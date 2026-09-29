@@ -1,6 +1,6 @@
 # Execution backlog
 
-Status is maintained by the supervisor. Statuses below reflect the September 27 local-skeleton acceptance; source access remains explicitly incomplete. `ready` requires completed dependencies and a concrete assignment; `pending` has a defined outcome but unmet dependencies; `planned` requires decomposition before delegation. Once claimed, use `in_progress`, then `review`, then `done` after supervisor acceptance, or `blocked` with an explicit cause. For detailed packets, use [templates](templates.md).
+Status is maintained by the supervisor. Statuses reflect September 29 T006a acceptance; live ACS observation access and persisted ingestion remain incomplete. `ready` requires completed dependencies and a concrete assignment; `pending` has a defined outcome but unmet dependencies; `planned` requires decomposition before delegation. Once claimed, use `in_progress`, then `review`, then `done` after supervisor acceptance, or `blocked` with an explicit cause. For detailed packets, use [templates](templates.md).
 
 | ID | Deliverable | Depends on | Status |
 | --- | --- | --- | --- |
@@ -10,7 +10,8 @@ Status is maintained by the supervisor. Statuses below reflect the September 27 
 | T004 | Loopback API, session boundary, static asset serving | T001, T003 | done |
 | T005 | React application shell and honest empty states | T001 | done |
 | T006 | ACS, boundary, and one-document ingestion slice | T002, T003 | blocked |
-| T006a | Independent adapter groundwork (partial T006 only) | T002, T003 | ready |
+| T006a | Independent adapter groundwork (partial T006 only) | T002, T003 | done |
+| T006b | Retained public artifacts and unpublished candidate staging | T006a | ready |
 | T007 | Minimal sealed release, explicit activation, pinned reads | T006 | pending |
 | T008 | Integrated map/table/evidence workflow | T004, T005, T007 | pending |
 | T009 | Job lifecycle, interruption and retry, failed-refresh preservation | T007 | planned |
@@ -25,7 +26,8 @@ Status is maintained by the supervisor. Statuses below reflect the September 27 
 - **T001/T003/T004/T005 done:** managed locks/runtime, separate initial stores, loopback session API, and built React empty shell accepted with unit, component, and real browser checks. See [handoff](handoffs/2026-09-27-local-skeleton.md). Source checkout operation only; schema upgrades, complete evidence validation, and release services remain absent.
 - **T002 done as an audit with an explicit blocker:** metric metadata, boundary/document retrieval, and report accepted. This does **not** satisfy live-source readiness for the full T006 slice. The corrected ACS query returned HTTP 302 to `missing_key.html` with `X-DataWebAPI-KeyError: 1` on September 27. No key was created.
 - **T006 blocked for full acceptance:** supervisor must obtain an authorized Census credential or verify an official download route; do not infer data from metadata. No blocking user decision is needed to start T006a below.
-- **T006a ready — bounded independent adapter groundwork** (depends on accepted T002/T003): supervisor owns typed candidate/provenance contracts; a worker may own `src/chesterfield_twin/sources/` and adapter tests after contracts settle. Implement schema/media-type/annotation validation with explicitly synthetic fixtures and boundary/document normalization using audited sources. Preserve raw hashes, exact locators, ACS E/M/EA/MA, periods, CRS, units/universe and two-locality document scope. Acceptance: duplicate/change/suppression/malformed/geography checks; report fixture versus live evidence separately. This is partial T006, never a substitute for live observation access.
+- **T006a done:** supervisor settled `domain/candidates.py`/`sources/common.py`, then explicitly requested three `gpt-6.1-sol` workers with separate ACS/boundary/document ownership. Adapters and cross-source checks are accepted after supervisor review, 132 passing Python tests, and independent audited-byte replay (75 boundaries, 3 document excerpts). ACS validation is synthetic only. Source/spec/transform hashes, exact locators, annotations, uncertainty, units/universes and periods are preserved. No ingestion persistence, live ACS access or release completion is claimed. See [handoff](handoffs/2026-09-29-source-adapters.md).
+- **T006b ready:** implement retained public source artifacts and unpublished candidate staging, using T006a's typed interfaces. This can progress independently of ACS access. Use the packet below; do not bypass full T006's real-observation gate.
 - T007/T008 remain pending: generic storage guards are groundwork, not release validation/sealing/activation or a map/table/evidence workflow. Confirm source-specific and complete provenance closure contracts before exposing baseline reads or user exports.
 
 T007 deliberately precedes acceptance of the end-to-end slice: the UI must not ship with an unversioned baseline that needs to be retrofitted later. This sequences the architecture's stages B and C together for the minimum slice.
@@ -65,6 +67,14 @@ Ownership: `frontend/src` feature/style files and frontend tests excluding share
 ### T006 — Traceable ingestion
 
 Using T002's confirmed specifications, ingest three measures, boundaries, and a document excerpt into candidate records. Preserve source artifacts/locators, values, uncertainty, units, geography/vintage, and lineage. Test identical re-import, changed source content, suppression, malformed input, and incompatible geography. Fixture tests are distinct from a real small source run. Done requires a sourced candidate dataset and a reported access limitation wherever live retrieval remains unavailable.
+
+### T006b — Retained public artifacts and candidate staging
+
+Next bounded checkpoint, independent of the live ACS access blocker. Supervisor owns storage service integration, shared contracts and any migration decision. Reuse initial schema/artifact safeguards where suitable; do not modify existing migration checksums or silently upgrade stores. Delegate only disjoint adapter/service tests after persistence interfaces settle.
+
+Accept explicit authorized public bytes/retrieval metadata and pinned specs; normalize/validate first, retain exact permitted bytes in the external content-addressed object store, then append typed candidate versions and separate retrieval events. Re-importing equal source/spec/transform content reuses candidate versions; changed content remains a separate version of the same natural assertion. Preserve full source/spec/transform lineage and exact locator/retention/synthetic metadata. County PDF remains local research evidence with unconfirmed redistribution. No private-store dependency, automatic activation, baseline HTTP reads, or user exports.
+
+Acceptance: isolated temporary data root; boundary/document real-byte replay staged durably; identical re-import, changed synthetic content, failed validation, absent/corrupt artifact and interrupted artifact-before-metadata cases; raw SHA-256 re-verification and complete candidate rehydration; no active-pointer change or private sentinel leakage. Explicitly isolate synthetic observations from real candidate runs. Document any new schema requirement before implementing it; existing user stores must remain fail-closed. Full T006 remains blocked until real authorized ACS bytes or an official alternative is verified, followed by three-source validation. Future fetch/job orchestration remains separately scoped.
 
 ### T007 — Release contract
 

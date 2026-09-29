@@ -95,3 +95,10 @@ The stable numeric DocumentCenter route returned PDF bytes; a descriptive suffix
 ## Reproduction notes
 
 The audit used bounded `curl` requests to the exact URLs above, `shasum -a 256`, `unzip -l`, a Python standard-library DBF header/record reader, `pdfinfo`, and `pypdf` text extraction. Temporary paths began `/tmp/cdt-`; they are not application fixtures. Proposed TOML is syntax-checked separately and contains no secrets or source bytes.
+
+
+## T006a replay and interpretation update — September 29, 2026
+
+The accepted adapters were independently replayed against the retained boundary ZIP and PDF above: exact audited hashes matched; 75 boundary candidates and three exact extracted page candidates validated. No new download occurred, and no source bytes/text were added to Git. `scripts/replay_audited_sources.py` reproduces this check when the temporary audit artifacts are available; its HTTP envelope is declared from the original audit/spec expectations rather than fresh headers.
+
+ACS checks remain explicitly synthetic. [Official annotation guidance](https://www.census.gov/data/developers/data-sets/acs-1year/notes-on-acs-estimate-and-annotation-values.html), inspected this session, informs independent E/M interpretation: preserve nulls/sentinels/annotations, recognize numeric open-ended median annotations as bounds rather than point estimates, and preserve controlled-MOE annotations without fabricating observed zero. Percentage MOE is not clamped to the percentage estimate range. Unknown interpretations fail closed. The prior live ACS blocker remains unresolved; this session made no observation request.

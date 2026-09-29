@@ -8,14 +8,14 @@ Read `AGENTS.md`, current state, and relevant backlog entries. Read the full arc
 
 ## Delegate deliberately
 
-- Supervisor: requested model `gpt-6-astra`. Workers: requested model `gpt-5.6-sol`. These names express the user's selection, not an automatic model switch performed by Markdown.
+- Supervisor: requested model `gpt-6-astra`. Workers: requested model `gpt-6.1-sol`. These names express the user's selection, not an automatic model switch performed by Markdown.
 - Explicitly pass the worker model in the available delegation tool and check returned metadata where available. Do not infer success from a role label. If the tool does not expose confirmation, report the requested model without claiming it was independently verified.
 - In the current collaboration tool, full-history forks cannot override the parent model. Use a fresh-context worker (`fork_turns: "none"`) with an explicit model and complete assignment packet; consult the actual tool schema in each new environment.
 - Prefer one or two useful workers initially. Add another only for independent work with clear ownership and available capacity. Keep dependent implementation sequential.
 - Give each worker only the mission summary, relevant decisions/contracts, exact files or sections, acceptance checks, and return format. Avoid sending the entire family framework or chat history.
 - Reuse a worker for closely related follow-up corrections when helpful. Do not recreate workers merely to ask for status. Use completion notifications/waits and keep the supervisor occupied with integration, shared contracts, or meaningful review.
 
-Codex documents project-scoped instruction discovery in [AGENTS.md guidance](https://learn.chatgpt.com/docs/agent-configuration/agents-md). Its [subagent guidance](https://learn.chatgpt.com/docs/agent-configuration/subagents) describes inherited model settings, focused worker context, and the extra coordination needed for concurrent edits. The model IDs also appear in official [Astra guidance](https://developers.openai.com/api/docs/guides/latest-model) and the [GPT-5.6 Sol model page](https://developers.openai.com/api/docs/models/gpt-5.6-sol). Actual availability and tool limits come from the current session.
+Codex documents project-scoped instruction discovery in [AGENTS.md guidance](https://learn.chatgpt.com/docs/agent-configuration/agents-md). Its [subagent guidance](https://learn.chatgpt.com/docs/agent-configuration/subagents) describes inherited model settings, focused worker context, and the extra coordination needed for concurrent edits. The model IDs also appear in official [Astra guidance](https://developers.openai.com/api/docs/guides/latest-model) and the [GPT-6.1 Sol model page](https://developers.openai.com/api/docs/models). Actual availability and tool limits come from the current session.
 
 ## Make parallel writes safe
 

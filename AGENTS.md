@@ -10,7 +10,7 @@ Check the current directory, branch, working tree, and available commands before
 
 ## Supervisor and workers
 
-The requested workflow uses **GPT-6 Astra (`gpt-6-astra`) as supervisor** and **GPT-5.6 Sol (`gpt-5.6-sol`) as subagents**. Use subagents for bounded independent work when delegation helps. Request the worker model explicitly; do not silently substitute GPT-6 Sol or inherit the supervisor model. If the requested model is unavailable, report it and continue independent supervisor work while resolving the delegation choice.
+The requested workflow uses **GPT-6 Astra (`gpt-6-astra`) as supervisor** and **GPT-6.1 Sol (`gpt-6.1-sol`) as subagents**. Use subagents for bounded independent work when delegation helps. Request the worker model explicitly; do not silently substitute GPT-6 Sol or inherit the supervisor model. If the requested model is unavailable, report it and continue independent supervisor work while resolving the delegation choice.
 
 The supervisor selects scope, settles shared contracts, assigns file ownership, integrates, verifies acceptance, and updates project state. Each worker receives the [assignment template](docs/execution/templates.md) with exact deliverables, dependencies, allowed paths, checks, and stop conditions. Workers do not spawn additional agents unless assigned that responsibility. Use only available concurrency; do not fill slots without useful independent work.
 

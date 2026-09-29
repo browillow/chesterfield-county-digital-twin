@@ -6,7 +6,7 @@ Copy only the template needed. Keep packets concise and link exact code/sections
 
 ```text
 Task ID and outcome:
-Requested model: gpt-5.6-sol
+Requested model: gpt-6.1-sol
 Why this can run independently:
 Repository/checkout and shared-filesystem status:
 Current baseline/branch and relevant existing changes:

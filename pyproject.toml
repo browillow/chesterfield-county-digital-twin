@@ -3,7 +3,13 @@ name = "chesterfield-twin"
 version = "0.1.0"
 description = "Private local Chesterfield County evidence observatory"
 requires-python = ">=3.12,<3.13"
-dependencies = ["fastapi==0.141.1", "pydantic==2.13.5", "uvicorn==0.54.0"]
+dependencies = [
+    "fastapi==0.141.1",
+    "pydantic==2.13.5",
+    "pypdf==6.1.1",
+    "pyshp==2.3.1",
+    "uvicorn==0.54.0",
+]
 
 [project.scripts]
 cdt = "chesterfield_twin.cli:main"
