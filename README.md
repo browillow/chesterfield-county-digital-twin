@@ -1,6 +1,6 @@
 # Chesterfield County Digital Twin
 
-A private, locally operated county evidence tool. The local skeleton runs: Python/FastAPI serves a React shell, with separate public-baseline and private SQLite stores outside the checkout. No county observations have been ingested and no release is active. The source audit and remaining work are recorded in [current state](docs/execution/state.md).
+A private, locally operated county evidence tool. The local skeleton runs: Python/FastAPI serves a React shell, with separate public-baseline and private SQLite stores outside the checkout. Typed source adapters and unpublished candidate staging are implemented. Audited boundary/document bytes have been staged in an isolated test root; no real ACS observations or active release exist. The source audit and remaining work are recorded in [current state](docs/execution/state.md).
 
 ## Setup and daily use
 
@@ -44,6 +44,14 @@ Python tests cover observed zero versus suppression, sealed-membership guards, c
 
 The [source audit](docs/source-audit.md) selects 2019–2023 ACS median household income, poverty rate, and household count, plus matching 2023 boundaries and a county Social Services budget excerpt. Metadata, boundaries, and the document were retrieved and checked. The corrected observation query redirects to Census's missing-key page. Live ACS ingestion requires an authorized key or a separately verified official download route. No credentials or downloaded source documents are in Git.
 
-Ingestion, validated release build/activation, map/table/evidence inspection, private brief editing, and recovery remain future work. SQL immutability guards and synthetic tests do not establish those capabilities.
+Retained staging accepts explicit public bytes through the three typed adapters, preserves exact source/specification objects and retrieval events, and verifies complete candidate readback. Real and synthetic runs are explicitly separate. Offline audit replay is available when the retained audit files exist:
+
+```sh
+uv run --no-sync python scripts/stage_audited_sources.py --boundary /path/to/audited-boundary.zip --document /path/to/audited-budget.pdf --data-dir /path/to/new-external-test-root
+```
+
+This command retains local evidence and repeats each import to verify reuse; it does not fetch, activate or export. It reports counts/hashes only. Retrieval times come from pinned specifications; successful response headers are declared, not freshly verified. The county PDF's redistribution remains unconfirmed. Baseline migration 002 is required: existing 001 stores are rejected without upgrading; preserve them and choose a separate new root.
+
+Fetch/job orchestration, real three-source acceptance, validated release build/activation, map/table/evidence inspection, private brief editing and recovery remain future work. The next bounded checkpoint is persisted candidate-set validation reports; synthetic tests do not establish a real release.
 
 For implementation sessions, read [AGENTS.md](AGENTS.md), [state](docs/execution/state.md), [backlog](docs/execution/backlog.md), and [workflow](docs/execution/workflow.md). See the [MVP plan](docs/mvp-plan.md), [technical architecture](docs/technical-architecture.md), and [illustrative UI concepts](docs/ui-concepts/README.md) for intended later behavior.

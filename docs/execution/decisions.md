@@ -43,3 +43,14 @@ Use pinned pure-Python pyshp 2.3.1 and pypdf 6.1.1 for bounded local normalizati
 ## D014 — Current worker selection (2026-09-29)
 
 The user's current explicit `gpt-6.1-sol` worker request supersedes the older `gpt-5.6-sol` standing text. Three focused fresh-context assignments requested the exact new ID after shared contracts passed tests. Update AGENTS/workflow/template references accordingly; historical handoffs retain their original facts. The delegation tool exposes task IDs but does not independently confirm actual model metadata. Markdown cannot change or verify the supervisor's model setting; Astra remains the requested supervisor.
+
+## D015 — Retained staging schema and failure boundary (2026-09-29)
+
+Settled before implementation and accepted after T006b integration: append baseline `002_candidate_staging.sql`; never edit either `001_initial.sql`. Fresh initialization applies both baseline migrations. Existing 001 stores remain incompatible and must fail closed; no upgrade, ledger rewrite, or backup/recovery capability is introduced. The generic version/artifact/retrieval tables lack typed candidate indexing, run isolation and ordered import membership, so an explicit migration is preferable to hiding those relationships in unindexed JSON.
+
+Reuse immutable `version` payloads (candidate JSON excluding retrieval), raw/spec content-addressed artifacts, and separate retrieval events. Add immutable staging runs with required synthetic mode, typed candidate lineage indexes, import manifests and ordered membership. Each import uses one accepted adapter, validates before object retention, retains both exact inputs, then commits all metadata atomically. An interruption can leave an unreferenced complete object; retry reuses it. Reads re-verify hashes, membership, typed payload identity and event lineage. Staging services open only baseline storage and do not create releases, activate, expose HTTP reads or export evidence. Retention is limited to the three audited local-retention policies; unsupported policy changes fail closed. Revisit for T007 closure and T013 paired migration/recovery.
+
+
+## D016 — Validation groundwork remains independent of real-source acceptance (2026-09-29)
+
+With T006b accepted, T007a is ready as a bounded next packet for persisted validation reports over explicit staged imports. This is proposed implementation work; no report service exists yet. It may use wholly synthetic selections for checks and report that the real boundary/document selection lacks ACS. Full T006 still needs authorized ACS observation bytes or a verified official alternative; T007 real release sealing/activation and T008 remain pending. This avoids idle independent validation work without weakening the evidence gate or inventing observation access. Revisit when ACS access is established and a real three-source candidate set can pass validation.

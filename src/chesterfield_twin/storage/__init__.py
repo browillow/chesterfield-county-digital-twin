@@ -61,6 +61,15 @@ def _secure_directory(root: Path, relative: str | Path = ".") -> Path:
     return path
 
 
+def _sync_directory(path: Path) -> None:
+    """Persist directory entries before committing references to newly linked objects."""
+    descriptor = os.open(path, os.O_RDONLY | getattr(os, "O_DIRECTORY", 0))
+    try:
+        os.fsync(descriptor)
+    finally:
+        os.close(descriptor)
+
+
 def _layout(root: Path) -> None:
     _assert_not_symlink(root)
     for relative in (
@@ -225,6 +234,8 @@ class ArtifactStore:
         if target.exists():
             if target.read_bytes() != content:
                 raise StorageError("existing content address has different bytes")
+            for path in (directory, directory.parent, directory.parent.parent, self.root):
+                _sync_directory(path)
             return digest
         temporary = directory / f".{digest}.{os.getpid()}.{secrets.token_hex(6)}.tmp"
         flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_NOFOLLOW", 0)
@@ -241,7 +252,17 @@ class ArtifactStore:
                 raise StorageError("existing content address has different bytes")
         finally:
             temporary.unlink(missing_ok=True)
+        # Persist the object link and new prefix directories before SQLite can reference it.
+        for path in (directory, directory.parent, directory.parent.parent, self.root):
+            _sync_directory(path)
         return digest
+
+    def read(self, digest: str) -> bytes:
+        """Read retained bytes only after re-verifying their content address."""
+        content = self.path(digest).read_bytes()
+        if hashlib.sha256(content).hexdigest() != digest:
+            raise StorageError("artifact SHA-256 mismatch")
+        return content
 
     def path(self, digest: str) -> Path:
         if len(digest) != 64 or any(character not in "0123456789abcdef" for character in digest):

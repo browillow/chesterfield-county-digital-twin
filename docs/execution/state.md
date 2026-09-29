@@ -1,40 +1,46 @@
 # Current project state
 
 Last updated: September 29, 2026 (America/New_York).
-Implementation stage: **Local skeleton and T006a normalization accepted and tested.** First auditable source slice remains incomplete.
-Active supervisor/assignments: None remaining. All three explicitly requested `gpt-6.1-sol` workers completed; supervisor reviewed and integrated their files.
-Latest handoff: [Typed source adapters](handoffs/2026-09-29-source-adapters.md).
+Implementation stage: **Local skeleton, T006a normalization and T006b retained candidate staging accepted and tested.** First auditable source slice remains incomplete.
+Active supervisor/assignments: None remaining. Three explicitly requested `gpt-6.1-sol` workers completed (synthetic tests, audited replay, read-only review); supervisor inspected and verified the integrated result. Requested supervisor: GPT-6 Astra; actual supervisor/worker model metadata is not independently exposed by this tool interface.
+Latest handoff: [Retained candidate staging](handoffs/2026-09-29-retained-staging.md).
 
 ## Implemented and verified
 
-- **T001/T003/T004/T005:** accepted Python/FastAPI/SQLite/React local skeleton, external data root, baseline/private separation, initial migration guards, loopback session security, pinned bootstrap and honest empty UI. No skeleton work was redone. Details remain in the [previous handoff](handoffs/2026-09-27-local-skeleton.md).
-- **T002:** source audit/specifications accepted with the ACS access blocker below.
-- **T006a:** typed unpublished candidates, retrieval/provenance and locators; source/spec/geometry/text hashes; natural keys and deterministic version fingerprints; structured atomic validation failures. Three bounded byte-to-candidate adapters validate the pinned ACS slice, NAD83 boundaries and FY2025 document. They do not fetch, persist or activate anything.
-- ACS preserves E/M/EA/MA, annotations, suppression/null versus zero, bounds, published 90% MOEs, units/universes, periods and geography. All ACS observations used in checks were **synthetic**.
-- Independent replay of retained audited bytes succeeded: boundary ZIP validates 2,186 Virginia records and returns **75 Chesterfield candidates**; county PDF returns **3 exact page excerpts** (PDF 229–231 / printed 211–213), preserving both Chesterfield and Colonial Heights scope. Actual hashes match `source_specs/`. This is offline replay, not a fresh source-access check.
-- Cross-source validation requires 75 tracts × 3 metrics and the three document locators, consistent snapshot identities/period/vintage, and rejects synthetic candidates by default. A combined replay with synthetic ACS on the real boundary keys returns 303 candidates only with explicit test opt-in; the real-slice check rejects it.
+- **T001/T003/T004/T005:** accepted Python/FastAPI/SQLite/React local skeleton, external data root, baseline/private separation, loopback session security, pinned bootstrap and honest empty UI. No skeleton rebuild. See [skeleton handoff](handoffs/2026-09-27-local-skeleton.md).
+- **T002/T006a:** accepted source audit, pinned specifications, typed provenance/locators and three bounded normalization adapters. Hashes, natural assertions, transform identity, ACS E/M/EA/MA, uncertainty, units/universes, period/vintage, geometry and exact document excerpts remain as accepted. See [adapter handoff](handoffs/2026-09-29-source-adapters.md).
+- **T006b:** `CandidateStaging` validates accepted public byte inputs before retaining exact source/spec objects; appends immutable candidate versions, ordered import membership and separate retrieval events. Re-imports reuse fingerprints; changed source/spec/transform content creates new versions of the same assertions. Required real/synthetic run modes cannot mix. Complete typed readback re-verifies raw/spec SHA-256/size, retrieval/index consistency and membership/fingerprints. No private-store access, release mutation or HTTP capability was added.
+- File and directory synchronization precede SQLite metadata commits. Failed validation writes no evidence; interruption after retention may leave complete unreferenced objects; metadata failures roll back; retry reuses valid objects. Corrupt objects are rejected, not silently overwritten. County PDF remains local evidence with redistribution unconfirmed; only the three audited retention policies are accepted.
+- **Audited offline staging:** 75 real boundary candidates and 3 real document excerpts, 78 unique versions, 4 raw/spec objects and 4 successful import/retrieval events after repeat imports. Worker replay and separate-process supervisor readback/re-normalization from retained bytes both passed. Source hashes match `source_specs/`. This does not verify fresh HTTP access.
+- **Synthetic ACS only:** 225 candidates from generated 75-row fixtures; complete persistence/readback, annotations, suppression/null/zero, MOEs and identity changes verified in isolated synthetic runs. No synthetic observations entered the audited real run.
 
-No real ACS observations, persisted source candidates/artifacts, active release, maps, ingestion jobs, private brief UI, search, user export, or backup/restore have been added. Typed adapter validation does not establish complete persisted provenance/release closure. NAD83 source geometry is not a WGS84 display layer or full topology-validity proof. PDF accepted-output limits are not hard peak-memory/CPU isolation. Existing schema upgrades still fail closed. Product operation still requires this checkout.
+New baseline migration **002** is required for fresh stores. Both accepted **001 checksums are unchanged**. Existing 001 stores fail closed and remain byte-for-byte unchanged in the migration rejection test; no upgrade/backup/recovery path exists. Preserve old roots and use a separate new root for this checkpoint.
+
+No real ACS observations, active release, map/table/evidence UI, fetch orchestration/jobs, private brief UI, search, user export or backup/restore were added. Staging does not establish full release membership closure or prove caller-supplied authorization/retrieval declarations. NAD83 is not a prepared WGS84 display layer; PDF accepted-output bounds are not hard parser resource isolation. Product operation still requires this checkout.
 
 ## Next ready work and blockers
 
-- **T006b ready:** retained public artifacts and candidate staging from the accepted adapter contracts, using independently available boundary/document bytes and explicitly isolated synthetic tests. Concrete assignment/acceptance packet in [backlog](backlog.md). Supervisor owns storage/shared contracts/migration decisions; no activation or default baseline reads.
-- **Full T006 blocked:** last verified corrected ACS request (September 27) returned HTTP 302 to Census `missing_key.html`, `X-DataWebAPI-KeyError: 1`. Still needs authorized observation bytes or a separately verified official download route. No live ACS request was made this session; metadata/docs and fixtures are not observation access. No account or credential was created or searched for.
-- T007 release validation/sealing/explicit activation and T008 pinned map/table/evidence remain pending. Retention, artifact availability, complete membership closure and synthetic isolation must be enforced in those services.
-- No personal decision blocks T006b. Private data remains outside Git; tests use temporary roots and no real research directory was initialized.
+- **T007a ready:** persisted candidate-set validation reports, a bounded prerequisite of T007, from explicitly selected staged imports. Concrete packet in [backlog](backlog.md). It can progress with isolated synthetic tests and report missing real ACS without sealing/activation or baseline reads. This is proposed work, not an implemented capability.
+- **Full T006 blocked:** last verified corrected ACS request (September 27) returned HTTP 302 to Census `missing_key.html`, `X-DataWebAPI-KeyError: 1`. Needs authorized observation bytes or a separately verified official download route and subsequent real three-source validation. No new ACS request, account creation, credential search/request or network source access occurred this session. Fixtures and declared retrieval metadata do not satisfy this gate.
+- T007 sealing/explicit activation and T008 pinned map/table/evidence remain pending. Complete supporting membership, retention-aware release/export access and source availability must be checked before accepting a real release.
+- No personal decision blocks T007a. Private data stays outside Git; no actual research directory was initialized.
 
 ## Commands and checks
 
-From this checkout: `uv sync --locked`, `npm --prefix frontend ci`, `npm --prefix frontend run build`; then `uv run --no-sync cdt init` and `uv run --no-sync cdt serve --open`. See [README](../../README.md). Use an external temporary `--data-dir` for tests.
+From this checkout: `.venv/bin/pytest -q` **167 passed**, with the existing Starlette test-client deprecation warning. `.venv/bin/ruff check src tests scripts` and `git diff --check` pass. Focused new tests: 16 staging, 10 integrity/migration, 9 replay-tool tests. One injected metadata abort initially leaked a SQLite exception; corrected and verified. No dependency/lock, API/OpenAPI or frontend changes; dependency sync/build/browser checks were not repeated.
 
-This session: `.venv/bin/pytest -q` **132 passed**, including existing API/storage/runtime/OpenAPI drift checks, with the existing Starlette test-client deprecation warning; Ruff and whitespace checks pass after correcting one import order and Markdown whitespace. `uv sync --locked --offline` passes with 26 resolved packages. Added/pinned pyshp 2.3.1 and pypdf 6.1.1. No frontend change; previous frontend/browser acceptance was not repeated.
+Audited retained replay:
 
-Replay: `.venv/bin/python scripts/replay_audited_sources.py --boundary /private/tmp/cdt-boundary.zip --document /private/tmp/cdt-fy2025`. Requires retained audit files with exact spec hashes; reports no document text. Original retrieval dates come from specifications; successful status/media types are declared expected envelopes, not re-verified headers.
+```sh
+.venv/bin/python scripts/stage_audited_sources.py --boundary /private/tmp/cdt-boundary.zip --document /private/tmp/cdt-fy2025 --data-dir /private/tmp/cdt-t006b-worker-replay-20260929-4c8f19
+```
 
-Session environment: `UV_CACHE_DIR=/private/tmp/cdt-uv-cache`, `UV_PYTHON_INSTALL_DIR=/private/tmp/cdt-python`; pinned Python 3.12.12. Temporary runtimes/audit files may disappear. `.venv` and frontend build artifacts remain ignored.
+Replay output contains only counts/hashes/status; original retrieval times are from specifications and expected successful status/media headers are caller-declared. A separate-process supervisor check read all four imports, independently normalized both retained artifacts/specs, verified complete equality, a private test sentinel boundary and no release/active pointer. Details in handoff. The replay root remains disposable and external; source objects and generated candidate text are not in Git.
+
+Normal setup commands remain in [README](../../README.md). Use an explicit new external temporary `--data-dir` for checks. Existing ignored `.venv` uses pinned Python 3.12.12 under `/private/tmp/cdt-python`; dependency caches and audit files may disappear.
 
 ## Working tree and processes
 
-Actual branch `main`, HEAD `97841eb` (`feat: first checkpoint`), reconciled against stale `7ad18c0` in the prior state. Starting project modification was the user's `start-session.md` wording; preserved and advanced. New adapters/contracts/tests/replay script and changed locks/docs are uncommitted. No Git commit/reset/push/publication occurred; sibling workspace content was untouched.
+Actual branch `main`, HEAD `b623129` (`feat: next checkpoint`). Previous state said `97841eb` and uncommitted adapters; those files are now committed. The only starting modification was the user's `start-session.md` correction/removal of stale handoff prose; preserved while advancing the prompt.
 
-All workers completed; file ownership returned to supervisor. Every shell command completed. No API/browser/background process or automation was started this session. Existing temporary audit/dependency files remain disposable; no source bytes or private data were added to Git.
+This session's storage service/migration/replay/tests and README/execution/source-audit updates are uncommitted. No commit/reset/push/publication occurred; sibling workspace content was untouched. All three workers completed and ownership returned to supervisor. All shell commands completed; no server, browser, background job or automation was started. External test root above retains public evidence plus a synthetic private sentinel only.
