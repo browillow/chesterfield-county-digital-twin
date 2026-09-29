@@ -16,34 +16,50 @@ another worker model. Give each worker focused context, exclusive file
 ownership, concrete deliverables, and acceptance checks.
 
 The local skeleton, T006a adapters, T006b retained staging and T007a
-persisted candidate validation reports are accepted. T006c is complete:
-the compatible API query remains key-blocked, while an official ZIP/CSV
-Subject export route is documented but unacquired/unvalidated. Begin
-T006d, the bounded official Subject export acquisition and representation
-review. Read its backlog packet, D017/D018, report contracts, the dated
-T006c source-audit evidence and source_specs/. Follow later state if advanced.
+persisted candidate validation reports are accepted. T006c's compatible
+API query remains historically key-blocked. T006d is complete with a
+precise tool-blocker outcome: both official 2023 Subject ZIP vintage
+dialogs were reached, but no export was triggered. Supported browser
+downloads exposed only a path/wait timeout, without enforceable transfer
+bounds or actual response URL/status/media provenance. This is not
+publisher denial. Read D017–D019, T006e's conditional backlog packet,
+the T006d handoff/preflight evidence, report contracts and source_specs/.
+Follow later state if advanced; reconcile the actual branch and worktree.
 
-Use supported official public UI/documentation/download routes only;
-no accounts, credential searches/requests, outreach or spending. Pin
-2019–2023 ACS 5-Year Subject Tables S1901/S1701, Chesterfield tracts,
-all three measures and E/M/EA/MA. Acquire at most one bounded export per
-table into a fresh external audit directory. Retain original archive/member
-bytes, real URLs/status/media/time/hash. Verify geography, annotations,
-units/universes and 90-percent MOEs from actual bytes and official docs.
-Do not infer observations from metadata, fabricate null annotations,
-substitute fixtures/Detailed Tables, or relabel converted CSV as raw API JSON.
+T006e is blocked, not an implementation-ready export adapter. First inspect
+whether supported acquisition capabilities have materially changed. Do not
+repeat unchanged API/FTP audits or create another audit-only ticket. If no
+supported route can enforce 20 MB/60-second transfer bounds and preserve
+actual sanitized response URL/status/media/time with original bytes,
+report the existing precise blocker; do not infer publisher denial.
+No accounts, credential searches/requests, outreach or spending.
 
-Stop for supervisor source/spec/locator/adapter contract review before
-implementing or ingesting a differing representation. T006d's deliverable
-is a reviewed contract/implementation packet or a precise access/semantic
-blocker. Tool/browser failure is not proof of publisher denial. Preserve
-accepted adapters and all earlier roots; baseline migration 003 has no
-upgrade path. If bytes already match the accepted API contract, stage
-only in a fresh external current-schema root and explicitly select all
-three real imports for persisted validation and current revalidation.
-Historical report readback is not current artifact verification. Reports
-alone authorize no sealing/activation or default baseline reads. Do not
-redo accepted skeleton, adapter, staging or report groundwork.
+If unblocked, acquire at most one official public ZIP export per table
+S1901/S1701 into a fresh external audit directory. Start from clean UI
+geography selection (T006d observed URLs retained an earlier invalid
+selector), explicitly pin 2019–2023 ACS 5-Year Subject / 2023 release and
+Chesterfield's 75 tracts. Retain exact archive/member bytes and real
+retrieval envelopes/hashes; bound expansion to 100 MB and 32 members per
+archive. Verify exact GEOIDs, all three existing measures, E/M/EA/MA,
+annotations/nulls/sentinels, units/universes and published 90-percent MOEs
+from actual bytes plus official docs. Metadata and rendered UI values are
+not raw observations. Do not fabricate null annotations, substitute
+fixtures/Detailed Tables, inspect unpublished endpoints, or relabel
+converted CSV as raw API JSON.
+
+Stop for Astra source/spec/locator/adapter contract review before any
+differing-representation implementation or ingestion. Current ACS staging
+retains one raw artifact and validation requires one ACS source snapshot;
+two exports require explicit original/derived multi-artifact lineage and
+verified readback design. No replacement contract is approved yet.
+Deliver a reviewed implementation packet or precise semantic/access
+blocker. Preserve accepted code/specs and earlier roots; baseline 003 has
+no upgrade path. Only bytes already matching the accepted API contract
+may use a fresh external schema-003 staging root, with all three real
+imports explicitly selected for persisted validation and current
+revalidation. Historical report readback is not current artifact
+verification. Reports authorize no sealing/activation/default reads.
+Do not redo accepted skeleton, adapter, staging or report groundwork.
 
 Resolve routine reversible choices autonomously. Preserve existing work,
 the local runtime design, provenance, release pinning, and the private-data
@@ -57,4 +73,4 @@ still proposed capabilities. Do not publish, contact people, or make
 spending commitments as part of this task.
 ```
 
-Current checkpoint reference: [official ACS route-audit handoff](handoffs/2026-09-29-acs-route-audit.md). The state file takes precedence if work has progressed since this prompt was updated. For a narrower session, replace the checkpoint paragraphs with one specific outcome and stopping condition. Markdown cannot switch or verify the session model; use actual app/tool settings. No project/global Codex configuration has been installed by this execution kit.
+Current checkpoint reference: [Subject export review handoff](handoffs/2026-09-29-subject-export-review.md). The state file takes precedence if work has progressed since this prompt was updated. For a narrower session, replace the checkpoint paragraphs with one specific outcome and stopping condition. Markdown cannot switch or verify the session model; use actual app/tool settings. No project/global Codex configuration has been installed by this execution kit.

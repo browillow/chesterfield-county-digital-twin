@@ -1,0 +1,137 @@
+{
+  "scope": "T006d official Subject export UI acquisition preflight; zero exports triggered or acquired",
+  "evidence_kind": "coordinator transcription of supported browser tool observations and capability documentation; not raw HTTP or observation bytes",
+  "client_date": "2026-09-29",
+  "checkout": {
+    "branch": "main",
+    "head": "77678ac",
+    "initial_git_status": "clean"
+  },
+  "requested_models": {
+    "supervisor": "gpt-6-astra",
+    "documentation_worker": "gpt-6.1-sol",
+    "runtime_model_metadata_independently_confirmed": false
+  },
+  "predeclared_limits": {
+    "exports_per_table": 1,
+    "tables": [
+      "S1901",
+      "S1701"
+    ],
+    "archive_bytes": 20000000,
+    "download_seconds": 60,
+    "expanded_bytes_per_archive": 100000000,
+    "members_per_archive": 32,
+    "enforcement_available": false
+  },
+  "pin": {
+    "reference_period": "2019-2023",
+    "product": "2023 ACS 5-Year Estimates Subject Tables",
+    "geography": "Chesterfield County, Virginia Census tracts",
+    "expected_tracts": 75,
+    "metric_stems": [
+      "S1901_C01_012",
+      "S1901_C01_001",
+      "S1701_C03_001"
+    ],
+    "required_suffixes": [
+      "E",
+      "M",
+      "EA",
+      "MA"
+    ],
+    "actual_export_coverage_verified": false
+  },
+  "browser": {
+    "chrome": "unavailable; no tab opened",
+    "used": "Codex In-app Browser",
+    "tab_closed": true,
+    "credentials_used": false
+  },
+  "navigation_notes": [
+    "Initial direct S1901 URL with g=140XX00US51041 returned Data not available. This was a filter result, not publisher denial.",
+    "Used official View Filters > Geographies > Summary Levels > 140 - State->County->Census Tract > Virginia > Chesterfield County > All Census Tracts within Chesterfield County, Virginia.",
+    "All-tract checkbox was visibly checked. Generic geography picker showed 91 items across its available choices; this is not proof of 2023 export coverage.",
+    "UI initially selected GEOINFO2025, then S1901/S1701 search defaults selected 2024. Explicitly changed each to 2023 ACS 5-Year Estimates Subject Tables before opening ZIP vintage dialog.",
+    "Observed resulting URLs retain the initial unrecognized 140XX00US51041 selector alongside the UI-generated 050XX00US51041$1400000. These URLs are recorded exactly, not normalized into supposed download URLs. Resume from a clean UI selection and verify actual 75-GEOID bytes.",
+    "Temporary empty/loading lists and stale selectors resolved via fresh DOM state; no lasting UI access blocker."
+  ],
+  "ui_observations": [
+    {
+      "observed_at_utc": "2026-09-29T23:34:18.570Z",
+      "table": "S1901",
+      "page_url": "https://data.census.gov/table/ACSST5Y2023.S1901?q=S1901&g=050XX00US51041$1400000_140XX00US51041",
+      "dialog": "Select Table Vintages to Download",
+      "checked_input_labels": [
+        "Table: S1901 Vintage: 2023"
+      ],
+      "compressed_size_estimate": "17.9 kB",
+      "estimate_is_verified_download_size": false,
+      "dialog_link_count": 0,
+      "final_download_button_clicked": false,
+      "http_status": null,
+      "http_media_type": null,
+      "archive_sha256": null,
+      "null_reason": "No export transfer was triggered; browser UI observation is not a retrieval envelope."
+    },
+    {
+      "observed_at_utc": "2026-09-29T23:35:13.711Z",
+      "table": "S1701",
+      "page_url": "https://data.census.gov/table/ACSST5Y2023.S1701?q=S1701&g=050XX00US51041$1400000_140XX00US51041",
+      "dialog": "Select Table Vintages to Download",
+      "checked_input_labels": [
+        "Table: S1701 Vintage: 2023"
+      ],
+      "compressed_size_estimate": "56.3 kB",
+      "estimate_is_verified_download_size": false,
+      "dialog_link_count": 0,
+      "final_download_button_clicked": false,
+      "http_status": null,
+      "http_media_type": null,
+      "archive_sha256": null,
+      "null_reason": "No export transfer was triggered; browser UI observation is not a retrieval envelope."
+    }
+  ],
+  "download_capabilities": {
+    "waitForEvent_download": "accepts timeoutMs; returns object exposing path(options) only",
+    "downloadMedia": "accepts timeoutMs; returns local path; no documented byte cap/HTTP envelope",
+    "cancel_or_byte_cap": "not exposed in documented API",
+    "actual_response_url_status_media": "not exposed in documented download API",
+    "pageAssets": "bundles fonts/images/stylesheets/video; not a ZIP transfer envelope API",
+    "webmcp": "No WebMCP tools are available in this document (S1901)"
+  },
+  "exports_triggered": 0,
+  "exports_acquired": 0,
+  "archive_members_retained": 0,
+  "export_retrievals": [],
+  "blocker": "Supported browser controls reach the official export dialogs, but cannot enforce declared transfer byte/time bounds or retain the required actual download response URL/status/media envelope. No public download href was present in either dialog. Supervisor stopped before final Download ZIP.",
+  "publisher_denial_established": false,
+  "semantics": {
+    "actual_E_M_EA_MA_verified": false,
+    "actual_units_universes_verified": false,
+    "actual_90_percent_MOE_fields_verified": false,
+    "documentation_review": "worker-semantics.md; documentation only"
+  },
+  "contract_decision": "No compatibility approval or executable change; preserve accepted API spec/acs-subject/1. Future two-table exports require reviewed multi-artifact lineage, locators, selectors, retention and verified readback; no CSV-to-API disguise.",
+  "validation": {
+    "staging_performed": false,
+    "new_report": false,
+    "historical_report_read": false,
+    "current_revalidation": false,
+    "earlier_roots_opened": false
+  },
+  "external_notes": [
+    {
+      "name": "ownership.md",
+      "bytes": 1184,
+      "sha256": "2280c3d2f6648be0c0de88821d1ee16e762e0690b163b2909de4bffcbb9ec6bd",
+      "identity_kind": "local note, not publisher response"
+    },
+    {
+      "name": "worker-semantics.md",
+      "bytes": 7490,
+      "sha256": "d070a449a88243a1ca797fc8649255ecf655bd5fd4fc9b0392454f1891ed13cb",
+      "identity_kind": "local note, not publisher response"
+    }
+  ]
+}
