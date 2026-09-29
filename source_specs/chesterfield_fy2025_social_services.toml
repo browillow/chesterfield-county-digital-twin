@@ -1,0 +1,33 @@
+spec_version = 1
+source_id = "chesterfield_fy2025_budget_social_services"
+publisher = "Chesterfield County, Virginia"
+title = "FY2025 Budget and FY2025-FY2029 Capital Improvement Program"
+document_url = "https://www.chesterfield.gov/DocumentCenter/View/36170/"
+index_url = "https://www.chesterfield.gov/251/Budget-Development-and-Documents"
+fiscal_year = "FY2025"
+retrieved_at = "2026-09-27T03:45:19Z"
+artifact_bytes = 25649160
+artifact_sha256 = "d0d52e068d3b02dd6b134b2b08dbe29f65b3311197e3b8aee12f72e88650136d"
+media_type = "application/pdf"
+page_count = 424
+scope_caveat = "Social Services serves Chesterfield County and the City of Colonial Heights; document claims are not Chesterfield-only service counts."
+retention = "retain one local evidence copy for private research and reproducibility"
+redistribution = "unconfirmed; link/cite rather than exporting the full PDF until authoritative rights are recorded"
+
+[[locators]]
+pdf_page = 229
+printed_page = 211
+heading = "Departmental Summaries > Social Services > Description"
+use = "department scope, divisions, program areas, mission, and two-locality coverage caveat"
+
+[[locators]]
+pdf_page = 230
+printed_page = 212
+heading = "Department Blueprint: Priorities, Programs, and Performance"
+use = "program list and Adult Services / Assessment and Resources Team function descriptions"
+
+[[locators]]
+pdf_page = 231
+printed_page = 213
+heading = "Housing Choice Voucher; Public Assistance"
+use = "reported housing subsidy and public-assistance function descriptions"

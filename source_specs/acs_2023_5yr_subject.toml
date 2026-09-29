@@ -1,0 +1,72 @@
+spec_version = 1
+source_id = "census_acs_2023_5yr_subject"
+publisher = "U.S. Census Bureau"
+release_id = "acs5_subject_2023"
+dataset = "2023/acs/acs5/subject"
+reference_period = "2019-2023"
+publication_vintage = "2023"
+geography = "tract"
+state_fips = "51"
+county_fips = "041"
+access_status = "blocked_requires_api_key"
+data_url_template = "https://api.census.gov/data/2023/acs/acs5/subject?get={fields}&for=tract:*&in=state:51%20county:041&key={secret}"
+documentation_url = "https://www.census.gov/data/developers/data-sets/acs-5year/2023.html"
+terms_url = "https://www.census.gov/data/developers/about/terms-of-service.html"
+citation_url = "https://www.census.gov/about/policies/citation.html"
+credential_name = "census_api_key"
+credential_transport = "query_parameter_redacted"
+response_media_type = "application/json"
+raw_retention = "retain successful response bytes with sanitized request metadata; API availability is not guaranteed"
+required_attribution = "This product uses the Census Bureau Data API but is not endorsed or certified by the Census Bureau."
+
+[expected_schema]
+shape = "array_of_rows_with_header"
+identifier_fields = ["state", "county", "tract"]
+requested_nonmetric_fields = ["NAME"]
+expected_current_row_count = 75
+reject_media_types = ["text/html"]
+
+[[metrics]]
+code = "median_household_income"
+table = "S1901"
+estimate = "S1901_C01_012E"
+estimate_annotation = "S1901_C01_012EA"
+margin_of_error = "S1901_C01_012M"
+margin_of_error_annotation = "S1901_C01_012MA"
+concept = "Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars)"
+label = "Households - Median income (dollars)"
+unit = "2023 inflation-adjusted dollars per household"
+universe = "Households"
+uncertainty = "published 90 percent margin of error"
+aggregation = "non_additive_median"
+metadata_url = "https://api.census.gov/data/2023/acs/acs5/subject/groups/S1901.json"
+
+[[metrics]]
+code = "poverty_rate"
+table = "S1701"
+estimate = "S1701_C03_001E"
+estimate_annotation = "S1701_C03_001EA"
+margin_of_error = "S1701_C03_001M"
+margin_of_error_annotation = "S1701_C03_001MA"
+concept = "Poverty Status in the Past 12 Months"
+label = "Percent below poverty level - Population for whom poverty status is determined"
+unit = "percent"
+universe = "Population for whom poverty status is determined"
+uncertainty = "published 90 percent margin of error"
+aggregation = "published_percentage_non_additive"
+metadata_url = "https://api.census.gov/data/2023/acs/acs5/subject/groups/S1701.json"
+
+[[metrics]]
+code = "household_count"
+table = "S1901"
+estimate = "S1901_C01_001E"
+estimate_annotation = "S1901_C01_001EA"
+margin_of_error = "S1901_C01_001M"
+margin_of_error_annotation = "S1901_C01_001MA"
+concept = "Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars)"
+label = "Households - Total"
+unit = "households"
+universe = "Households"
+uncertainty = "published 90 percent margin of error"
+aggregation = "additive_only_across_mutually_exclusive_geographies_in_same_release"
+metadata_url = "https://api.census.gov/data/2023/acs/acs5/subject/groups/S1901.json"

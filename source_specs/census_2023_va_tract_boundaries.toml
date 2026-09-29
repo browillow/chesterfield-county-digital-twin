@@ -1,0 +1,26 @@
+spec_version = 1
+source_id = "census_cartographic_2023_va_tract_500k"
+publisher = "U.S. Census Bureau"
+boundary_vintage = "2023"
+geography_definition = "2020 Census tracts"
+geography = "tract"
+state_fips = "51"
+county_fips_filter = "041"
+scale = "1:500000"
+purpose = "small-scale thematic mapping"
+artifact_url = "https://www2.census.gov/geo/tiger/GENZ2023/shp/cb_2023_51_tract_500k.zip"
+documentation_url = "https://www.census.gov/geographies/mapping-files/time-series/geo/cartographic-boundary.2023.html"
+artifact_bytes = 1773760
+artifact_sha256 = "172e398e73aa6db00bad3b720ca793dc36628cbfa332d3bd3b80926019f9c8bd"
+retrieved_at = "2026-09-27T03:45:19Z"
+archive_format = "zip"
+geometry_format = "ESRI Shapefile"
+crs = "NAD83 geographic coordinates"
+join_field = "GEOID"
+join_expression = "state + county + tract"
+expected_state_records = 2186
+expected_county_records = 75
+raw_retention = "retain original archive and embedded ISO metadata with URL and checksum; no source retention-duration promise identified"
+limitations = "generalized cartographic geometry; not parcel authority; do not calculate areas or distances in degrees"
+
+required_fields = ["STATEFP", "COUNTYFP", "TRACTCE", "GEOIDFQ", "GEOID", "NAME", "NAMELSAD", "ALAND", "AWATER"]

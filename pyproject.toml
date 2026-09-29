@@ -1,0 +1,28 @@
+[project]
+name = "chesterfield-twin"
+version = "0.1.0"
+description = "Private local Chesterfield County evidence observatory"
+requires-python = ">=3.12,<3.13"
+dependencies = ["fastapi==0.141.1", "pydantic==2.13.5", "uvicorn==0.54.0"]
+
+[project.scripts]
+cdt = "chesterfield_twin.cli:main"
+
+[build-system]
+requires = ["hatchling==1.30.1"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/chesterfield_twin"]
+
+[dependency-groups]
+dev = ["pytest", "httpx", "ruff"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]
