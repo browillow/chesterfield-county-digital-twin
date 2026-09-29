@@ -1,0 +1,129 @@
+{
+  "scope": "T006c official route audit; no observation bytes acquired",
+  "method": {
+    "client": "curl",
+    "redirects_followed": false,
+    "connect_timeout_seconds": 10,
+    "timeout_seconds": 30,
+    "max_response_bytes": 2000000,
+    "credentials_used": false,
+    "environment_note": "Initial sandbox-only API attempt failed DNS (curl 6, no HTTP response). Authorized network retry produced the publisher 302 below. No claim of publisher failure from DNS."
+  },
+  "probes": [
+    {
+      "name": "api-observations",
+      "requested_at_utc": "2026-09-29T23:16:53.570019+00:00",
+      "url": "https://api.census.gov/data/2023/acs/acs5/subject?get=NAME,S1901_C01_001E,S1901_C01_001EA,S1901_C01_001M,S1901_C01_001MA,S1901_C01_012E,S1901_C01_012EA,S1901_C01_012M,S1901_C01_012MA,S1701_C03_001E,S1701_C03_001EA,S1701_C03_001M,S1701_C03_001MA&for=tract:*&in=state:51%20county:041",
+      "curl_exit": 0,
+      "http_status": 302,
+      "headers": {
+        "x-datawebapi-keyerror": "1",
+        "location": "https://api.census.gov/data/missing_key.html",
+        "content-length": "0"
+      },
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "complete_body": true,
+      "redirect_followed": false,
+      "error": null
+    },
+    {
+      "name": "ftp-documentation",
+      "requested_at_utc": "2026-09-29T23:17:27.422441+00:00",
+      "url": "https://www.census.gov/programs-surveys/acs/data/data-via-ftp.html",
+      "curl_exit": 0,
+      "http_status": 200,
+      "headers": {
+        "content-type": "text/html; charset=UTF-8",
+        "server": "cloudflare"
+      },
+      "bytes": 340276,
+      "sha256": "37e1368cd305ff720934e3e9336d2cc17963dc1b7a9f716d29c2ca5a8463ca9e",
+      "complete_body": true,
+      "redirect_followed": false,
+      "error": null
+    },
+    {
+      "name": "summary-documentation",
+      "requested_at_utc": "2026-09-29T23:17:27.068297+00:00",
+      "url": "https://www.census.gov/programs-surveys/acs/data/summary-file.html",
+      "curl_exit": 0,
+      "http_status": 200,
+      "headers": {
+        "content-type": "text/html; charset=UTF-8",
+        "server": "cloudflare"
+      },
+      "bytes": 358156,
+      "sha256": "71eb3ad57099a7d7250ef4ddb27a200ac43fe5b47283b0176f130c729cb8bd09",
+      "complete_body": true,
+      "redirect_followed": false,
+      "error": null
+    },
+    {
+      "name": "2023-ftp-index",
+      "requested_at_utc": "2026-09-29T23:17:27.044270+00:00",
+      "url": "https://www2.census.gov/programs-surveys/acs/data/2023/",
+      "curl_exit": 0,
+      "http_status": 200,
+      "headers": {
+        "content-type": "text/html;charset=ISO-8859-1",
+        "server": "cloudflare"
+      },
+      "bytes": 14983,
+      "sha256": "0a59bb21e9c08c4330c22d801f55163220aee43eb795b4b5231e642dbc57ad37",
+      "complete_body": true,
+      "redirect_followed": false,
+      "error": null
+    },
+    {
+      "name": "subject-documentation",
+      "requested_at_utc": "2026-09-29T23:17:26.135079+00:00",
+      "url": "https://www.census.gov/programs-surveys/acs/data/data-tables/subject-tables.html",
+      "curl_exit": 0,
+      "http_status": 301,
+      "headers": {
+        "content-type": "text/html;charset=utf-8",
+        "location": "//www.census.gov/acs/www/data/data-tables-and-tools/subject-tables/",
+        "server": "cloudflare"
+      },
+      "bytes": 326146,
+      "sha256": "111f0b9522366c34f6691e20b16788fbb2131bfff7e8f67f07d466d908f03b80",
+      "complete_body": true,
+      "redirect_followed": false,
+      "error": null
+    },
+    {
+      "name": "data-tables-documentation",
+      "requested_at_utc": "2026-09-29T23:18:37.959171+00:00",
+      "url": "https://www.census.gov/programs-surveys/acs/data/data-tables.html",
+      "curl_exit": 0,
+      "http_status": 200,
+      "headers": {
+        "content-type": "text/html; charset=UTF-8",
+        "server": "cloudflare"
+      },
+      "bytes": 369145,
+      "sha256": "60313f910327f9928a5dad6144e93f7e946e3670c5df22872e73e5031f0af707",
+      "complete_body": true,
+      "redirect_followed": false,
+      "error": null
+    },
+    {
+      "name": "geoid-csv-guide",
+      "requested_at_utc": "2026-09-29T23:17:28.311349+00:00",
+      "url": "https://www2.census.gov/data/api-documentation/how-to-download-tables-as-a-csv-file-that-includes-geoids.pdf",
+      "curl_exit": 0,
+      "http_status": 200,
+      "headers": {
+        "content-type": "application/pdf",
+        "content-length": "520856",
+        "server": "cloudflare"
+      },
+      "bytes": 520856,
+      "sha256": "a4dd3fb94473bafc33bfbf7395df68d75301b13786102f52479d3d9ee0b26429",
+      "complete_body": true,
+      "redirect_followed": false,
+      "error": null
+    }
+  ]
+}

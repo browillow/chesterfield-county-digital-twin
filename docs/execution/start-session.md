@@ -15,25 +15,35 @@ bounded subagent work where delegation helps. Do not silently substitute
 another worker model. Give each worker focused context, exclusive file
 ownership, concrete deliverables, and acceptance checks.
 
-The local skeleton, T006a adapters and T006b retained candidate staging
-are accepted. Begin T007a: persisted candidate-set validation reports over
-explicitly selected staged imports. Read its concrete backlog packet,
-current contracts, D015/D016, docs/source-audit.md and source_specs/.
-Supervisor owns shared report/storage interfaces, dependencies and any
-migration decision. Delegate only after those interfaces settle.
+The local skeleton, T006a adapters, T006b retained staging and T007a
+persisted candidate validation reports are accepted. T006c is complete:
+the compatible API query remains key-blocked, while an official ZIP/CSV
+Subject export route is documented but unacquired/unvalidated. Begin
+T006d, the bounded official Subject export acquisition and representation
+review. Read its backlog packet, D017/D018, report contracts, the dated
+T006c source-audit evidence and source_specs/. Follow later state if advanced.
 
-Use verified T006b readback and accepted three-source validation semantics.
-Pin input/import/version identities and source/spec/transform lineage in
-reports. Keep real and synthetic selections isolated. Audited boundary
-and document inputs alone must report missing ACS, never pass a real-slice
-gate. T007a adds no release sealing, activation or default baseline reads.
-Do not modify existing migration checksums or silently upgrade stores;
-use a fresh external temporary root and preserve incompatible older roots.
-Full T006 requires authorized observation bytes or a verified official
-download route and real three-source validation; fixtures alone do not
-satisfy it. Do not create accounts or request credentials in chat.
-Follow later state if T007a has progressed. Do not redo accepted skeleton,
-adapters, staging, or completed planning.
+Use supported official public UI/documentation/download routes only;
+no accounts, credential searches/requests, outreach or spending. Pin
+2019–2023 ACS 5-Year Subject Tables S1901/S1701, Chesterfield tracts,
+all three measures and E/M/EA/MA. Acquire at most one bounded export per
+table into a fresh external audit directory. Retain original archive/member
+bytes, real URLs/status/media/time/hash. Verify geography, annotations,
+units/universes and 90-percent MOEs from actual bytes and official docs.
+Do not infer observations from metadata, fabricate null annotations,
+substitute fixtures/Detailed Tables, or relabel converted CSV as raw API JSON.
+
+Stop for supervisor source/spec/locator/adapter contract review before
+implementing or ingesting a differing representation. T006d's deliverable
+is a reviewed contract/implementation packet or a precise access/semantic
+blocker. Tool/browser failure is not proof of publisher denial. Preserve
+accepted adapters and all earlier roots; baseline migration 003 has no
+upgrade path. If bytes already match the accepted API contract, stage
+only in a fresh external current-schema root and explicitly select all
+three real imports for persisted validation and current revalidation.
+Historical report readback is not current artifact verification. Reports
+alone authorize no sealing/activation or default baseline reads. Do not
+redo accepted skeleton, adapter, staging or report groundwork.
 
 Resolve routine reversible choices autonomously. Preserve existing work,
 the local runtime design, provenance, release pinning, and the private-data
@@ -47,4 +57,4 @@ still proposed capabilities. Do not publish, contact people, or make
 spending commitments as part of this task.
 ```
 
-Current checkpoint reference: [retained-staging handoff](handoffs/2026-09-29-retained-staging.md). The state file takes precedence if work has progressed since this prompt was updated. For a narrower session, replace the checkpoint paragraphs with one specific outcome and stopping condition. Markdown cannot switch or verify the session model; use actual app/tool settings. No project/global Codex configuration has been installed by this execution kit.
+Current checkpoint reference: [official ACS route-audit handoff](handoffs/2026-09-29-acs-route-audit.md). The state file takes precedence if work has progressed since this prompt was updated. For a narrower session, replace the checkpoint paragraphs with one specific outcome and stopping condition. Markdown cannot switch or verify the session model; use actual app/tool settings. No project/global Codex configuration has been installed by this execution kit.
