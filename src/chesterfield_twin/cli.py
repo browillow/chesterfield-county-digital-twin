@@ -15,6 +15,7 @@ from pathlib import Path
 
 import uvicorn
 
+from .acquisition import AcquisitionError, acquire_acs, preflight_acquisition
 from .api.app import create_app
 from .config import PROJECT_ROOT, resolve_data_root
 from .credentials import CredentialError, load_census_credentials
@@ -53,6 +54,13 @@ def main():
     parser = SafeArgumentParser(prog="cdt", description="Local Chesterfield evidence tool")
     parser.add_argument("--version", action="version", version="%(prog)s 0.1.0")
     sub = parser.add_subparsers(dest="command", required=True)
+    acquire = sub.add_parser("acquire-acs", help="Explicit bounded 2023 Subject acquisition")
+    acquire.add_argument("--audit-dir", type=Path, required=True,
+                         help="New external local audit directory; must not exist")
+    acquire.add_argument("--boundary", type=Path, required=True,
+                         help="Previously audited, unchanged 2023 Virginia tract ZIP")
+    acquire.add_argument("--census-key-source", choices=("none", "prompt", "env", "keychain"),
+                         default="none", help="Explicit local credential source; default: none")
     for name in ("init", "doctor", "serve"):
         command = sub.add_parser(name)
         command.add_argument(
@@ -70,6 +78,18 @@ def main():
     args = parser.parse_args()
     credentials = None
     try:
+        if args.command == "acquire-acs":
+            preflight_acquisition(boundary_path=args.boundary, audit_dir=args.audit_dir)
+            credentials = load_census_credentials(args.census_key_source)
+            result = acquire_acs(credentials=credentials, boundary_path=args.boundary,
+                                 audit_dir=args.audit_dir)
+            print(json.dumps({"acquired": True, "sha256": result.sha256,
+                              "byte_length": result.byte_length,
+                              "tract_count": result.tract_count,
+                              "candidate_count": result.candidate_count,
+                              "staged": False, "release_activated": False}, indent=2))
+            return 0
+
         from .storage import BaselineRepository, check_initialized, initialize, maintenance_lock
 
         root = resolve_data_root(args.data_dir)
@@ -127,6 +147,18 @@ def main():
                     stopped.set()
                     if thread:
                         thread.join(timeout=1)
+    except KeyboardInterrupt:
+        if args.command != "acquire-acs":
+            raise
+        print("ACS acquisition cancelled; preserve any audit directory. "
+              "No automatic retry was made.", file=sys.stderr)
+        return 130
+    except AcquisitionError:
+        print("ACS acquisition did not complete; preserve any audit directory. "
+              "Check the pinned boundary, fresh external --audit-dir and local credential source. "
+              "A changed source representation requires review; no automatic retry was made.",
+              file=sys.stderr)
+        return 1
     except CredentialError:
         print(
             "Local Census credential unavailable or invalid. Check the selected source; "
@@ -137,6 +169,10 @@ def main():
     except (ValueError, OSError, RuntimeError, sqlite3.Error) as exc:
         # Commands never echo source/private content. Details are checked by tests,
         # while the user gets an actionable command-level failure.
+        if args.command == "acquire-acs":
+            print("ACS acquisition failed. Preserve existing evidence and use a fresh external "
+                  "--audit-dir; inspect the local setup before retrying.", file=sys.stderr)
+            return 1
         print(
             f"cdt {args.command} failed ({type(exc).__name__}). "
             "Use an external local --data-dir; run cdt init for a fresh root. "

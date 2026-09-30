@@ -1,0 +1,104 @@
+{
+  "run_id": "f818d77c-0ebc-4a0a-8667-ebd2b3839d24",
+  "report_id": "26e19a013ddb23741caae80d5a66ce01ffa66a33fd486b4afcb7f4fc1c7ba432",
+  "real_slice_valid": true,
+  "sources": {
+    "acs": {
+      "import_id": "5d9fe342-85b8-41c4-bddf-5f12a1aa7f46",
+      "candidate_count": 225,
+      "artifact_sha256": "df0a0dffa69d4409102a616cc5144b502117c3eaad4907c4afee51d7a0334fdf",
+      "artifact_bytes": 11368,
+      "spec_sha256": "76a5155ad62ef7c78c0db048100cae2b1a09bb82e7485cc11e988f8d6c72d1e4",
+      "transform_id": "acs-subject/1",
+      "current_readback_verified": true
+    },
+    "boundary": {
+      "import_id": "85c2eba9-2686-4154-9198-8ee38a198325",
+      "candidate_count": 75,
+      "artifact_sha256": "172e398e73aa6db00bad3b720ca793dc36628cbfa332d3bd3b80926019f9c8bd",
+      "artifact_bytes": 1773760,
+      "spec_sha256": "e71cd8d72fefc05a585148dff44e7b1b5ccaa124b73a033d0dcbb51a4006f07a",
+      "transform_id": "boundaries/1",
+      "current_readback_verified": true
+    },
+    "document": {
+      "import_id": "9d21bbe3-24db-4fc4-b223-f8badd2d9ff8",
+      "candidate_count": 3,
+      "artifact_sha256": "d0d52e068d3b02dd6b134b2b08dbe29f65b3311197e3b8aee12f72e88650136d",
+      "artifact_bytes": 25649160,
+      "spec_sha256": "77ece34af9e1c6f9acd2a4f63893c53468fadda3a56264dfdf87f8369d5bdf38",
+      "transform_id": "county-budget-pypdf-6.1.1/1",
+      "current_readback_verified": true
+    }
+  },
+  "counts": {
+    "release": 0,
+    "release_version": 0,
+    "staging_run": 1,
+    "staging_import": 3,
+    "retrieval": 3,
+    "version": 303,
+    "candidate_validation_report": 1
+  },
+  "active_release_id": null,
+  "baseline_and_objects_unchanged_by_readback": true,
+  "object_count": 6,
+  "acquisition": {
+    "accepted": true,
+    "acs_spec_sha256": "76a5155ad62ef7c78c0db048100cae2b1a09bb82e7485cc11e988f8d6c72d1e4",
+    "boundary_sha256": "172e398e73aa6db00bad3b720ca793dc36628cbfa332d3bd3b80926019f9c8bd",
+    "boundary_spec_sha256": "e71cd8d72fefc05a585148dff44e7b1b5ccaa124b73a033d0dcbb51a4006f07a",
+    "byte_length": 11368,
+    "candidate_count": 225,
+    "elapsed_seconds": 0.6345892500248738,
+    "final_url": "https://api.census.gov/data/2023/acs/acs5/subject?get=NAME%2CS1901_C01_012E%2CS1901_C01_012M%2CS1901_C01_012EA%2CS1901_C01_012MA%2CS1901_C01_001E%2CS1901_C01_001M%2CS1901_C01_001EA%2CS1901_C01_001MA%2CS1701_C03_001E%2CS1701_C03_001M%2CS1701_C03_001EA%2CS1701_C03_001MA&for=tract%3A%2A&in=state%3A51+county%3A041",
+    "geoid_sha256": "61df50bfacd67a0dd7144d8f463459c664e30d4ec54f42512ce4a57ccf5381c5",
+    "kind": "acs_subject_acquisition",
+    "media_type": "application/json;charset=utf-8",
+    "request_url": "https://api.census.gov/data/2023/acs/acs5/subject?get=NAME%2CS1901_C01_012E%2CS1901_C01_012M%2CS1901_C01_012EA%2CS1901_C01_012MA%2CS1901_C01_001E%2CS1901_C01_001M%2CS1901_C01_001EA%2CS1901_C01_001MA%2CS1701_C03_001E%2CS1701_C03_001M%2CS1701_C03_001EA%2CS1701_C03_001MA&for=tract%3A%2A&in=state%3A51+county%3A041",
+    "retrieved_at": "2026-09-30T01:04:59.395127+00:00",
+    "schema_version": 1,
+    "sha256": "df0a0dffa69d4409102a616cc5144b502117c3eaad4907c4afee51d7a0334fdf",
+    "status_code": 200,
+    "synthetic": false,
+    "tract_count": 75
+  },
+  "source_semantics": {
+    "sha256": "df0a0dffa69d4409102a616cc5144b502117c3eaad4907c4afee51d7a0334fdf",
+    "byte_length": 11368,
+    "tract_count": 75,
+    "candidate_count": 225,
+    "status_code": 200,
+    "media_type": "application/json;charset=utf-8",
+    "retrieved_at": "2026-09-30T01:04:59.395127+00:00",
+    "elapsed_seconds": 0.6345892500248738,
+    "acs_spec_sha256": "76a5155ad62ef7c78c0db048100cae2b1a09bb82e7485cc11e988f8d6c72d1e4",
+    "boundary_sha256": "172e398e73aa6db00bad3b720ca793dc36628cbfa332d3bd3b80926019f9c8bd",
+    "boundary_spec_sha256": "e71cd8d72fefc05a585148dff44e7b1b5ccaa124b73a033d0dcbb51a4006f07a",
+    "geoid_sha256": "61df50bfacd67a0dd7144d8f463459c664e30d4ec54f42512ce4a57ccf5381c5",
+    "unchanged_adapter_valid": true,
+    "metric_counts": {
+      "median_household_income": 75,
+      "poverty_rate": 75,
+      "household_count": 75
+    },
+    "estimate_states": {
+      "observed": 225
+    },
+    "moe_states": {
+      "observed": 225
+    },
+    "annotated_estimates": 0,
+    "annotated_moes": 0,
+    "staging_root_absent_before_creation": true
+  },
+  "verification_scope": {
+    "acquisition": "user-invoked hidden prompt; strict original-bundle readback",
+    "initial_and_explicit_current_validation_passed": true,
+    "boundary_document": "historical audited bytes and declared envelopes; no new HTTP access",
+    "readback": "all three current imports; baseline and six retained objects byte-preserved",
+    "release_closure": false,
+    "sealing": false,
+    "activation": false
+  }
+}

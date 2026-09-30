@@ -1,66 +1,80 @@
 # Start the next implementation session
 
-Select **GPT-6 Astra** and use the existing `chesterfield-county-digital-twin` checkout. Preserve and reconcile uncommitted work before changing worktrees. Markdown does not switch or verify the model. Root `AGENTS.md` supplies standing instructions.
+Select **GPT-6 Astra** and use the existing `chesterfield-county-digital-twin` checkout. Reconcile and preserve uncommitted work before changing worktrees. Markdown does not switch or verify the model. Root `AGENTS.md` supplies standing instructions.
 
 Paste this prompt:
 
 ```text
-Implement the next ready checkpoint for Chesterfield County Digital Twin.
+Implement the next ready checkpoint for Chesterfield County Digital Twin:
+T007b, first-slice release closure and sealed build, after an Astra contract
+and schema freeze. Explicit activation and pinned reads remain later T007c;
+map/table/evidence UI remains T008.
 
 Read AGENTS.md, docs/execution/state.md, workflow.md, the latest linked
-handoff, relevant backlog/contracts, decisions D017–D020 and source_specs/.
-Reconcile actual branch/HEAD/worktree and preserve uncommitted work.
-Use GPT-6 Astra as supervisor; explicitly request gpt-6.1-sol for bounded
-workers where useful, with focused context, exclusive ownership, concrete
-deliverables and checks. Never silently substitute models.
+handoff, relevant backlog/contracts, D017–D021 including live continuation,
+source_specs/ and architecture release/reproducibility sections. Reconcile
+actual branch/HEAD/worktree and preserve all uncommitted work.
+Use GPT-6 Astra as supervisor; explicitly request gpt-6.1-sol for useful
+bounded workers with focused context, exclusive ownership, deliverables
+and checks. Never silently substitute models.
 
-The local skeleton, T006a adapters, T006b staging, T007a reports and T006f
-local credential injection are accepted. Do not rebuild them. The user
-explicitly lifted the no-credentials constraint and authorized safe local
-injection. T006f supports serve --census-key-source none|prompt|env|keychain,
-default none, no fallback, backend-only redaction and lifecycle cleanup.
-No real key or live API access has been verified. Never request a secret
-in chat, scan for credentials, create accounts, or put keys in argv/files.
+The local skeleton, adapters, staging, reports, credential injection and
+bounded acquisition are accepted. T006/T006g now have real acceptance:
+the user ran a hidden-prompt acquisition and strict readback verified the
+unchanged 2023 ACS 5-Year Subject original, 11,368 bytes, SHA-256
+ df0a0dffa69d4409102a616cc5144b502117c3eaad4907c4afee51d7a0334fdf.
+All 75 exact tracts and 225 ACS observations passed, and the fresh schema-003
+root retains those with 75 boundaries and 3 document excerpts. Initial and
+explicit current validation passed for all three real imports/303 versions.
+Read exact roots/run/import/report IDs from the latest handoff; never select
+latest implicitly. No release is sealed or active. Do not rebuild accepted
+components, request another key, repeat acquisition or reopen old roots
+merely to resume. Boundary/document envelopes remain historical audited-byte
+replay, not new HTTP retrieval. The specification's old access status is
+historical; do not modify accepted source/spec identities to update prose.
 
-T006g is ready for implementation: an explicit bounded acquisition service
-and entry point using the accepted 2023 ACS 5-Year Subject JSON contract
-and T006f provider. Freeze the acquisition/command contract with Astra
-before delegation. Pin 2019–2023/2023, NAME plus E/M/EA/MA for the existing
-three measures in one response, and Chesterfield County's 75 exact tracts.
-Enforce 20 MB and 60-second total transfer bounds. Retain original bytes
-and actual sanitized request/final URL, status, media, time, length and hash.
-Prevent credential leakage via logs/errors/redirects/proxies or echoed
-response content. Do not sanitize changed bytes and label them raw.
-Use synthetic transport tests before live invocation. Local credential
-injection alone authorizes no automatic network call at startup.
+Before delegation, freeze complete release membership/canonical manifest,
+current-evidence validation, reproducibility pins and any new schema needed.
+Close every supporting raw/spec/retrieval/metric/geography/document/transform
+identity. Pin explicit memberships/report identity, query/config/transform,
+dependency locks and code revision or exact dirty-tree content identity.
+Persist complete manifest/report before atomic sealing. Build must not change
+the active pointer. Verify sealed immutability, missing/corrupt dependency
+rejection and failed-build preservation. Existing low-level release guards
+are groundwork, not proof of complete release closure. Reports alone do not
+authorize sealing, activation or default baseline reads; keep operations
+explicit and separate. Do not implement activation or UI in this checkpoint.
 
-After an explicitly invoked live acquisition with a locally supplied key,
-only bytes matching the unchanged accepted API contract may use a fresh
-external schema-003 root. Preserve earlier roots; no upgrade path exists.
-Validate all three explicitly selected real imports and explicitly revalidate
-current artifacts. Historical report readback is not current verification.
-Reports authorize no sealing/activation/default reads.
+Preserve accepted migrations 001–003, the real schema-003 root and all earlier
+roots. There is no upgrade/recovery path. If a new schema is required, use a
+new external root with exact-byte replay and retain original retrieval times.
+Explicitly revalidate current artifacts; historical report reads are not
+current verification. Keep private data separate and all baseline facts pinned.
 
-T006e remains a blocked alternative ZIP route: supported browser downloads
-lack bounds and actual response provenance. Prior UI access succeeded;
-this is not publisher denial. Do not repeat unchanged API/FTP audits or
-create audit-only tickets. If a materially changed supported export route
-is needed, follow T006e: clean geography selection, at most one official
-S1901/S1701 ZIP each, 100 MB/32-member expansion caps, exact bytes and
-semantics. Stop for Astra source/spec/locator/adapter review before any
-differing-representation implementation or ingestion. No replacement
-multi-artifact original/derived lineage/readback contract is approved.
-No fixtures, Detailed Table substitutions, invented null annotations,
+Credential sources remain none|prompt|env|keychain, default none, no fallback,
+backend-only cleanup. No automatic network on startup. Never request a key
+in chat, scan for credentials, create accounts or put keys in argv/files.
+The user prefers concrete manual assistance when a real blocker requires it:
+ask for the local action and sanitized result instead of settling for mocks.
+No manual acquisition action is currently needed. Any future explicit request
+retains fixed 2019–2023/2023 Subject fields, exact GEOIDs, 20 MB/60-second
+transfer bounds, unchanged 1 MB adapter cap and sanitized actual provenance.
+Never rewrite bytes and call them raw or weaken safeguards for acceptance.
+
+T006e remains an unnecessary blocked alternate ZIP route: supported browser
+downloads lack bounds/actual response provenance; prior UI access succeeded,
+not publisher denial. No unchanged API/FTP audits or audit-only tickets.
+If a materially changed export route is needed, follow T006e and stop for
+Astra source/spec/locator/adapter review before differing-representation work.
+No replacement multi-artifact original/derived lineage/readback contract is
+approved. No fixture substitutions, Detailed Tables, invented annotations,
 unpublished endpoints or CSV relabeled as API JSON.
 
-Resolve routine reversible choices autonomously. Preserve local runtime,
-private-data separation, release pinning and provenance. Run proportionate
-checks and review integrated work. Before finishing update state/backlog,
-material decisions, handoff and this starter prompt; account for workers
-and processes and distinguish implemented/tested/proposed capabilities.
-No outreach, publication, spending or background automation.
+Resolve routine reversible choices autonomously. Run proportionate checks
+and review integration. Update state/backlog, material decisions, handoff and
+this starter prompt. Account for workers/processes and distinguish implemented,
+tested and live-verified capabilities. No outreach, publication, spending or
+background automation.
 ```
 
-Current checkpoint: [Local credential injection](handoffs/2026-09-29-local-credentials.md). Follow later state if advanced. The [capability gate continuation](handoffs/2026-09-29-capability-gate-continuation.md) records the earlier credential-free blocker; D020 supersedes its credential restriction only.
-
-Startup support note: the default local store pair was initialized and passed `cdt doctor` after a missing-database error. This is a fresh schema-003 store, not an upgraded prior root; no credentials or observations were acquired. Recheck current state before running commands.
+Current checkpoint: [First real three-source slice](handoffs/2026-09-29-real-slice.md). Follow later state if advanced. The [implementation handoff](handoffs/2026-09-29-bounded-acquisition.md) preserves acquisition safety checks; its pending-manual wording is historical. Use the exact retained real root/selection from the latest handoff, not the default runtime or older audit roots.
