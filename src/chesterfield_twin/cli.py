@@ -54,6 +54,17 @@ def main():
     parser = SafeArgumentParser(prog="cdt", description="Local Chesterfield evidence tool")
     parser.add_argument("--version", action="version", version="%(prog)s 0.1.0")
     sub = parser.add_subparsers(dest="command", required=True)
+    release = sub.add_parser("release", help="Explicit sealed build or current verification")
+    release_commands = release.add_subparsers(dest="release_command", required=True)
+    build = release_commands.add_parser("build", help="Build and seal without activation")
+    build.add_argument("--data-dir", type=Path, required=True)
+    build.add_argument("--run-id", required=True)
+    build.add_argument("--import-id", action="append", required=True)
+    build.add_argument("--report-id", required=True,
+                       help="Explicit candidate validation report; current evidence must match")
+    verify = release_commands.add_parser("verify", help="Verify current sealed dependencies")
+    verify.add_argument("--data-dir", type=Path, required=True)
+    verify.add_argument("--release-id", required=True)
     acquire = sub.add_parser("acquire-acs", help="Explicit bounded 2023 Subject acquisition")
     acquire.add_argument("--audit-dir", type=Path, required=True,
                          help="New external local audit directory; must not exist")
@@ -93,6 +104,32 @@ def main():
         from .storage import BaselineRepository, check_initialized, initialize, maintenance_lock
 
         root = resolve_data_root(args.data_dir)
+        if args.command == "release":
+            from .storage.releases import ReleaseBuilder
+
+            builder = ReleaseBuilder(root, PROJECT_ROOT)
+            if args.release_command == "build":
+                result = builder.build(args.run_id, tuple(args.import_id),
+                                       expected_report_id=args.report_id)
+                print(json.dumps({
+                    "sealed": result.sealed,
+                    "release_id": result.manifest.release_id if result.manifest else None,
+                    "build_report_id": result.report.report_id,
+                    "candidate_report_id": result.report.content.candidate_report_id,
+                    "synthetic": result.report.content.synthetic,
+                    "issue_codes": [issue.code for issue in result.report.content.issues],
+                    "active_pointer_changed": False,
+                }, indent=2))
+                return 0 if result.sealed else 1
+            manifest = builder.read_release(args.release_id, verify_current=True)
+            print(json.dumps({
+                "release_id": manifest.release_id,
+                "current_dependencies_verified": True,
+                "synthetic": manifest.content.synthetic,
+                "version_count": len(manifest.content.selection.version_ids),
+                "active_pointer_changed": False,
+            }, indent=2))
+            return 0
         if args.command == "init":
             initialize(root)
             print("Local baseline and private stores initialized.")
@@ -148,6 +185,10 @@ def main():
                     if thread:
                         thread.join(timeout=1)
     except KeyboardInterrupt:
+        if args.command == "release":
+            print("Release operation interrupted. Preserve the root and reports; "
+                  "no activation was requested.", file=sys.stderr)
+            return 130
         if args.command != "acquire-acs":
             raise
         print("ACS acquisition cancelled; preserve any audit directory. "
@@ -172,6 +213,11 @@ def main():
         if args.command == "acquire-acs":
             print("ACS acquisition failed. Preserve existing evidence and use a fresh external "
                   "--audit-dir; inspect the local setup before retrying.", file=sys.stderr)
+            return 1
+        if args.command == "release":
+            print("Release operation failed. Preserve the root and reports. Check the explicit "
+                  "selection and retained dependencies; do not upgrade an earlier store. "
+                  "No activation was requested.", file=sys.stderr)
             return 1
         print(
             f"cdt {args.command} failed ({type(exc).__name__}). "

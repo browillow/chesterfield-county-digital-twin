@@ -1,6 +1,6 @@
 # Execution backlog
 
-Status is maintained by the supervisor. Statuses reflect September 29 real T006/T006g ingestion acceptance; release closure, activation and integrated UI acceptance remain incomplete. `ready` requires completed dependencies and a concrete assignment; `pending` has a defined outcome but unmet dependencies; `planned` requires decomposition before delegation. Once claimed, use `in_progress`, then `review`, then `done` after supervisor acceptance, or `blocked` with an explicit cause. For detailed packets, use [templates](templates.md).
+Status is maintained by the supervisor. Statuses reflect September 29 T007b real sealed-build acceptance; activation and integrated UI acceptance remain incomplete. `ready` requires completed dependencies and a concrete assignment; `pending` has a defined outcome but unmet dependencies; `planned` requires decomposition before delegation. Once claimed, use `in_progress`, then `review`, then `done` after supervisor acceptance, or `blocked` with an explicit cause. For detailed packets, use [templates](templates.md).
 
 | ID | Deliverable | Depends on | Status |
 | --- | --- | --- | --- |
@@ -19,8 +19,8 @@ Status is maintained by the supervisor. Statuses reflect September 29 real T006/
 | T006f | Safe local Census credential injection | User authorization, local runtime | done |
 | T006g | Bounded credential-enabled exact Subject API acquisition | T006f, accepted API spec/adapters | done (implementation and real acquisition/staging) |
 | T007 | Minimal sealed release, explicit activation, pinned reads | T006 | planned (decomposed below) |
-| T007b | First-slice release closure and sealed build | T006, T007a | ready (supervisor contract/schema freeze first) |
-| T007c | Explicit activation and release-filtered reads | T007b | pending |
+| T007b | First-slice release closure and sealed build | T006, T007a | done |
+| T007c | Explicit activation and release-filtered reads | T007b | ready (supervisor API/activation freeze first) |
 | T008 | Integrated map/table/evidence workflow | T004, T005, T007 | pending |
 | T009 | Job lifecycle, interruption and retry, failed-refresh preservation | T007 | planned |
 | T010 | CBP/NES/LODES and broad coverage | T008, T009 | planned |
@@ -33,7 +33,7 @@ Status is maintained by the supervisor. Statuses reflect September 29 real T006/
 
 - **T006f done:** explicit local prompt/Keychain/env injection, default none, redacted backend provider and lifecycle cleanup accepted with sentinel tests. No key was supplied or source fetched. [D020](decisions.md#d020--explicit-local-credential-injection-authorized-2026-09-29), [handoff](handoffs/2026-09-29-local-credentials.md).
 - **T006/T006g done:** user-local hidden-prompt acquisition matched the unchanged Subject JSON contract; strict bundle verification and fresh-root three-source validation/current revalidation passed, 303 retained versions. Astra accepted traceable ingestion. No seal/activation. [Real-slice handoff](handoffs/2026-09-29-real-slice.md). The earlier 321-test implementation acceptance remains valid; no code change was needed for actual source bytes.
-- **T007b next:** freeze complete release membership, manifest/reproducibility and any schema change before delegating bounded implementation. Explicit activation/read filtering stays T007c. Details below.
+- **T007b done:** Astra froze complete closure/schema before Sol implementation; real exact-byte replay, explicit sealed build and separate-process current verification passed. 413 tests passed. New schema-004 root has one sealed release and a null active pointer; schema-003 and migrations 001–003 are preserved. [Handoff](handoffs/2026-09-29-sealed-build.md). **Next: T007c** explicit activation/pinned application reads; T008 UI remains pending.
 
 - **T007a done:** immutable persisted validation reports over explicit staged selections, deterministic content identities and diagnostic failure reports accepted. Synthetic three-source success remains synthetic; audited real boundary/document selection reports missing ACS. Historical report readback is distinct from current evidence revalidation. Migration 003 is fresh-store only; no release authority was added. See [handoff](handoffs/2026-09-29-candidate-validation.md).
 - **T006c done as a historical bounded audit:** its compatible keyless request was key-blocked; official ZIP/CSV export is documented but unacquired/unvalidated. Astra stopped at the representation boundary (D018); accepted specs/adapters unchanged. [Audit handoff](handoffs/2026-09-29-acs-route-audit.md).
@@ -45,7 +45,7 @@ Status is maintained by the supervisor. Statuses reflect September 29 real T006/
 - **T006 historical access blocker resolved:** explicit authorized ACS acquisition now supplies the missing observation bytes; all three real sources validate. T006e’s alternate ZIP tool blocker remains unnecessary to this accepted API path.
 - **T006a done:** supervisor settled `domain/candidates.py`/`sources/common.py`, then explicitly requested three `gpt-6.1-sol` workers with separate ACS/boundary/document ownership. Adapters and cross-source checks are accepted after supervisor review, 132 passing Python tests, and independent audited-byte replay (75 boundaries, 3 document excerpts). ACS validation is synthetic only. Source/spec/transform hashes, exact locators, annotations, uncertainty, units/universes and periods are preserved. No ingestion persistence, live ACS access or release completion is claimed. See [handoff](handoffs/2026-09-29-source-adapters.md).
 - **T006b done:** supervisor-owned append-only migration 002 and staging service retain exact raw/spec objects, immutable candidate versions and separate retrieval/import events, with explicit real/synthetic isolation and verified full readback. Audited offline replay staged 75 boundaries and 3 excerpts; repeats reused versions. Synthetic ACS/failure checks are separate. Existing 001 stores remain fail-closed; checksums unchanged. Integrated suite: 167 passed. See [handoff](handoffs/2026-09-29-retained-staging.md).
-- T007/T008 remain incomplete: generic storage guards are groundwork, not release validation/sealing/activation or a map/table/evidence workflow. Confirm source-specific and complete provenance closure contracts before exposing baseline reads or user exports.
+- T007/T008 remain incomplete: T007b now supplies verified first-slice closure and sealing; explicit activation and release-filtered application reads remain T007c, followed by T008 UI. No user export is added.
 
 T007 deliberately precedes acceptance of the end-to-end slice: the UI must not ship with an unversioned baseline that needs to be retrofitted later. This sequences the architecture's stages B and C together for the minimum slice.
 
@@ -154,10 +154,10 @@ Test acquisition offline with synthetic responses first. Live retrieval requires
 
 Implementation follows [D021](decisions.md#d021--explicit-bounded-subject-acquisition-separate-from-injection-2026-09-29) and the [acquisition contracts](contracts.md#t006g--explicit-bounded-acquisition-and-continuation-september-29-2026). Offline safety and user-local live acceptance are complete; do not request another key or acquisition merely to resume. Continue from exact identities in the latest handoff. The manual-step preference remains applicable to future real blockers.
 
-### T007b — First-slice release closure and sealed build (next ready)
+### T007b — First-slice release closure and sealed build (done)
 
-Supervisor first freezes the complete membership and canonical manifest contract over an explicit run and three import IDs; decides whether a new migration is needed before worker assignments. Revalidate current retained raw/spec/candidate evidence and close every referenced metric/geography/document/retrieval/transform identity. Pin memberships, validation reports, query/config/transform identities, dependency locks and code revision or an exact dirty-tree content digest for reproducibility. Persist complete manifest/report before atomic sealing; build never changes the active pointer. Prove sealed immutability, missing/corrupt dependency rejection and failed-build preservation. Existing low-level release tables/guards are groundwork, not proof of closure. Preserve migrations 001–003 and the accepted real root; if a new schema is required, use another fresh root and exact-byte replay. No implementation or sealing is performed by the real-ingestion continuation.
+Accepted after Astra freeze, bounded Sol implementation, integration tests and real-byte verification. [D022](decisions.md#d022--complete-first-slice-closure-and-explicit-sealed-build-2026-09-29) and [the freeze](t007b-freeze.md) define complete canonical membership, supporting identities and retained reproducibility pins. Migration 004 adds normalized closure and stronger SQL guards without changing 001–003. Explicit build revalidates selected evidence, persists complete manifest/reports before atomic seal and preserves the active pointer. Corrupt/missing evidence, replacement attacks and failed/interrupted builds are tested. Current readback never repairs evidence. One real release is sealed in the new schema-004 root; all 303 candidate identities and original retrievals match the preserved schema-003 root. Exact IDs and limitations: [handoff](handoffs/2026-09-29-sealed-build.md).
 
-### T007c — Explicit activation and pinned release reads (pending T007b)
+### T007c — Explicit activation and pinned release reads (ready)
 
 Define and implement explicit activation, release-filtered baseline reads and basic old/new comparison only after accepted closure/sealing. Failed activation preserves the active pointer; every displayed fact and its supporting metadata must belong to the explicit pinned release. Coordinate API consumers and keep private strategy separate. T008 map/table/evidence integration follows; real candidate validation alone is not UI acceptance.

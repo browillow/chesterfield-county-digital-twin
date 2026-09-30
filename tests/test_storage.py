@@ -132,7 +132,7 @@ def test_foreign_keys_and_measurement_states(tmp_path):
         )
 
 
-def test_sealed_membership_and_version_content_are_immutable(tmp_path):
+def test_invalid_seal_rejected_and_version_content_immutable(tmp_path):
     root = tmp_path / "data"
     initialize(root)
     with connect(root) as connection:
@@ -149,24 +149,20 @@ def test_sealed_membership_and_version_content_are_immutable(tmp_path):
             "INSERT INTO release(release_id, status, manifest_json) VALUES ('r1', 'draft', '{}')"
         )
         connection.execute("INSERT INTO release_version VALUES ('r1', 'v1')")
-        connection.execute(
-            "UPDATE release SET status = 'sealed', sealed_at = '2026-09-27T00:00:00Z' "
-            "WHERE release_id = 'r1'"
-        )
+        with pytest.raises(sqlite3.IntegrityError, match="closure"):
+            connection.execute(
+                "UPDATE release SET status = 'sealed', sealed_at = '2026-09-27T00:00:00Z' "
+                "WHERE release_id = 'r1'"
+            )
         for statement in (
             "UPDATE version SET payload_json = '{}' WHERE version_id = 'v1'",
             "DELETE FROM version WHERE version_id = 'v1'",
-            "DELETE FROM release_version WHERE release_id = 'r1' AND version_id = 'v1'",
-            "INSERT INTO release_version VALUES ('r1', 'v1')",
-            "DELETE FROM version_link WHERE from_version_id = 'v1'",
-            "UPDATE version_link SET role = 'support' WHERE from_version_id = 'v1'",
-            "INSERT INTO version_link VALUES ('v1', 'v2', 'support')",
         ):
             with pytest.raises(sqlite3.IntegrityError):
                 connection.execute(statement)
 
 
-def test_export_requires_explicit_sealed_release_and_excludes_private_data(tmp_path):
+def test_export_refuses_fake_seal_and_requires_explicit_sealed_release(tmp_path):
     root = tmp_path / "data"
     initialize(root)
     private_sentinel = "PRIVATE-SYNTHETIC-SENTINEL-93F1"
@@ -182,17 +178,15 @@ def test_export_requires_explicit_sealed_release_and_excludes_private_data(tmp_p
             (json.dumps({"fixture": "synthetic"}),),
         )
         connection.execute("INSERT INTO release_version VALUES ('sealed-release', 'v-public')")
-        connection.execute(
-            "UPDATE release SET status = 'sealed', sealed_at = '2026-09-27T00:00:00Z' "
-            "WHERE release_id = 'sealed-release'"
-        )
+        with pytest.raises(sqlite3.IntegrityError, match="closure"):
+            connection.execute(
+                "UPDATE release SET status = 'sealed', sealed_at = '2026-09-27T00:00:00Z' "
+                "WHERE release_id = 'sealed-release'"
+            )
     repository = BaselineRepository(root)
-    for release_id in ("draft-release", "unknown-release"):
+    for release_id in ("draft-release", "sealed-release", "unknown-release"):
         with pytest.raises(StorageError, match="unknown or not sealed"):
             repository.export_release(release_id)
-    exported = repository.export_release("sealed-release")
-    assert exported["release_id"] == "sealed-release"
-    assert private_sentinel not in json.dumps(exported)
 
 
 def test_artifacts_are_content_addressed_and_unsafe_paths_are_rejected(tmp_path):

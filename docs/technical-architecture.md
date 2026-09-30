@@ -303,7 +303,7 @@ pyproject.toml
 uv.lock
 ```
 
-The commands below define the intended interface. `init`, `doctor`, and `serve` are implemented in the local skeleton; ingestion, release, export, backup, and restore remain proposed. See [README](../README.md) for verified setup commands.
+The commands below define the intended interface. `init`, `doctor`, `serve`, bounded `acquire-acs`, and explicit `release build` / `release verify` are implemented. Release build requires explicit root/run/import/report arguments. Activation, user export, backup, and restore remain proposed; scripts provide explicit staging and candidate validation. See [README](../README.md) for verified setup commands.
 
 ```sh
 # First setup: resolve the checked-in runtimes and locks, then build assets.

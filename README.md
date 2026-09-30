@@ -1,6 +1,6 @@
 # Chesterfield County Digital Twin
 
-A private, locally operated county evidence tool. The local skeleton runs: Python/FastAPI serves a React shell, with separate public-baseline and private SQLite stores outside the checkout. The first real three-source candidate slice is retained and currently validated: 225 ACS observations, 75 tract boundaries and 3 document excerpts. No sealed or active release exists; the UI remains the empty shell. The source audit and remaining work are recorded in [current state](docs/execution/state.md).
+A private, locally operated county evidence tool. The local skeleton runs: Python/FastAPI serves a React shell, with separate public-baseline and private SQLite stores outside the checkout. The first real three-source candidate slice is retained and currently validated: 225 ACS observations, 75 tract boundaries and 3 document excerpts. The first real release is now sealed and current-verified in a fresh schema-004 root. No release is active; the UI remains the empty shell. The source audit and remaining work are recorded in [current state](docs/execution/state.md).
 
 ## Setup and daily use
 
@@ -74,7 +74,39 @@ uv run --no-sync python scripts/stage_acquired_slice.py \
   --data-dir '/absolute/path/to/new-three-source-root'
 ```
 
-The helper verifies the bundle and all three accepted source contracts before initializing schema 003. It explicitly selects one import per source, persists validation, and invokes validation again to verify current retained artifacts. Output includes the run, three import IDs, both report IDs and actual validity. A later current check uses those exact IDs with `scripts/validate_audited_sources.py`; reading a historical report is insufficient. Boundary/document envelopes remain historical offline replay, not newly observed HTTP responses. Local manifest declarations are not cryptographic proof of acquisition origin. Preserve any partial root on failure; existing roots are never upgraded or reused. Neither command seals, activates, publishes or enables default baseline reads.
+The helper verifies the bundle and all three accepted source contracts before initializing the current schema (004). It explicitly selects one import per source, persists validation, and invokes validation again to verify current retained artifacts. Output includes the run, three import IDs, both report IDs and actual validity. A later current check uses those exact IDs with `scripts/validate_audited_sources.py`; reading a historical report is insufficient. Boundary/document envelopes remain historical offline replay, not newly observed HTTP responses. Local manifest declarations are not cryptographic proof of acquisition origin. Preserve any partial root on failure; existing roots are never upgraded or reused. Neither command seals, activates, publishes or enables default baseline reads.
+
+## Explicit release build and current verification
+
+Release build requires a current-schema root and an explicit candidate selection:
+
+```sh
+uv run --no-sync cdt release build \
+  --data-dir '/absolute/path/to/schema-004-root' \
+  --run-id RUN_ID \
+  --import-id ACS_IMPORT_ID \
+  --import-id BOUNDARY_IMPORT_ID \
+  --import-id DOCUMENT_IMPORT_ID \
+  --report-id CANDIDATE_REPORT_ID
+
+uv run --no-sync cdt release verify \
+  --data-dir '/absolute/path/to/schema-004-root' \
+  --release-id RELEASE_ID
+```
+
+Build revalidates the selected current evidence, requires the report identity to
+match, closes all supporting memberships, and retains exact code/configuration,
+locks and runtime pins. It persists the canonical manifest and reports before an
+atomic seal. It never changes the active pointer. Verification checks the explicit
+sealed release's current retained dependencies; reading a historical report alone
+is insufficient. Synthetic builds remain labeled synthetic. Failure summaries do
+not expose source text or local exception details; preserve the root and reports.
+
+The [closure contract](docs/execution/t007b-freeze.md) defines the complete graph
+and code-snapshot scope. Use the exact root and identities in the latest
+[handoff](docs/execution/handoffs/2026-09-29-sealed-build.md). Preserve schema-003
+and earlier roots: no migration upgrade exists. Explicit activation and pinned
+application reads remain T007c; map/table/evidence UI remains T008.
 
 ## Verification
 
@@ -103,9 +135,9 @@ Retained staging accepts explicit public bytes through the three typed adapters,
 uv run --no-sync python scripts/stage_audited_sources.py --boundary /path/to/audited-boundary.zip --document /path/to/audited-budget.pdf --data-dir /path/to/new-external-test-root
 ```
 
-This command retains local evidence and repeats each import to verify reuse; it does not fetch, activate or export. It reports counts/hashes only. Retrieval times come from pinned specifications; successful response headers are declared, not freshly verified. The county PDF's redistribution remains unconfirmed. Baseline migration 003 is required: existing 001/002 stores are rejected without upgrading; preserve them and choose a separate new root.
+This command retains local evidence and repeats each import to verify reuse; it does not fetch, activate or export. It reports counts/hashes only. Retrieval times come from pinned specifications; successful response headers are declared, not freshly verified. The county PDF's redistribution remains unconfirmed. Baseline migration 004 is required: existing 001–003 stores are rejected without upgrading; preserve them and choose a separate new root.
 
-The explicit bounded ACS command and first real three-source ingestion are accepted. Broader job orchestration, validated release build/activation, map/table/evidence inspection, private brief editing and recovery remain future work. Validation reports require an explicit staging run and explicit import IDs; they never choose latest evidence. Complete synthetic selections pass only as synthetic. Historical real boundary/document selections still report missing ACS; the new explicit three-source selection passes. Reports pin inputs and validator identity, remain immutable, and describe evidence verification at creation time; reading an old report does not recheck current object availability. Revalidate explicitly after evidence changes. No report authorizes sealing or activation. Next is the supervised release-closure contract checkpoint; no active release or default baseline reads exist.
+The explicit bounded ACS command and first real three-source ingestion are accepted. Complete first-slice closure and explicit sealed build are accepted. Broader job orchestration, explicit activation and pinned application reads, map/table/evidence inspection, private brief editing and recovery remain future work. Validation reports require an explicit staging run and explicit import IDs; they never choose latest evidence. Complete synthetic selections pass only as synthetic. Historical real boundary/document selections still report missing ACS; the new explicit three-source selection passes. Reports pin inputs and validator identity, remain immutable, and describe evidence verification at creation time; reading an old report does not recheck current object availability. Revalidate explicitly after evidence changes. No report authorizes sealing or activation. Next is T007c explicit activation and pinned application reads; no active release or default baseline reads exist.
 
 For implementation sessions, read [AGENTS.md](AGENTS.md), [state](docs/execution/state.md), [backlog](docs/execution/backlog.md), and [workflow](docs/execution/workflow.md). See the [MVP plan](docs/mvp-plan.md), [technical architecture](docs/technical-architecture.md), and [illustrative UI concepts](docs/ui-concepts/README.md) for intended later behavior.
 

@@ -1,0 +1,96 @@
+{
+  "acs_original_bytes": 11368,
+  "acs_original_sha256": "df0a0dffa69d4409102a616cc5144b502117c3eaad4907c4afee51d7a0334fdf",
+  "activated": false,
+  "active_release_id": null,
+  "all_303_candidate_fingerprints_equal": true,
+  "all_original_retrieval_envelopes_equal": true,
+  "all_raw_spec_hashes_equal": true,
+  "astra_acceptance": "T007b only",
+  "astra_independent_current_verification": true,
+  "astra_readback_database_unchanged": true,
+  "baseline_migrations": [
+    {
+      "checksum": "44ddafb2a26c5781cb35d4345a17106ac892e603267a9f8b128d2fe8cfabbd93",
+      "migration_id": "001_initial.sql"
+    },
+    {
+      "checksum": "ed7ae394515aec128e93093bbccbb6f800e700be00308231b9e6f6af2103a18b",
+      "migration_id": "002_candidate_staging.sql"
+    },
+    {
+      "checksum": "54d682a9e6cc010e67964d7a98f4e6da2a80fc3ed91c695f6ecf73d54c6875e4",
+      "migration_id": "003_candidate_validation.sql"
+    },
+    {
+      "checksum": "3135887591ddedcbaa4141dba89ae0a198fb8c2bcaf5854b499d1086e5f978ff",
+      "migration_id": "004_release_closure.sql"
+    }
+  ],
+  "baseline_sha256": "7dea9c3fae526401fdfcdaf827bc94be119214cd8709bf9053cac09336b170df",
+  "build_report_id": "48ab41e78ef0553ea6571290391d987372eae293eeeb475a664081a9027dd2c8",
+  "candidate_report_id": "9f6709caf335f9722c7dba5307d85c8d4f1d3e8d6e825321f72ab8b784947a9e",
+  "checkpoint": "T007b",
+  "code_dirty": true,
+  "code_head": "e1997e3d95b81ea063a287d65b1518045644a91f",
+  "code_manifest_sha256": "0b916ddd516020ff1643b3caa7a3a60eb9d2138062018ce0152a0401a12c3e78",
+  "code_present_file_count": 53,
+  "content_id": "a4267b0d0eae67cc4b8cdd4a50cb8a0b08401275740f832d7dfc8e397803e994",
+  "data_root": "/Users/jordan/Library/Application Support/ChesterfieldTwin-SealedSlice-20260929",
+  "imports": {
+    "acs": "352490fd-8882-4b93-a8df-03c0df1a22f3",
+    "boundary": "6d97c8af-ed5c-4f2d-b392-1e400a7908aa",
+    "document": "351ba05c-73dc-401f-b5a3-6851a9356454"
+  },
+  "node_counts": {
+    "candidate": 303,
+    "code": 1,
+    "config": 1,
+    "coverage": 1,
+    "dependency": 3,
+    "document": 1,
+    "metric": 3,
+    "query": 1,
+    "raw": 3,
+    "retrieval": 3,
+    "schema": 1,
+    "source": 3,
+    "spec": 3,
+    "transform": 3
+  },
+  "release_id": "81ec338c8c4ff0da3cd7d3f6aa5acbdebb14c65a9096689d202211629138cf84",
+  "run_id": "bc809bfa-e597-4447-8feb-5a988cb2d4ed",
+  "schema003_preserved_hashes": {
+    "baseline.sqlite": "adb7b53fc7e17c2c9897ceec47a72f333b8e46061e15f39a0fdf5be3ba3c1839",
+    "objects/sha256/17/172e398e73aa6db00bad3b720ca793dc36628cbfa332d3bd3b80926019f9c8bd": "172e398e73aa6db00bad3b720ca793dc36628cbfa332d3bd3b80926019f9c8bd",
+    "objects/sha256/76/76a5155ad62ef7c78c0db048100cae2b1a09bb82e7485cc11e988f8d6c72d1e4": "76a5155ad62ef7c78c0db048100cae2b1a09bb82e7485cc11e988f8d6c72d1e4",
+    "objects/sha256/77/77ece34af9e1c6f9acd2a4f63893c53468fadda3a56264dfdf87f8369d5bdf38": "77ece34af9e1c6f9acd2a4f63893c53468fadda3a56264dfdf87f8369d5bdf38",
+    "objects/sha256/d0/d0d52e068d3b02dd6b134b2b08dbe29f65b3311197e3b8aee12f72e88650136d": "d0d52e068d3b02dd6b134b2b08dbe29f65b3311197e3b8aee12f72e88650136d",
+    "objects/sha256/df/df0a0dffa69d4409102a616cc5144b502117c3eaad4907c4afee51d7a0334fdf": "df0a0dffa69d4409102a616cc5144b502117c3eaad4907c4afee51d7a0334fdf",
+    "objects/sha256/e7/e71cd8d72fefc05a585148dff44e7b1b5ccaa124b73a033d0dcbb51a4006f07a": "e71cd8d72fefc05a585148dff44e7b1b5ccaa124b73a033d0dcbb51a4006f07a"
+  },
+  "schema003_public_files_unchanged": true,
+  "sealed": true,
+  "sealed_at_utc": "2026-09-30 01:38:24",
+  "separate_process_current_verification": true,
+  "snapshot_scope": "Exact allowlisted build-input tree including nonignored new code; documentation/tests/private/runtime files excluded; see frozen contract",
+  "source_retrieval_status": "Existing actual ACS original; boundary/document historical audited-byte replay; no new HTTP requests",
+  "table_counts": {
+    "candidate_validation_report": 1,
+    "release": 1,
+    "release_build_report": 1,
+    "release_dependency": 330,
+    "release_edge": 1983,
+    "release_import": 3,
+    "release_version": 303,
+    "retrieval": 3,
+    "staging_import": 3,
+    "staging_run": 1,
+    "version": 303
+  },
+  "tests": {
+    "diff_check": "passed",
+    "pytest_passed": 413,
+    "ruff": "passed"
+  }
+}
