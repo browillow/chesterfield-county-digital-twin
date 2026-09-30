@@ -17,7 +17,15 @@ import uvicorn
 
 from .api.app import create_app
 from .config import PROJECT_ROOT, resolve_data_root
+from .credentials import CredentialError, load_census_credentials
 from .diagnostics import runtime_checks
+
+
+class SafeArgumentParser(argparse.ArgumentParser):
+    def error(self, message):
+        # Unknown arguments can contain a mistakenly pasted credential.
+        self.print_usage(sys.stderr)
+        self.exit(2, "Invalid command arguments; use --help. Never pass credential values as arguments.\n")
 
 
 def port_number(value):
@@ -42,7 +50,7 @@ def open_when_ready(url, port, stopped):
 
 
 def main():
-    parser = argparse.ArgumentParser(prog="cdt", description="Local Chesterfield evidence tool")
+    parser = SafeArgumentParser(prog="cdt", description="Local Chesterfield evidence tool")
     parser.add_argument("--version", action="version", version="%(prog)s 0.1.0")
     sub = parser.add_subparsers(dest="command", required=True)
     for name in ("init", "doctor", "serve"):
@@ -55,7 +63,12 @@ def main():
             command.add_argument(
                 "--open", action="store_true", help="Open a one-time local session in your browser"
             )
+            command.add_argument(
+                "--census-key-source", choices=("none", "prompt", "env", "keychain"),
+                default="none", help="Explicit local credential source; default: none",
+            )
     args = parser.parse_args()
+    credentials = None
     try:
         from .storage import BaselineRepository, check_initialized, initialize, maintenance_lock
 
@@ -81,12 +94,14 @@ def main():
             with maintenance_lock(root, exclusive=False):
                 check_initialized(root)
                 repo = BaselineRepository(root)
+                credentials = load_census_credentials(args.census_key_source)
                 secret = secrets.token_urlsafe(32)
                 app = create_app(
                     bootstrap=repo.bootstrap,
                     port=args.port,
                     launch_secret=secret,
                     frontend_dir=PROJECT_ROOT / "frontend/dist",
+                    credentials=credentials,
                 )
                 url = f"http://127.0.0.1:{args.port}/#session={secret}"
                 stopped = threading.Event()
@@ -112,6 +127,13 @@ def main():
                     stopped.set()
                     if thread:
                         thread.join(timeout=1)
+    except CredentialError:
+        print(
+            "Local Census credential unavailable or invalid. Check the selected source; "
+            "use --census-key-source prompt in an interactive terminal for hidden entry.",
+            file=sys.stderr,
+        )
+        return 1
     except (ValueError, OSError, RuntimeError, sqlite3.Error) as exc:
         # Commands never echo source/private content. Details are checked by tests,
         # while the user gets an actionable command-level failure.
@@ -123,4 +145,7 @@ def main():
             file=sys.stderr,
         )
         return 1
+    finally:
+        if credentials is not None:
+            credentials.clear()
     return 0

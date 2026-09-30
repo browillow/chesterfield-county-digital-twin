@@ -2,6 +2,7 @@
 
 import secrets
 from collections.abc import Callable
+from contextlib import asynccontextmanager
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException, Request
@@ -9,6 +10,7 @@ from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import ValidationError
 
+from ..credentials import CensusCredentialProvider
 from ..domain.contracts import Bootstrap, SessionRequest, SessionResponse
 
 MAX_SESSION_BODY = 512
@@ -20,7 +22,34 @@ def create_app(
     port: int = 8765,
     launch_secret: str | None = None,
     frontend_dir: Path | None = None,
+    credentials: CensusCredentialProvider | None = None,
 ) -> FastAPI:
+    provider = credentials if credentials is not None else CensusCredentialProvider()
+    try:
+        return _create_app(
+            bootstrap=bootstrap, port=port, launch_secret=launch_secret,
+            frontend_dir=frontend_dir, credentials=provider,
+        )
+    except BaseException:
+        provider.clear()
+        raise
+
+
+def _create_app(
+    *,
+    bootstrap: Callable[[], Bootstrap],
+    port: int,
+    launch_secret: str | None,
+    frontend_dir: Path | None,
+    credentials: CensusCredentialProvider,
+) -> FastAPI:
+    @asynccontextmanager
+    async def lifespan(app: FastAPI):
+        try:
+            yield
+        finally:
+            credentials.clear()
+
     expected_host = f"127.0.0.1:{port}"
     origin = f"http://{expected_host}"
     secret = launch_secret or secrets.token_urlsafe(32)
@@ -29,8 +58,11 @@ def create_app(
     cookie_name = f"cdt_session_{port}"
     exchanged = False
     app = FastAPI(
-        title="Chesterfield Twin", version="0.1.0", docs_url=None, redoc_url=None, openapi_url=None
+        title="Chesterfield Twin", version="0.1.0", docs_url=None, redoc_url=None, openapi_url=None,
+        lifespan=lifespan,
     )
+    # Internal dependency only. Never include this provider in transport/storage models.
+    app.state.census_credentials = credentials
 
     @app.middleware("http")
     async def boundary(request: Request, call_next):

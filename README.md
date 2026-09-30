@@ -23,6 +23,30 @@ The server binds only `127.0.0.1:8765` (or `--port`). Stop with Ctrl-C. Without 
 
 A missing UI build or incompatible/uninitialized stores fail closed. This checkpoint supports new initialization and repeat compatibility checks, **not schema upgrades or backup/restore**. Preserve an incompatible existing data directory; do not delete it to make initialization pass. The application currently runs from its source checkout; a standalone distributable bundle is not implemented.
 
+## Local Census credentials
+
+Choose a credential source explicitly when starting the app. The default is `none`; startup never searches for credentials or falls back to another source. For a one-session key, run this in your own interactive terminal after setup:
+
+```sh
+uv run --no-sync cdt serve --census-key-source prompt --open
+```
+
+Enter the key at the hidden `Census API key:` prompt. It is not a command argument and is not saved by the app. Noninteractive input or an unavailable hidden-input facility fails closed. Do not paste keys into chat, command arguments, source files, `.env` files, or research documents.
+
+For a key already provisioned in **macOS Keychain**, use:
+
+```sh
+uv run --no-sync cdt serve --census-key-source keychain --open
+```
+
+The provider reads one generic-password item with service **`ChesterfieldTwin`** and account **`census_api_key`** using the system Keychain utility. Provision/manage that item separately in Keychain Access or your trusted credential-management workflow. The app does not create, edit, enumerate or delete Keychain items. Missing/locked/denied access or a five-second timeout fails without fallback. This integration is covered with mocked system responses; access to a real Keychain item has not been exercised.
+
+For development or a trusted launcher, inject **`CDT_CENSUS_API_KEY`** into the process environment and select `--census-key-source env`. No `.env` file is loaded. The serving process removes this variable before launching the browser or Keychain helper, even if another source or `none` is selected. This does not remove the value from the parent shell or erase OS/process-memory snapshots; hidden prompting or Keychain avoids the environment fallback. No raw-key command-line option exists, and parser errors do not echo supplied arguments.
+
+The key is held in a redacted backend-only provider, separate from the browser session secret. It is absent from HTTP responses/OpenAPI, bootstrap capabilities, databases, artifacts and reports. Shutdown/startup failure releases the provider's reference; memory zeroization is not guaranteed. Restart or select `none` to run without a key. `init` and `doctor` do not acquire credentials.
+
+**Injection is implemented; Census fetching is not.** Startup validates only a bounded nonempty printable credential string, not whether Census accepts it. It makes no Census request and creates no import or release. The next checkpoint is an explicit bounded API acquisition with sanitized retrieval provenance and real three-source validation.
+
 ## Verification
 
 ```sh
@@ -52,7 +76,7 @@ uv run --no-sync python scripts/stage_audited_sources.py --boundary /path/to/aud
 
 This command retains local evidence and repeats each import to verify reuse; it does not fetch, activate or export. It reports counts/hashes only. Retrieval times come from pinned specifications; successful response headers are declared, not freshly verified. The county PDF's redistribution remains unconfirmed. Baseline migration 003 is required: existing 001/002 stores are rejected without upgrading; preserve them and choose a separate new root.
 
-Fetch/job orchestration, real three-source acceptance, validated release build/activation, map/table/evidence inspection, private brief editing and recovery remain future work. Validation reports require an explicit staging run and explicit import IDs; they never choose latest evidence. Complete synthetic selections pass only as synthetic. Real boundary/document selections fail with missing ACS. Reports pin inputs and validator identity, remain immutable, and describe evidence verification at creation time; reading an old report does not recheck current object availability. Revalidate explicitly after evidence changes. No report authorizes sealing or activation. The next bounded work is an official alternate ACS observation-route audit; synthetic tests do not establish a real release.
+Fetch/job orchestration, real three-source acceptance, validated release build/activation, map/table/evidence inspection, private brief editing and recovery remain future work. Validation reports require an explicit staging run and explicit import IDs; they never choose latest evidence. Complete synthetic selections pass only as synthetic. Real boundary/document selections fail with missing ACS. Reports pin inputs and validator identity, remain immutable, and describe evidence verification at creation time; reading an old report does not recheck current object availability. Revalidate explicitly after evidence changes. No report authorizes sealing or activation. The next bounded work is credential-enabled acquisition from the accepted 2023 Subject API contract; synthetic tests and credential injection do not establish source access or a real release.
 
 For implementation sessions, read [AGENTS.md](AGENTS.md), [state](docs/execution/state.md), [backlog](docs/execution/backlog.md), and [workflow](docs/execution/workflow.md). See the [MVP plan](docs/mvp-plan.md), [technical architecture](docs/technical-architecture.md), and [illustrative UI concepts](docs/ui-concepts/README.md) for intended later behavior.
 
