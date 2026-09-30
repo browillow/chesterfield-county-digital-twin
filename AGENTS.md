@@ -4,6 +4,8 @@
 
 Build a private, locally operated Chesterfield County research tool that improves strategic decisions through inspectable evidence. Preserve the distinction between observations, calculations, inferences, hypotheses, and scenarios.
 
+Optimize for Jordan's personal business discovery: understand valuable local problems, investigate opportunities for an AI-native business presence, and build credibility through informed contributions. Broad public evidence collection and agent-assisted investigation are intended uses. Family capacity and community responsibilities remain constraints. Commercializing the data tool, multiuser features and generalized platform infrastructure are not objectives.
+
 At session start, read [current state](docs/execution/state.md), then the relevant items in [backlog](docs/execution/backlog.md). The supervisor also reads [workflow](docs/execution/workflow.md). Read only the architecture sections and source files needed for the selected work. The existing MVP and architecture define intended behavior; state and repository inspection establish what actually works.
 
 Check the current directory, branch, working tree, and available commands before editing. Preserve existing work. Architecture command examples are not proof those commands exist. If plans and implementation conflict, investigate and record the resolution; do not silently rewrite either.
@@ -19,6 +21,9 @@ Assume shared filesystem state unless the runtime says otherwise. One writer own
 ## Implementation constraints
 
 - Follow the local architecture: Python/FastAPI, SQLite, React, local artifacts, and bounded on-demand jobs. No new infrastructure without a demonstrated requirement.
+- Name the research capability enabled or concrete failure prevented by each infrastructure task. Reuse accepted contracts and safeguards; freeze only changed shared interfaces. Routine source additions and reversible interface experiments do not automatically need the ceremony of a new storage boundary.
+- Collect useful evidence at the minimum necessary depth: retained originals and citations, then searchable extracts, then structured records when a research question or repeated comparison warrants them. New source/representation contracts still require review; collection does not authorize baseline publication, sealing, activation or agent access.
+- Existing agents may support explicitly scoped investigations through a reviewed evidence-access boundary. Agent findings remain drafts with citations, counterevidence and unknowns; they cannot silently alter baseline facts. No blanket outbound permission for public documents or access to private strategy is implied.
 - Keep private strategy data outside the repository and separate from baseline stores, indexes, and exports.
 - Preserve provenance, units, geography/vintage, uncertainty, suppression, and reproducible derivations. Unknown is not zero. Generated UI examples are not source data.
 - All baseline queries pin a release. Sealed memberships and referenced versions are immutable. Shared contracts change through supervisor coordination.

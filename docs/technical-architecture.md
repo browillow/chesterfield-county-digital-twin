@@ -1,6 +1,6 @@
 # Technical architecture: local Mac application
 
-Status: Target design; local skeleton implemented September 27, 2026. See [current execution state](execution/state.md) for verified behavior; later sections remain intended capabilities.  
+Status: Target design, aligned September 29, 2026 to personal research and agent-assisted exploration. See [current execution state](execution/state.md) for verified behavior; planned access, collection and backup workflows below are not implemented capabilities.
 Date: September 26, 2026.  
 Scope: [MVP plan](mvp-plan.md), with the [UI concepts](ui-concepts/README.md) as visual direction.  
 Deployment target: One user, one MacBook, local browser, native processes.
@@ -31,6 +31,8 @@ Read-only checks during design found Apple Silicon (`arm64`), macOS 15.4.1, Pyth
 | Future portability | Explicit schema, versioned JSON/CSV/Markdown exports, source adapters, and application service boundaries |
 
 The MVP is not a multiuser service. It does not need distributed transactions, Kubernetes, Redis, a message broker, a graph database, a vector database, server-side rendering, or a native desktop wrapper. These omissions are deliberate scope decisions, not extension points to implement now.
+
+Optimize for Jordan's local business discovery, informed contributions and sustainable personal upkeep. Infrastructure work must name the research capability enabled or concrete failure prevented. Reuse accepted evidence/privacy/release safeguards; do not generalize for hypothetical customers, distribution or source families. A useful new dataset or retained document can justify work before UI polish. Existing agents can assist through the bounded research-access contract below without an embedded assistant platform.
 
 ## 3. Components and process boundaries
 
@@ -148,6 +150,10 @@ Record source reference period, event/effective date where known, publication da
 
 ## 7. Ingestion, review, and release publication
 
+Collection depth follows the investigation: first retain permitted originals with provenance and stable locators, then add searchable extracts, then structured records when needed for repeated comparisons or joins. A document need not become a complete entity/relationship model to be useful. Preserve separate intake/validation/release statuses and original-versus-derived identities. This proposed broader intake needs its own source, locator and lineage contract; the accepted three-source schema/adapters and first-slice release closure cannot accept arbitrary new documents or datasets unchanged. Unreleased material is never a fallback for pinned baseline reads.
+
+New source preparation need not wait for the map/table interface or a general job framework. Use bounded explicit foreground operations where sufficient, retaining resource limits, interruption safety and last-valid-state preservation. Add general job machinery when a selected workload requires it. No source is acquired or made agent-accessible simply by adding it to the portfolio.
+
 Each source adapter implements `discover`, `fetch`, `normalize`, and `validate`. Its versioned specification declares access route, geographic scope, variables, expected schema, terms/retention, rate limits, reference-period rules, and required checks. No adapter accepts source text as executable instructions.
 
 ```mermaid
@@ -235,6 +241,12 @@ Serve a small county/tract FeatureCollection keyed by release and boundary versi
 
 **Search:** Extract documents into page/section chunks with exact source locators. FTS5 indexes accepted baseline text; query results join release membership so superseded and unreleased material does not leak into the selected view. Apply membership filtering before final ranking/limit. Maintain a completely separate private index. Rebuild indexes from canonical records. Do not execute or embed retrieved HTML; show escaped text and source links. Unreadable scanned pages enter the extraction-review queue.
 
+**Agent-assisted investigation (planned):** Provide the smallest reviewed read-only interface needed by an existing agent: an explicitly selected release, allowlisted queries/documents and bounded results with claim/artifact IDs, exact source locators, periods, units, uncertainty and limitations. Start with the available application-service/CLI boundary; add an HTTP/MCP connector or other packaging only if a real use requires it. A general chatbot, vector search, local model and new agent orchestrator are not prerequisites.
+
+Each investigation records its question, evidence selection and processing scope. The agent returns cited findings, counterevidence, unknowns and a concrete next validation step. Its synthesis stays private draft research; reviewed promotion to baseline evidence is a separate operation. Exploratory retained documents outside a release need a separately reviewed access/status contract and must never be mixed silently with release facts. Existing staging internals and unrestricted filesystem access are not the research interface. T007c supplies pinned reads; the bounded research packet follows without requiring the full map or institutional graph UI.
+
+Use existing user authorization where applicable, but do not infer permission to send whole public documents to an external model. The task must identify allowed evidence and destination, honor source retention/redistribution restrictions, and exclude private strategy unless explicitly authorized. No automatic remote inference, autonomous baseline mutations, outreach, publication, spending or background research follows from this design. Source text is untrusted evidence, never instructions to an agent.
+
 **Scenarios:** A Python calculation module owns versioned formulas and input schemas. React controls request recalculation; the server supplies canonical results. Saved runs pin baseline release, explicit assumptions, formula version, outputs, units, and omissions. For the initial economics worksheet:
 
 ```text
@@ -256,7 +268,7 @@ Bind only to `127.0.0.1` on a configurable port, default 8765. Reject unexpected
 
 This protects the local API from unrelated websites; it is not a multiuser authentication system. Native same-user processes remain inside the local trust boundary. Do not expose the port to the LAN or add a public tunnel as part of this design. Development must preserve Host/Origin checks through the Vite proxy, with only the explicit loopback development origin allowed.
 
-Keep credentials in macOS Keychain through a narrow secret-provider adapter, with environment variables as a development fallback. Source configuration stores credential names, not values. Raw downloads, query logs, errors, and manifests must redact authenticated request details. No telemetry or remote AI calls by default; a future extraction assistant must have an explicit outbound-data policy and cannot alter accepted evidence directly.
+Credential selection is explicitly `none|prompt|env|keychain`, default `none`, with no fallback; the accepted provider owns backend-only redaction and cleanup. Source configuration stores credential names, not values. Raw downloads, query logs, errors, and manifests must redact authenticated request details. No telemetry or remote AI calls by default; agent-assisted research follows the explicit evidence/destination boundary above and cannot alter accepted evidence directly.
 
 Baseline exports use a versioned allowlist of fields drawn only from the selected release. They never serialize database files or an entire data directory. Private exports use a separate command/path and are visibly labeled. Both include lineage references and manifest data; attachments obey source retention/redistribution rules. Full backups are private operational artifacts because they include strategy data and logs. Evidence file access accepts registered artifact IDs, validates ownership, and prevents path traversal. Serve active downloaded content as an attachment or sanitized text, never as executable same-origin HTML.
 
@@ -332,6 +344,10 @@ Document a supported Python patch and Node LTS version when the first implementa
 
 ## 14. Migrations, backup, restore, and retention
 
+**Early basic protection (planned T013a):** Before accumulating irreplaceable private notes/briefs, implement or document one bounded offline backup procedure and demonstrate restoration into a separate fresh directory. Quiesce writers, capture a coherent baseline/private pair with all referenced public/private artifacts and manifest/ledger checksums, exclude credentials, and verify restored integrity and pinned evidence/private references. The working root must remain untouched. Choose a user-approved local backup destination; same-disk copies alone do not protect against device loss. This milestone does not depend on private research UI, generalized exports, job orchestration or schema upgrades. No backup, restore or upgrade capability is currently accepted; these paragraphs are design requirements.
+
+The broader migration/recovery design below remains later T013. Basic protection must not become an in-place upgrade or evidence repair path.
+
 Each database has an ordered migration ledger with checksums. Run upgrades only with the app and worker stopped under the exclusive maintenance lock. Create a pre-migration backup, apply transactional migrations where supported, and start the app only when both databases pass compatibility checks. Cross-database migration is not atomic: if the second migration fails, retain the maintenance state and restore both from the matched backup or complete the repair before serving.
 
 An offline backup quiesces all application writes, uses the SQLite backup API for both databases, and copies the referenced immutable objects, private artifacts, release manifests, and non-secret configuration into one checksummed archive. Include all committed draft and private references as well as sealed releases; logs are optional and staging/cache files are excluded. This produces a coherent baseline/private pair without attempting cross-database live snapshots. Python exposes SQLite's connection backup API ([documentation](https://docs.python.org/3/library/sqlite3.html#sqlite3.Connection.backup)); the underlying mechanism is documented by [SQLite](https://www.sqlite.org/backup.html). Credentials are reconnected separately and are not exported in plaintext.
@@ -350,6 +366,10 @@ Retain sealed releases, evidence they reference, and releases pinned by private 
 | D. Breadth and bulk | CBP/NES, LODES worker, coverage ledger, curated relationships, search | Bounded resource use; complete selected flow universe; suppressed/missing cells preserved; search obeys release membership |
 | E. Strategy and recovery | Brief editing, research queue, scenario calculation, export, backup/restore | Deterministic economics tests; no private data in baseline export; restored release and private references match originals |
 
+These stages group capabilities, not mandatory serial dependencies. After the accepted ingestion/release foundation, a new source batch can proceed on its own reviewed contract; T007c enables bounded agent research without waiting for T008 polish or the complete T011 graph. T013a basic protection precedes irreplaceable private research in stage E. Full schemas, job systems and interfaces are built only to the depth required by selected work. Accepted immutable evidence/release guarantees remain unchanged.
+
+For each investigation-oriented checkpoint, also inspect a sourced answer: what problem or relationship became clearer, which evidence supports or contradicts it, what remains unknown, and what next action could test it? Retaining a useful source batch is a valid intermediate outcome; periodically test its research value rather than equating data volume or test count with decision quality.
+
 Tests should exercise failure modes and domain meaning rather than mirror implementation:
 
 - Fixtures with suppressed versus zero values; changed vintages; overlapping ACS periods; conflicting claims; source revisions; incompatible units; duplicate imports; reversible identity decisions.
@@ -367,10 +387,11 @@ Tests should exercise failure modes and domain meaning rather than mirror implem
 | PostgreSQL/PostGIS | Embedded SQLite plus geographic preprocessing | Measured interactive spatial needs exceed prepared layers, or multiple writers/users are required |
 | DuckDB as live query engine | Worker-only | Repeated large analytical queries cannot be served by modest release aggregates |
 | Native desktop wrapper | Local browser | Install/update ergonomics or OS integration becomes a demonstrated problem |
-| Semantic search / AI assistant | Lexical search and deterministic question pages | A bounded retrieval evaluation demonstrates value beyond FTS and outbound-data rules are established |
+| Agent-assisted research access | Planned bounded access for existing agents, with explicit evidence and processing scope | Implement when a selected investigation needs it; does not wait for an embedded assistant |
+| Semantic search / embedded AI assistant | Lexical search, pinned evidence access and existing agents; no embedded assistant | A bounded retrieval evaluation demonstrates value beyond the simpler workflow and outbound-data rules are established |
 | Background scheduling | Explicit runs | Actual maintenance burden justifies a macOS launch agent with visible controls |
 | Cloud hosting | None | There is an explicit remote-access or collaboration requirement |
 
 No additional user decisions block the first implementation slice. Confirm a backup destination and any resource caps during setup; measure available memory and disk there. Source access and the actual data shapes remain the main technical uncertainties. This design selects a local architecture now while preserving the MVP's gate: validate the thin slice before building broader infrastructure.
 
-**Design handoff:** Read the MVP and current repository state; inspected local runtime availability; checked official runtime/storage documentation. Added this architecture and synchronized the plan's stack recommendation. No packages were installed, no services were started, and no runtime directories or databases were created. The next concrete implementation task is stage A followed immediately by the auditable slice in stage B.
+**Original design handoff (September 26, 2026; historical):** Read the MVP and current repository state; inspected local runtime availability; checked official runtime/storage documentation. Added this architecture and synchronized the plan's stack recommendation. No packages were installed, no services were started, and no runtime directories or databases were created. The next concrete implementation task is stage A followed immediately by the auditable slice in stage B.

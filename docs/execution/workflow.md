@@ -6,6 +6,16 @@ Use one supervisor session per integration checkpoint, such as “local skeleton
 
 Read `AGENTS.md`, current state, and relevant backlog entries. Read the full architecture once when starting implementation, then route workers to specific sections. The state file is an index, not authority over observed repository facts.
 
+## Match effort to research value and risk
+
+For each task, state the research capability it enables or concrete failure it prevents, the smallest useful deliverable, and its stopping condition. Useful deliverables include a bounded batch of retained/citable evidence, not only application features. Source preparation can proceed independently of presentation or general job infrastructure once its actual prerequisites are met. Data availability alone does not require exhaustive collection or normalization.
+
+Reuse existing contracts, source checks and test helpers. Freeze changed shared contracts; use independent review where consequential failure risk warrants it, especially for provenance/representations, private/outbound boundaries, schemas, sealing, activation or recovery. A compatible source addition still needs its source-specific checks, but not a renewed review of the entire platform. Reversible prose, interface and research-draft changes normally need scoped checks and coordinator review; do not create standing review agents, audit-only tickets or implementation workers without useful independent work. Preserve the requested Astra/Sol model choices when delegation is used.
+
+Keep source semantics, citations, uncertainty, immutable releases and private separation strict. Keep provisional hypotheses, collection order and interface experiments inexpensive to revise. Do not build generalized scheduling, plugin packaging, multiuser support or commercial distribution without an immediate demonstrated need. Before storing irreplaceable private research, complete basic backup/restore verification (T013a).
+
+Agent-assisted research is a product workflow distinct from implementation delegation: give an existing agent a scoped question and reviewed evidence access, require citations/counterevidence/unknowns, and retain output as draft research. Follow the architecture's outbound/private boundary; this workflow grants no new network, publication or spending authority.
+
 ## Delegate deliberately
 
 - Supervisor: requested model `gpt-6-astra`. Workers: requested model `gpt-6.1-sol`. These names express the user's selection, not an automatic model switch performed by Markdown.
@@ -32,6 +42,8 @@ A worker returns paths, behavior changed, tests/checks with outcomes, unresolved
 Mark backlog work `done` only after integration acceptance. Record `review` for work awaiting integration, `blocked` with the exact dependency for a real blocker, and `planned` for future items lacking readiness. Do not equate a passing mock-based unit test with working live source access or a completed end-to-end slice.
 
 Run targeted checks first and an appropriate integration check after combining changes. Re-run checks affected by follow-up edits; avoid rerunning unrelated suites. Preserve failing output in a concise handoff instead of dumping full logs into every worker context.
+
+Settle relevant code writes before running integrated checks that pin executing source hashes; concurrent edits can invalidate those checks without finding a product defect. Documentation-only changes need consistency, link and preservation checks, not a repeat acquisition, sealed build or full application test suite. State explicitly what was tested now versus retained historical acceptance.
 
 ## Finish without losing state
 

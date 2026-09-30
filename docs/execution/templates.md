@@ -6,6 +6,8 @@ Copy only the template needed. Keep packets concise and link exact code/sections
 
 ```text
 Task ID and outcome:
+Research capability enabled or concrete failure prevented:
+Smallest useful deliverable and stopping condition:
 Requested model: gpt-6.1-sol
 Why this can run independently:
 Repository/checkout and shared-filesystem status:

@@ -11,12 +11,25 @@ Astra API/activation contract freeze. T007b complete first-slice closure and
 sealed build is accepted. Map/table/evidence UI remains later T008.
 
 Read AGENTS.md, docs/execution/state.md, workflow.md, the latest linked
-handoff, relevant backlog/contracts, D017–D022 including live continuations,
+handoff, relevant backlog/contracts, D017–D023 including live continuations,
 the T007b freeze, source_specs/ and architecture release/reproducibility and
 query-consistency sections. Reconcile actual branch/HEAD/worktree and preserve
 all uncommitted work. Use GPT-6 Astra as supervisor; explicitly request
 gpt-6.1-sol for useful bounded workers with focused context, exclusive file
 ownership, deliverables and checks. Never silently substitute models.
+
+Optimize for Jordan's personal research: discovering valuable local problems,
+evaluating an AI-native business presence and building credibility through useful
+contributions. Apply D023: broad evidence collection can precede UI polish;
+source preparation needs its actual safeguards/contracts, not a completed map or
+general job framework. Retain citable documents before full structured modeling
+when sufficient. Existing-agent research is planned separately from an embedded
+chatbot. T011a/T011b/T013a remain planned; no general document intake, agent access
+or backup capability is implied. Complete basic backup/verified fresh-directory
+restore before irreplaceable private research accumulation. Give infrastructure
+work a concrete research benefit or failure it prevents; reuse accepted safeguards
+and keep review/testing proportionate. This session remains bounded to T007c,
+not simultaneous implementation or acquisition of all those future packets.
 
 The local skeleton, adapters, staging, validation reports, credential injection,
 bounded acquisition and T007b sealed build are accepted. The user previously
@@ -32,8 +45,8 @@ The explicit sealed real release is
 81ec338c8c4ff0da3cd7d3f6aa5acbdebb14c65a9096689d202211629138cf84
 in /Users/jordan/Library/Application Support/ChesterfieldTwin-SealedSlice-20260929.
 The active pointer is null. Read exact run/import/candidate-report/build-report
-IDs from the latest handoff; never select latest implicitly. Current separate-
-process verification and Astra read-only acceptance passed. The release contains
+IDs from state and the linked implementation handoff; never select latest
+implicitly. Separate-process verification and Astra read-only acceptance passed. The release contains
 303 candidates, 330 complete nodes and 1,983 edges, with exact retained build
 inputs/locks/runtime/schema/query/config/transform pins. Final tests: 413 passed.
 Do not rebuild accepted components, repeat acquisition/sealing, request a key,
@@ -80,6 +93,7 @@ and actual-byte verified capabilities. No outreach, publication, spending or
 background automation.
 ```
 
-Current checkpoint: [Sealed first-slice build](handoffs/2026-09-29-sealed-build.md).
+Current planning: [Personal research plan alignment](handoffs/2026-09-29-research-plan-alignment.md).
+Current implementation/evidence checkpoint: [Sealed first-slice build](handoffs/2026-09-29-sealed-build.md).
 The [real-ingestion handoff](handoffs/2026-09-29-real-slice.md) retains the accepted
 schema-003 history and acquisition evidence. Follow later state if advanced.

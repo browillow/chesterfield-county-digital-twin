@@ -1,6 +1,6 @@
 # Chesterfield County Digital Twin: MVP plan
 
-Status: Target scope and delivery plan; local skeleton implemented September 27, 2026. See [execution state](execution/state.md) for current verified capabilities.  
+Status: Target scope, revised September 29, 2026 for personal research and agent-assisted exploration. See [execution state](execution/state.md) for current verified capabilities; proposed workflows below are not implementation claims.
 Prepared: September 26, 2026.  
 Primary user: Jordan Osier.  
 Release model: Private, single-user, locally operated research tool.
@@ -9,9 +9,13 @@ Release model: Private, single-user, locally operated research tool.
 
 Build a small, auditable county observatory that helps Jordan decide **which local responsibilities and institutions deserve deeper investigation, why, and what evidence would change that judgment**.
 
+The practical purpose is to discover valuable local problems, evaluate where Jordan's technological capabilities could support an AI-native business presence, and build local reputation through informed, useful contributions. The tool serves Jordan's decisions; selling or operating a generalized data product is not an objective. Family constraints, community responsibilities and a willingness to reject weak opportunities remain central.
+
 The MVP should support a repeatable research session: survey the county, inspect a sector or community function, follow its evidence, compare possible actions, and choose the next research step. Its value is better strategic judgment, including a justified decision to stop pursuing an idea.
 
 The county-wide ambition remains intact. The release achieves breadth through a coverage ledger and published aggregates; it achieves depth through a deliberately small collection of documented organizations, functions, and relationships. It does not claim exhaustive knowledge of county activity.
+
+Gathering a broader public evidence base before interface polish is worthwhile when sources have a plausible investigative use. Favor batches that add useful coverage at manageable acquisition and upkeep cost. Collecting every available dataset or fully structuring every document is not a completion requirement.
 
 This plan translates the [digital-model brief](../../chesterfield_county_digital_model_brief.md), especially sections 2, 6–14, and the [family strategic framework](../../osier_family_strategic_framework.md), especially sections 3–10, into a bounded first release. These source documents currently live outside the Git repository; preserve that context when sharing or moving the plan.
 
@@ -26,6 +30,8 @@ Jordan can complete these workflows using one saved release of the evidence:
 5. **Revisit:** Refresh one source, see changes and possible revisions, and reconstruct the previous answer.
 
 Business demand, private finances, family risk capacity, and spiritual health remain unknown unless supported by appropriate evidence or explicit personal input. A sector's size alone cannot qualify it as an opportunity.
+
+Also evaluate research usefulness: can a scoped agent-assisted investigation connect evidence across sources, identify a plausible problem and accountable buyer where known, expose counterevidence, and recommend a practical next validation step? Record which sources changed the hypothesis or exposed a meaningful gap. Useful outcomes include a pursue/defer/reject decision, a sharper unanswered question, or an evidence-backed contribution worth considering. Outreach and publication still require separate authorization; dataset counts and feature completion alone do not establish value.
 
 ## 3. Release scope
 
@@ -44,9 +50,11 @@ Choose these examples after the broad scan. Preserve physical work, care, infras
 
 **Excluded from this release:** Public launch, paid product validation, outreach, private individual profiles, inferred personal religion or health, automated entity merges, autonomous publication, comprehensive web crawling, live sensor feeds, and a general conversational interface. Saved questions and document search provide the initial question-answering experience.
 
+This excludes building an embedded general chatbot, not using existing agents for bounded research over explicitly selected evidence. A reviewed access contract and privacy/outbound rules must precede that integration. No extra agent runtime, vector database or local model is a prerequisite.
+
 ## 4. Source plan and access gate
 
-The following is a proposed source portfolio. Official documentation was spot-checked while preparing this plan; no county datasets have been downloaded, reconciled, or validated. A listed source is not an implemented connector. Exact releases, variables, retrieval routes, licenses, and geography identifiers must be pinned in milestone 0.
+The following is a proposed source portfolio. The original planning audit preceded ingestion; the first real slice is now accepted as recorded in [state](execution/state.md). A listed source is not an implemented connector. For each new source, pin exact releases, variables, retrieval routes, retention terms and geography identifiers before ingestion; reuse accepted safeguards rather than reopen accepted source audits.
 
 | Source family | Minimum slice and purpose | Access/comparability checks | Refresh proposal |
 | --- | --- | --- | --- |
@@ -67,7 +75,9 @@ County financial pages distinguish government payments from school-division paym
 
 **Access failure policy:** Time-box initial investigation of each source. Prefer an official download or a reproducible manual import if an API is unavailable. If neither is viable, record a blocked source and the affected acceptance question. Continue independent work, but explicitly revise the release scope before claiming the missing capability is complete.
 
-**Next sources after the MVP:** QCEW for additional employment/wage context; planning and permits for development status; procurement/payments for buying relationships; IRS data for partial nonprofit coverage; health, education, infrastructure, licensing, and cultural sources as the ledger identifies decision-relevant gaps. O*NET can later suggest workflow hypotheses, with local presence clearly unverified.
+**Additional source candidates, eligible when useful:** QCEW for employment/wage context; planning and permits for development status; procurement/payments for buying relationships; IRS data for partial nonprofit coverage; health, education, infrastructure, licensing, and cultural sources as the ledger identifies decision-relevant gaps. These need not wait for the full statistical portfolio or UI. Compare the research questions enabled, credible access route, comparability, acquisition effort and upkeep before selecting a bounded batch. Inclusion here is not proof of access or authorization to acquire it. O*NET may suggest workflow hypotheses, with local presence clearly unverified.
+
+**Depth of collection:** An original document with its provenance, retention limits and stable locators can be a useful deliverable before profiles or relationship extraction. Add searchable extracts when discovery warrants them, and structured entities/measurements only when needed for reliable joins, comparisons or repeated investigations. Track retained, extracted, validated and release-included status separately. This is a planned intake policy, not a bypass around existing adapters: new document representations and their original/derived lineage need an explicit reviewed contract. Unreleased material never appears as accepted baseline evidence.
 
 ## 5. First end-to-end slice
 
@@ -77,7 +87,7 @@ Use one ACS release, three published tract-level measures, compatible county/tra
 
 Deliver a small table/map and one linked function profile. From a displayed value, Jordan can inspect its unit, population universe, period, uncertainty, source record, archived input where permitted, and transformation. Re-running the build from the same inputs reproduces the same result.
 
-This slice deliberately exercises structured data, geography, documents, claims, and presentation before committing to an application framework or widening ingestion. Its completion is a useful stopping point even if the broader MVP is paused.
+This slice exercises structured data, geography, documents, claims and presentation. Its completion is a useful stopping point even if the broader MVP is paused. The accepted ingestion/release foundations also permit independent preparation of another bounded source batch before map/table completion; admitting that batch to a release still requires its source and closure contracts. Do not rebuild the accepted first slice merely to broaden collection.
 
 ## 6. Proposed architecture and data contract
 
@@ -128,13 +138,15 @@ Build four compact views:
 
 Every map has an equivalent table. Filters must expose reference period, geography, and coverage. Empty results say whether the information is unavailable, suppressed, outside scope, or genuinely zero. A fixed set of sourced question pages is sufficient; general natural-language Q&A is deferred.
 
+**Agent-assisted research:** Use an existing agent with an explicit question and an allowlisted evidence selection. Baseline access pins a release and preserves source IDs, dates and exact citation locators; separate exploratory material must be labeled and accessed only under its own reviewed contract. Ask for findings, counterevidence, unknowns and a next test. Keep synthesis as private draft research until reviewed; neither extraction nor an agent answer promotes a baseline claim. A public source is not blanket permission to send its full bytes to an external model. Establish permitted content and processing destination for the task, honor retention/redistribution limits, and exclude private strategy by default. This workflow does not require an in-app chatbot or authorize autonomous outreach, publication, spending or refreshes.
+
 Each candidate brief contains: responsibility and beneficiary; trigger and accountable buyer where known; current alternatives; local evidence; counterevidence; an explicit demand hypothesis; economics still to validate; founder time/capital/availability required; family resilience; community contribution; institutional/transferable capability; evidence quality; disconfirming conditions; next validation action. Assess these dimensions separately without a default composite ranking.
 
 The first scenario can examine one candidate's delivery economics under alternative productivity, price, demand, and review-cost assumptions. Compute contribution after delivery labor, founder labor, tools, selling effort, maintenance, and fixed costs; distinguish one-time setup. Use supplied assumptions or conspicuously illustrative ranges, never invented local finances. Show the break-even threshold and mechanisms omitted. This supports a decision about what to investigate; it does not forecast county employment or establish willingness to pay.
 
 ## 8. Delivery sequence and effort
 
-Estimates below are planning judgments for combined hands-on engineering, research, and review effort, assuming existing equipment and a modest interface. They are not delivery commitments or estimates of autonomous-agent runtime. Re-estimate after the first source audit and end-to-end slice.
+The historical estimates below describe the original scope, not remaining work, delivery commitments or autonomous-agent runtime. Re-estimate the next bounded batch from current state instead of treating the totals as a schedule. Gates describe capabilities rather than a strictly serial implementation queue: source preparation may proceed independently of presentation, and basic backup protection must precede irreplaceable private research.
 
 | Gate | Work and concrete artifacts | Exit criterion | Effort |
 | --- | --- | --- | --- |
@@ -143,11 +155,13 @@ Estimates below are planning judgments for combined hands-on engineering, resear
 | 2 — Broad baseline | CBP and NES ingestion; remaining indicators; LODES county aggregation; populated coverage ledger | Every category has a disposition; published sectors are represented; employment universes and geographic joins are validated | 20–30 hours |
 | 3 — Institutional depth | Curated profiles/functions/relationships; document search; review queue | Profiles span economic, public, and community functions; every asserted relationship has evidence; ambiguous identity remains unresolved | 12–20 hours |
 | 4 — Decision support | Three briefs; ranked research queue; one sensitivity worksheet | Each conclusion separates evidence and assumptions, includes counterevidence, and names a practical next test | 10–16 hours |
-| 5 — Release and handoff | Refresh/diff; exports; backup/restore; acceptance report; operating instructions | Release checks pass; one real research session is completed; previous evidence and answers remain reproducible | 8–12 hours |
+| 5 — Release and handoff | Refresh/diff; exports; extended recovery; acceptance report; operating instructions | Release checks pass; one real research session is completed; previous evidence and answers remain reproducible | 8–12 hours |
 
 Base estimate: **70–110 hours**. Allow approximately 25% contingency and round the planning envelope to **90–140 hours**. At five hours/week that is roughly 18–28 weeks; at ten hours/week, 9–14 weeks. Weekly capacity, budget, and reduced availability around March 2027 are unresolved; no completion date is assumed.
 
-The first two gates form a **20–32-hour base-effort checkpoint**. Continue only if the evidence chain is useful and maintenance looks sustainable. If the schedule is too long, reduce curated depth and interface polish or pause at that checkpoint. Do not remove provenance, uncertainty, private-data separation, or honest coverage reporting to meet a date. Defer LODES only through an explicit scope change that also marks the resident/workplace question deferred.
+The original first two gates estimated a **20–32-hour base-effort checkpoint**; this is historical, not a new prerequisite to repeat. Continue while evidence gathering or research answers justify the effort and upkeep looks sustainable. Reduce curated depth or interface polish when appropriate, rather than removing provenance, uncertainty, private-data separation or honest coverage. Source order may change; if LODES is postponed, keep the resident/workplace question explicitly unanswered rather than substituting incompatible statistics.
+
+**Early protection milestone:** Before storing irreplaceable private notes or briefs, establish a bounded offline backup and verify restoration into a separate fresh directory. Protect the paired stores, referenced evidence and private artifacts without overwriting the working root. Basic protection does not wait for scenario features, generalized exports, schema upgrades or a full recovery framework. No backup/restore capability exists merely because it is planned here.
 
 Jordan supplies personal constraints and resolves consequential strategic choices. Deterministic checks handle routine validation; ambiguous identities, conflicting evidence, and causal interpretations require review. If agents are used during implementation, give each a bounded source/domain assignment, the common evidence schema, and a requirement to return gaps and counterevidence. Extraction does not automatically promote a claim to accepted evidence.
 
@@ -158,8 +172,8 @@ Jordan supplies personal constraints and resolves consequential strategic choice
 | 1. Major industry segments and coverage | Required sector table plus separate aggregate/entity coverage ledger |
 | 2. Resident jobs versus county jobs | Required LODES-based comparison with explicit job universe and year; not equated with ACS residents |
 | 3. Geographic household conditions | Required tract table/map with margins of error and source universes |
-| 4. Development changes | Deferred systematic feed; represent any curated event with proposal/approval/completion status |
-| 5. Public purchasing relationships | Deferred systematic analysis; budget evidence cannot substitute for payments or contracts |
+| 4. Development changes | Bounded source collection eligible when useful; systematic feed deferred; distinguish proposal/approval/completion |
+| 5. Public purchasing relationships | Bounded source collection eligible when useful; systematic analysis deferred; budget evidence cannot substitute for payments or contracts |
 | 6. Providers of important functions | Required curated profiles; capacity explicitly unknown where unreported |
 | 7. Cultural/spiritual institutions and gaps | Required selected institutions and coverage gaps; no spiritual-health score |
 | 8. External dependencies | Required county job flows and supported examples of regional service links; no comprehensive supply-chain claim |
@@ -187,7 +201,7 @@ Use manually invoked refresh commands initially, with per-source cadence and sta
 
 | Risk | Planned response |
 | --- | --- |
-| Research grows without producing decisions | Gate expansion on completed sourced answers and candidate briefs; freeze the first source portfolio |
+| Research grows without producing decisions | Select bounded source batches by plausible investigative value and upkeep; periodically test them in sourced investigations without requiring a finished UI or brief for every addition |
 | Sources cannot support the desired inference | Return unknown; specify the missing evidence; move the question into the research queue |
 | Data access or cleanup consumes the schedule | Time-box access audit, use documented manual imports, and re-estimate at gate 1 |
 | Incompatible statistics produce confident errors | Preserve universes/vintages and limitations; reconcile only with an explicit method |
@@ -197,6 +211,6 @@ Use manually invoked refresh commands initially, with per-source cadence and sta
 
 The plan assumes existing equipment and avoids requiring new paid services. API/model spending, hosting, household finances, weekly availability, and any commercial test remain unestablished. None is necessary to write the schema and run the first access checks. Before making a calendar commitment, establish sustainable weekly capacity; before a venture comparison becomes a recommendation to act, establish relevant family constraints.
 
-**First implementation session:** Create the source register and coverage ledger; verify access to ACS, matching boundaries, and one local public-function document; select three measures; define the observation/evidence contract; record unresolved access issues. The next decision is whether that slice supports a useful, inspectable answer at manageable cost.
+**Current sequencing:** Follow [state](execution/state.md) and [backlog](execution/backlog.md). T007c remains next ready for explicit activation and pinned application reads. Source-batch preparation can be selected independently when its own safeguards and contracts are ready; broader research access and basic backup have separate bounded packets. Do not repeat completed acquisition or sealing to resume.
 
-**Planning handoff:** Reviewed both foundational artifacts and the repository's initial state. Added this plan and a README link. Spot-checked official source documentation; identified API-key and comparability considerations. No datasets were ingested, no application was built, and no external commitments were made. The next gate is foundation/access validation.
+**Original planning handoff (September 26, 2026; historical):** Reviewed both foundational artifacts and the repository's initial state. Added this plan and a README link. Spot-checked official source documentation; identified API-key and comparability considerations. No datasets were ingested, no application was built, and no external commitments were made. The next gate is foundation/access validation.

@@ -23,13 +23,18 @@ Status is maintained by the supervisor. Statuses reflect September 29 T007b real
 | T007c | Explicit activation and release-filtered reads | T007b | ready (supervisor API/activation freeze first) |
 | T008 | Integrated map/table/evidence workflow | T004, T005, T007 | pending |
 | T009 | Job lifecycle, interruption and retry, failed-refresh preservation | T007 | planned |
-| T010 | CBP/NES/LODES and broad coverage | T008, T009 | planned |
-| T011 | Curated profiles, relationships, review and lexical search | T008 | planned |
-| T012 | Private briefs, research queue and sensitivity worksheet | T008, T011 | planned |
-| T013 | Export, migrations/recovery, backup and restore | T009, T012 | planned |
+| T010 | Bounded source batches: CBP/NES/LODES and useful public overlays | T006b, T007b; per-source contract | planned |
+| T011 | Curated profiles, relationships, review and lexical search | T007c; T008 for UI integration | planned |
+| T011a | Retained document intake and citable extracts | T006b; selected document/lineage contract | planned |
+| T011b | Bounded research access for existing agents | T007c; selected accepted evidence/access contract | planned |
+| T013a | Basic offline backup and verified fresh-directory restore | T007b; bounded backup contract/destination | planned |
+| T012 | Private briefs, research queue and sensitivity worksheet | T008, T011, T013a | planned |
+| T013 | General exports and extended migration/recovery tooling | T009, T012, T013a | planned |
 | T014 | MVP acceptance review and operating handoff | T010, T011, T012, T013 | planned |
 
 ## Accepted checkpoint and next assignments
+
+- **Planning alignment ([D023](decisions.md#d023--personal-research-value-and-proportionate-delivery-2026-09-29)):** T007c remains the next ready implementation checkpoint. A bounded source batch may be prepared independently of T008/T009 when its own contracts and safety checks are ready. The new document-intake, agent-access and basic-backup packets below are planned, not implemented or automatically activated. There is no request to acquire more sources in this documentation update.
 
 - **T006f done:** explicit local prompt/Keychain/env injection, default none, redacted backend provider and lifecycle cleanup accepted with sentinel tests. No key was supplied or source fetched. [D020](decisions.md#d020--explicit-local-credential-injection-authorized-2026-09-29), [handoff](handoffs/2026-09-29-local-credentials.md).
 - **T006/T006g done:** user-local hidden-prompt acquisition matched the unchanged Subject JSON contract; strict bundle verification and fresh-root three-source validation/current revalidation passed, 303 retained versions. Astra accepted traceable ingestion. No seal/activation. [Real-slice handoff](handoffs/2026-09-29-real-slice.md). The earlier 321-test implementation acceptance remains valid; no code change was needed for actual source bytes.
@@ -161,3 +166,29 @@ Accepted after Astra freeze, bounded Sol implementation, integration tests and r
 ### T007c — Explicit activation and pinned release reads (ready)
 
 Define and implement explicit activation, release-filtered baseline reads and basic old/new comparison only after accepted closure/sealing. Failed activation preserves the active pointer; every displayed fact and its supporting metadata must belong to the explicit pinned release. Coordinate API consumers and keep private strategy separate. T008 map/table/evidence integration follows; real candidate validation alone is not UI acceptance.
+
+## Research-oriented expansion packets
+
+These packets identify minimum outcomes and actual dependencies; they are not a mandate to implement them all before research can begin. Select a bounded next assignment based on the questions enabled, acquisition/maintenance effort and current prerequisites. New source families require reviewed source and release-closure contracts: T007b's three-source, 303-candidate build is not a generic builder for additional overlays. Preserve accepted specs, migrations and roots; no implicit upgrades, release changes or automatic retrievals.
+
+### T010 — Bounded public source batches
+
+Choose the next batch by the local problems, organizations, economic context or relationships it can illuminate. CBP, NES and LODES remain candidates; organizational documents, budgets, procurement and development evidence can be selected earlier when useful. Record a short source packet: questions enabled, exact scope/period/geography, access and retention constraints, minimum output depth, resource bounds, acceptance checks and stopping condition. Do not turn this into repeated audits of unchanged blocked routes or require a separate planning project for routine additions.
+
+Source preparation and authorized bounded acquisition do not depend on completed maps or a general job framework. Use existing foreground primitives when sufficient; require T009 capabilities only where the actual workload needs them. Retained originals and correct provenance can be a completed collection outcome before structured normalization. Baseline inclusion, agent access and display remain separate gates. Do not imply all candidate datasets are accessible or licensed for every processing destination.
+
+### T011a — Retained documents before full institutional modeling
+
+Freeze the minimum contract for permitted originals, sanitized retrieval/source metadata, stable document/page/section locators, original/derived hashes, retention limits and explicit intake/validation status. Add extraction and lexical indexing only where a selected investigation needs them. Acceptance verifies exact original readback and citation resolution, labels extraction limitations, and prevents draft/unreleased content from leaking into baseline reads. No complete organization graph, entity merge system or polished profile UI is required. This is new work; the existing budget adapter remains unchanged and does not accept arbitrary documents.
+
+### T011b — Existing-agent research access
+
+Use T007c's explicit release-filtered reads to expose a small allowlisted, bounded evidence interface to an existing agent. Start with a service/CLI approach if adequate; do not build an embedded chatbot, generic connector platform, vector store or orchestrator by default. Access includes stable evidence IDs/locators, dates, uncertainty and limitations. Document material may use T011a only after its own release or explicitly separate exploratory-access contract is accepted. Private strategy is excluded by default, and permitted external processing must be explicit; source availability is not blanket redistribution permission.
+
+Acceptance includes one scoped investigation producing inspectable citations, counterevidence, unknowns and a next validation step, with tests for out-of-selection/private evidence access and source-text instruction handling. Output remains draft research; baseline promotion and outbound actions are separate. T008's full UI and T011's complete institutional model are not prerequisites. Complete T013a before retaining irreplaceable private synthesis in the application.
+
+### T013a — Basic protection before private research accumulation
+
+Provide one bounded offline backup path and demonstrate restore to a new separate directory, preserving the current root. Freeze quiescence, paired baseline/private capture, all referenced objects/private artifacts, checksums, credential exclusion and restored reference validation. Choose an explicit user-approved destination; state same-disk versus device-loss protection honestly. A documented manual procedure can satisfy this packet if its execution and restoration are verified. It need not provide generalized export, automated scheduling, in-place migrations or recovery of arbitrary damaged stores. This packet is planned; no backup/restore capability or destination is currently accepted.
+
+T012 private-note/brief persistence depends on T013a. Drafting research questions and exploring public evidence do not need to wait for the complete private desk. T013 retains broader export and migration/recovery work rather than bundling basic protection behind all research features.

@@ -2,7 +2,8 @@
 
 Last updated: September 29, 2026 (America/New_York).
 Implementation stage: **T007b first-slice release closure and sealed build implemented, tested and verified against the accepted real bytes.** One real release is sealed; **no release is active**. Explicit activation and pinned application reads remain T007c; map/table/evidence UI remains T008.
-Latest handoff: [Sealed first-slice build](handoffs/2026-09-29-sealed-build.md).
+Latest handoff: [Personal research plan alignment](handoffs/2026-09-29-research-plan-alignment.md).
+Latest implementation/evidence handoff: [Sealed first-slice build](handoffs/2026-09-29-sealed-build.md).
 
 ## Current exact baseline
 
@@ -31,6 +32,8 @@ Fresh stores require baseline **004**. Accepted baseline 001–003 and private 0
 
 ## Next ready work and limits
 
+- **Planning clarification ([D023](decisions.md#d023--personal-research-value-and-proportionate-delivery-2026-09-29)):** optimize for Jordan's personal business discovery, informed contributions and agent-assisted investigation. Broader source collection may precede UI polish when its actual contracts/safeguards are ready. Retain useful documents before requiring full structured modeling. Planned T011a document intake, T011b bounded access for existing agents and T013a basic protection do not yet exist; basic backup/verified restore precedes irreplaceable private research. No source, schema, access or runtime capability changed in this documentation session.
+
 - **Next ready: T007c**, explicit activation and release-filtered application reads, after an Astra contract/API freeze. Pin the release above; never select latest implicitly. Preserve failure atomicity and all supporting memberships. T007 overall is incomplete until this checkpoint is accepted.
 - **T008 pending:** map/table/evidence workflow follows T007c. Current UI remains the unactivated shell. No HTTP release query/activation endpoints, default baseline reads, user export, background jobs or private-research features were added in T007b.
 - **T006e remains an unnecessary blocked alternate ZIP route.** Supported browser downloads lack enforceable transfer bounds and actual response provenance; UI access succeeded, not publisher denial. No unchanged audits, alternate representations or new source/spec/locator contracts are needed. [Continuation](handoffs/2026-09-29-capability-gate-continuation.md).
@@ -39,8 +42,10 @@ Fresh stores require baseline **004**. Accepted baseline 001–003 and private 0
 
 ## Verification and checkout accounting
 
-Final `.venv/bin/pytest -q`: **413 passed**, existing Starlette deprecation warning only. `.venv/bin/ruff check src tests scripts` and `git diff --check` passed. The independent integrity/storage suite passed 79 tests; service focused tests and CLI/credential regressions also passed. A source-edit race invalidated an earlier full run; it was discarded and superseded by the fresh complete pass. No frontend/API/dependency change required browser or frontend reruns.
+Prior T007b implementation acceptance: `.venv/bin/pytest -q` — **413 passed**, existing Starlette deprecation warning only. `.venv/bin/ruff check src tests scripts` and `git diff --check` passed. The independent integrity/storage suite passed 79 tests; service focused tests and CLI/credential regressions also passed. A source-edit race invalidated an earlier full run; it was discarded and superseded by the fresh complete pass. No frontend/API/dependency change required browser or frontend reruns.
 
-Actual nested checkout: `main`, HEAD `e1997e3d95b81ea063a287d65b1518045644a91f` (`feat: loaded census data`), sole worktree. Started clean; prior handoff's older HEAD and uncommitted state were historical. No Git mutations or sibling changes. All new code/tests/docs remain uncommitted. Preservation and test source hashes are under `/private/tmp/cdt-t007b-20260929`.
+Actual nested checkout for the documentation alignment: `main`, HEAD `94f8ae9e8f8f1c6f65b5535bb4423583e9b23766` (`feat: next checkpoint`), sole worktree, started clean. Prior T007b changes were committed before this session. Its sealed build still correctly pins historical code HEAD `e1997e3` plus its exact dirty build-input snapshot. No Git mutations or sibling changes here; only the new documentation changes are uncommitted. Application code, tests, accepted specs/migrations, dependency locks and historical evidence are preserved. The 413-test result above is prior implementation acceptance; this documentation-only session checks consistency, links and preservation without rerunning application tests or opening data roots.
 
-Explicitly requested `gpt-6-astra` supervised freeze and acceptance; two explicitly requested `gpt-6.1-sol` workers owned service and independent integrity tests. Tool metadata did not independently verify actual executing model. Coordinator owned CLI, actual replay/build/verification and execution documents. All workers and foreground commands completed; no server, acquisition process or background automation remains. See the latest handoff for exact commands and acceptance evidence.
+T007b model/process accounting: explicitly requested `gpt-6-astra` supervised freeze and acceptance; two explicitly requested `gpt-6.1-sol` workers owned service and independent integrity tests. Tool metadata did not independently verify actual executing model. Coordinator owned CLI, actual replay/build/verification and execution documents. All workers and foreground commands completed; no server, acquisition process or background automation remains. See the linked implementation handoff for those commands and acceptance evidence. The current planning handoff records the separate documentation review and checks.
+
+Documentation alignment checks: one explicitly requested Astra read-only review accepted the changes; `git diff --check` and 69 local link checks passed. Nine existing Markdown files plus one handoff changed; all other 108 tracked files remained byte-identical. No runtime tests or data-root access were needed. The reviewer completed; no implementation workers or background processes were started. These checks do not advance runtime acceptance beyond T007b.
