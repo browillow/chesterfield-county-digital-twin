@@ -79,10 +79,450 @@
           }
         }
       }
+    },
+    "/api/v1/releases/{release_id}": {
+      "get": {
+        "summary": "Get Release",
+        "operationId": "get_release_api_v1_releases__release_id__get",
+        "parameters": [
+          {
+            "name": "release_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$",
+              "title": "Release Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReleaseSummary"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/records": {
+      "get": {
+        "summary": "Get Records",
+        "operationId": "get_records_api_v1_records_get",
+        "parameters": [
+          {
+            "name": "release_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$",
+              "title": "Release Id"
+            }
+          },
+          {
+            "name": "kind",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "observation",
+                    "boundary",
+                    "document_excerpt"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Kind"
+            }
+          },
+          {
+            "name": "geography_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^51041[0-9]{6}$"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Geography Id"
+            }
+          },
+          {
+            "name": "metric_code",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "median_household_income",
+                    "poverty_rate",
+                    "household_count"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Metric Code"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 303,
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 303,
+              "minimum": 1,
+              "default": 100,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecordPage"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/evidence/{version_id}": {
+      "get": {
+        "summary": "Get Evidence",
+        "operationId": "get_evidence_api_v1_evidence__version_id__get",
+        "parameters": [
+          {
+            "name": "version_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$",
+              "title": "Version Id"
+            }
+          },
+          {
+            "name": "release_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$",
+              "title": "Release Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EvidenceResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/changes": {
+      "get": {
+        "summary": "Get Changes",
+        "operationId": "get_changes_api_v1_changes_get",
+        "parameters": [
+          {
+            "name": "old_release_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$",
+              "title": "Old Release Id"
+            }
+          },
+          {
+            "name": "new_release_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$",
+              "title": "New Release Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReleaseComparison"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/releases/{release_id}/activate": {
+      "post": {
+        "summary": "Activate Release",
+        "operationId": "activate_release_api_v1_releases__release_id__activate_post",
+        "parameters": [
+          {
+            "name": "release_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$",
+              "title": "Release Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActivationResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
+      "ActivationResult": {
+        "properties": {
+          "release_id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Release Id"
+          },
+          "synthetic": {
+            "type": "boolean",
+            "title": "Synthetic"
+          },
+          "current_dependencies_verified": {
+            "type": "boolean",
+            "const": true,
+            "title": "Current Dependencies Verified",
+            "default": true
+          },
+          "previous_release_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Previous Release Id"
+          },
+          "active_release_id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Active Release Id"
+          },
+          "changed": {
+            "type": "boolean",
+            "title": "Changed"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "release_id",
+          "synthetic",
+          "previous_release_id",
+          "active_release_id",
+          "changed"
+        ],
+        "title": "ActivationResult"
+      },
+      "ApiLocator": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "const": "api_row",
+            "title": "Kind",
+            "default": "api_row"
+          },
+          "row": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Row",
+            "description": "Zero-based JSON array row; header is row zero"
+          },
+          "geography_id": {
+            "type": "string",
+            "pattern": "^51041[0-9]{6}$",
+            "title": "Geography Id"
+          },
+          "fields": {
+            "prefixItems": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "type": "array",
+            "maxItems": 4,
+            "minItems": 4,
+            "title": "Fields"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "row",
+          "geography_id",
+          "fields"
+        ],
+        "title": "ApiLocator"
+      },
+      "BaselineRecord": {
+        "properties": {
+          "version_id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Version Id"
+          },
+          "candidate": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ObservationCandidate"
+              },
+              {
+                "$ref": "#/components/schemas/BoundaryCandidate"
+              },
+              {
+                "$ref": "#/components/schemas/DocumentCandidate"
+              }
+            ],
+            "title": "Candidate",
+            "discriminator": {
+              "propertyName": "kind",
+              "mapping": {
+                "boundary": "#/components/schemas/BoundaryCandidate",
+                "document_excerpt": "#/components/schemas/DocumentCandidate",
+                "observation": "#/components/schemas/ObservationCandidate"
+              }
+            }
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "version_id",
+          "candidate"
+        ],
+        "title": "BaselineRecord"
+      },
       "Bootstrap": {
         "properties": {
           "api_version": {
@@ -119,6 +559,974 @@
         "type": "object",
         "title": "Bootstrap"
       },
+      "BoundaryCandidate": {
+        "properties": {
+          "natural_key": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Natural Key"
+          },
+          "provenance": {
+            "$ref": "#/components/schemas/Provenance"
+          },
+          "kind": {
+            "type": "string",
+            "const": "boundary",
+            "title": "Kind",
+            "default": "boundary"
+          },
+          "geography_id": {
+            "type": "string",
+            "pattern": "^51041[0-9]{6}$",
+            "title": "Geography Id"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Name"
+          },
+          "geography_vintage": {
+            "type": "string",
+            "const": "2023",
+            "title": "Geography Vintage",
+            "default": "2023"
+          },
+          "geography_definition": {
+            "type": "string",
+            "const": "2020 Census tracts",
+            "title": "Geography Definition",
+            "default": "2020 Census tracts"
+          },
+          "crs": {
+            "type": "string",
+            "const": "EPSG:4269",
+            "title": "Crs",
+            "default": "EPSG:4269"
+          },
+          "crs_wkt": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Crs Wkt"
+          },
+          "geometry": {
+            "$ref": "#/components/schemas/Geometry"
+          },
+          "geometry_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Geometry Sha256"
+          },
+          "land_area_m2": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Land Area M2"
+          },
+          "water_area_m2": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Water Area M2"
+          },
+          "locator": {
+            "$ref": "#/components/schemas/BoundaryLocator"
+          },
+          "limitations": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Limitations"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "natural_key",
+          "provenance",
+          "geography_id",
+          "name",
+          "crs_wkt",
+          "geometry",
+          "geometry_sha256",
+          "land_area_m2",
+          "water_area_m2",
+          "locator",
+          "limitations"
+        ],
+        "title": "BoundaryCandidate"
+      },
+      "BoundaryLocator": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "const": "shapefile_record",
+            "title": "Kind",
+            "default": "shapefile_record"
+          },
+          "archive_member": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Archive Member"
+          },
+          "record": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Record",
+            "description": "Zero-based Shapefile/DBF record"
+          },
+          "geography_id": {
+            "type": "string",
+            "pattern": "^51041[0-9]{6}$",
+            "title": "Geography Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "archive_member",
+          "record",
+          "geography_id"
+        ],
+        "title": "BoundaryLocator"
+      },
+      "DocumentCandidate": {
+        "properties": {
+          "natural_key": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Natural Key"
+          },
+          "provenance": {
+            "$ref": "#/components/schemas/Provenance"
+          },
+          "kind": {
+            "type": "string",
+            "const": "document_excerpt",
+            "title": "Kind",
+            "default": "document_excerpt"
+          },
+          "claim_class": {
+            "type": "string",
+            "const": "reported",
+            "title": "Claim Class",
+            "default": "reported"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Title"
+          },
+          "reference_period": {
+            "type": "string",
+            "const": "FY2025",
+            "title": "Reference Period",
+            "default": "FY2025"
+          },
+          "geographic_scope": {
+            "prefixItems": [
+              {
+                "type": "string",
+                "const": "51041"
+              },
+              {
+                "type": "string",
+                "const": "51570"
+              }
+            ],
+            "type": "array",
+            "maxItems": 2,
+            "minItems": 2,
+            "title": "Geographic Scope",
+            "default": [
+              "51041",
+              "51570"
+            ]
+          },
+          "scope_caveat": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Scope Caveat"
+          },
+          "excerpt": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Excerpt"
+          },
+          "extracted_page_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Extracted Page Sha256"
+          },
+          "locator": {
+            "$ref": "#/components/schemas/DocumentLocator"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "natural_key",
+          "provenance",
+          "title",
+          "scope_caveat",
+          "excerpt",
+          "extracted_page_sha256",
+          "locator"
+        ],
+        "title": "DocumentCandidate"
+      },
+      "DocumentLocator": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "const": "pdf_page",
+            "title": "Kind",
+            "default": "pdf_page"
+          },
+          "pdf_page": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Pdf Page"
+          },
+          "printed_page": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Printed Page"
+          },
+          "heading": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Heading"
+          },
+          "text_start": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Text Start"
+          },
+          "text_end": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Text End"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "pdf_page",
+          "printed_page",
+          "heading",
+          "text_start",
+          "text_end"
+        ],
+        "title": "DocumentLocator"
+      },
+      "EvidenceNode": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "candidate",
+              "raw",
+              "spec",
+              "retrieval",
+              "source",
+              "metric",
+              "document",
+              "transform",
+              "query",
+              "config",
+              "code",
+              "dependency",
+              "schema",
+              "coverage"
+            ],
+            "title": "Kind"
+          },
+          "key": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Key"
+          },
+          "payload": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Payload"
+          },
+          "node_id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Node Id",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "kind",
+          "key",
+          "payload",
+          "node_id"
+        ],
+        "title": "EvidenceNode",
+        "description": "Application projection with an explicit edge target; never sealed content."
+      },
+      "EvidenceResponse": {
+        "properties": {
+          "release_id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Release Id"
+          },
+          "synthetic": {
+            "type": "boolean",
+            "title": "Synthetic"
+          },
+          "current_dependencies_verified": {
+            "type": "boolean",
+            "const": true,
+            "title": "Current Dependencies Verified",
+            "default": true
+          },
+          "record": {
+            "$ref": "#/components/schemas/BaselineRecord"
+          },
+          "nodes": {
+            "items": {
+              "$ref": "#/components/schemas/EvidenceNode"
+            },
+            "type": "array",
+            "title": "Nodes"
+          },
+          "edges": {
+            "items": {
+              "$ref": "#/components/schemas/ReleaseEdge"
+            },
+            "type": "array",
+            "title": "Edges"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "release_id",
+          "synthetic",
+          "record",
+          "nodes",
+          "edges"
+        ],
+        "title": "EvidenceResponse"
+      },
+      "Geometry": {
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "Polygon",
+              "MultiPolygon"
+            ],
+            "title": "Type"
+          },
+          "coordinates": {
+            "items": {},
+            "type": "array",
+            "title": "Coordinates"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "type",
+          "coordinates"
+        ],
+        "title": "Geometry",
+        "description": "Source CRS geometry, deliberately not advertised as a WGS84 display layer."
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "Measurement": {
+        "properties": {
+          "claim_class": {
+            "type": "string",
+            "enum": [
+              "reported",
+              "calculated",
+              "inference",
+              "hypothesis",
+              "scenario"
+            ],
+            "title": "Claim Class"
+          },
+          "value_state": {
+            "type": "string",
+            "enum": [
+              "observed",
+              "suppressed",
+              "unavailable",
+              "not_applicable"
+            ],
+            "title": "Value State"
+          },
+          "value": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Value"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          },
+          "unit": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Unit"
+          },
+          "universe": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Universe"
+          },
+          "geography_id": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Geography Id"
+          },
+          "geography_vintage": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Geography Vintage"
+          },
+          "reference_period": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Reference Period"
+          },
+          "synthetic": {
+            "type": "boolean",
+            "title": "Synthetic",
+            "default": false
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "claim_class",
+          "value_state",
+          "unit",
+          "universe",
+          "geography_id",
+          "geography_vintage",
+          "reference_period"
+        ],
+        "title": "Measurement"
+      },
+      "ObservationCandidate": {
+        "properties": {
+          "natural_key": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Natural Key"
+          },
+          "provenance": {
+            "$ref": "#/components/schemas/Provenance"
+          },
+          "kind": {
+            "type": "string",
+            "const": "observation",
+            "title": "Kind",
+            "default": "observation"
+          },
+          "metric_code": {
+            "type": "string",
+            "title": "Metric Code"
+          },
+          "metric_label": {
+            "type": "string",
+            "title": "Metric Label"
+          },
+          "aggregation": {
+            "type": "string",
+            "title": "Aggregation"
+          },
+          "measurement": {
+            "$ref": "#/components/schemas/Measurement"
+          },
+          "estimate": {
+            "$ref": "#/components/schemas/SourceNumber"
+          },
+          "margin_of_error": {
+            "$ref": "#/components/schemas/SourceNumber"
+          },
+          "confidence_level": {
+            "type": "string",
+            "const": "90%",
+            "title": "Confidence Level",
+            "default": "90%"
+          },
+          "uncertainty_kind": {
+            "type": "string",
+            "const": "published_margin_of_error",
+            "title": "Uncertainty Kind",
+            "default": "published_margin_of_error"
+          },
+          "locator": {
+            "$ref": "#/components/schemas/ApiLocator"
+          },
+          "geography_definition": {
+            "type": "string",
+            "const": "2020 Census tracts",
+            "title": "Geography Definition",
+            "default": "2020 Census tracts"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "natural_key",
+          "provenance",
+          "metric_code",
+          "metric_label",
+          "aggregation",
+          "measurement",
+          "estimate",
+          "margin_of_error",
+          "locator"
+        ],
+        "title": "ObservationCandidate"
+      },
+      "Provenance": {
+        "properties": {
+          "source_id": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Source Id"
+          },
+          "artifact_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Artifact Sha256"
+          },
+          "artifact_bytes": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Artifact Bytes"
+          },
+          "spec_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Spec Sha256"
+          },
+          "transform_id": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Transform Id"
+          },
+          "retrieval": {
+            "$ref": "#/components/schemas/Retrieval"
+          },
+          "synthetic": {
+            "type": "boolean",
+            "title": "Synthetic"
+          },
+          "retention": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Retention"
+          },
+          "redistribution": {
+            "type": "string",
+            "enum": [
+              "unconfirmed",
+              "allowed"
+            ],
+            "title": "Redistribution",
+            "default": "unconfirmed"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "source_id",
+          "artifact_sha256",
+          "artifact_bytes",
+          "spec_sha256",
+          "transform_id",
+          "retrieval",
+          "synthetic",
+          "retention"
+        ],
+        "title": "Provenance"
+      },
+      "RecordChange": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "observation",
+              "boundary",
+              "document_excerpt"
+            ],
+            "title": "Kind"
+          },
+          "natural_key": {
+            "type": "string",
+            "title": "Natural Key"
+          },
+          "change": {
+            "type": "string",
+            "enum": [
+              "added",
+              "removed",
+              "changed"
+            ],
+            "title": "Change"
+          },
+          "old_version_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Old Version Id"
+          },
+          "new_version_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "New Version Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "kind",
+          "natural_key",
+          "change",
+          "old_version_id",
+          "new_version_id"
+        ],
+        "title": "RecordChange"
+      },
+      "RecordPage": {
+        "properties": {
+          "release_id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Release Id"
+          },
+          "synthetic": {
+            "type": "boolean",
+            "title": "Synthetic"
+          },
+          "current_dependencies_verified": {
+            "type": "boolean",
+            "const": true,
+            "title": "Current Dependencies Verified",
+            "default": true
+          },
+          "records": {
+            "items": {
+              "$ref": "#/components/schemas/BaselineRecord"
+            },
+            "type": "array",
+            "title": "Records"
+          },
+          "total": {
+            "type": "integer",
+            "maximum": 303.0,
+            "minimum": 0.0,
+            "title": "Total"
+          },
+          "offset": {
+            "type": "integer",
+            "maximum": 303.0,
+            "minimum": 0.0,
+            "title": "Offset"
+          },
+          "limit": {
+            "type": "integer",
+            "maximum": 303.0,
+            "minimum": 1.0,
+            "title": "Limit"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "release_id",
+          "synthetic",
+          "records",
+          "total",
+          "offset",
+          "limit"
+        ],
+        "title": "RecordPage"
+      },
+      "ReleaseComparison": {
+        "properties": {
+          "old_release_id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Old Release Id"
+          },
+          "new_release_id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "New Release Id"
+          },
+          "old_synthetic": {
+            "type": "boolean",
+            "title": "Old Synthetic"
+          },
+          "new_synthetic": {
+            "type": "boolean",
+            "title": "New Synthetic"
+          },
+          "current_dependencies_verified": {
+            "type": "boolean",
+            "const": true,
+            "title": "Current Dependencies Verified",
+            "default": true
+          },
+          "unchanged_count": {
+            "type": "integer",
+            "maximum": 303.0,
+            "minimum": 0.0,
+            "title": "Unchanged Count"
+          },
+          "changes": {
+            "items": {
+              "$ref": "#/components/schemas/RecordChange"
+            },
+            "type": "array",
+            "maxItems": 606,
+            "title": "Changes"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "old_release_id",
+          "new_release_id",
+          "old_synthetic",
+          "new_synthetic",
+          "unchanged_count",
+          "changes"
+        ],
+        "title": "ReleaseComparison"
+      },
+      "ReleaseEdge": {
+        "properties": {
+          "from_node": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "From Node"
+          },
+          "role": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Role"
+          },
+          "to_node": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "To Node"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "from_node",
+          "role",
+          "to_node"
+        ],
+        "title": "ReleaseEdge"
+      },
+      "ReleaseNode": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "candidate",
+              "raw",
+              "spec",
+              "retrieval",
+              "source",
+              "metric",
+              "document",
+              "transform",
+              "query",
+              "config",
+              "code",
+              "dependency",
+              "schema",
+              "coverage"
+            ],
+            "title": "Kind"
+          },
+          "key": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Key"
+          },
+          "payload": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Payload"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "kind",
+          "key",
+          "payload"
+        ],
+        "title": "ReleaseNode"
+      },
+      "ReleaseSummary": {
+        "properties": {
+          "release_id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Release Id"
+          },
+          "synthetic": {
+            "type": "boolean",
+            "title": "Synthetic"
+          },
+          "current_dependencies_verified": {
+            "type": "boolean",
+            "const": true,
+            "title": "Current Dependencies Verified",
+            "default": true
+          },
+          "candidate_report_id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Candidate Report Id"
+          },
+          "build_report_id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Build Report Id"
+          },
+          "counts": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Counts"
+          },
+          "coverage": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Coverage"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/ReleaseNode"
+            },
+            "type": "array",
+            "title": "Sources"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "release_id",
+          "synthetic",
+          "candidate_report_id",
+          "build_report_id",
+          "counts",
+          "coverage",
+          "sources"
+        ],
+        "title": "ReleaseSummary"
+      },
+      "Retrieval": {
+        "properties": {
+          "url": {
+            "type": "string",
+            "title": "Url"
+          },
+          "retrieved_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Retrieved At"
+          },
+          "status_code": {
+            "type": "integer",
+            "maximum": 599.0,
+            "minimum": 100.0,
+            "title": "Status Code"
+          },
+          "media_type": {
+            "type": "string",
+            "title": "Media Type"
+          },
+          "etag": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Etag"
+          },
+          "last_modified": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Modified"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "url",
+          "retrieved_at",
+          "status_code",
+          "media_type"
+        ],
+        "title": "Retrieval"
+      },
       "SessionResponse": {
         "properties": {
           "csrf_token": {
@@ -132,6 +1540,112 @@
           "csrf_token"
         ],
         "title": "SessionResponse"
+      },
+      "SourceNumber": {
+        "properties": {
+          "value_state": {
+            "type": "string",
+            "enum": [
+              "observed",
+              "suppressed",
+              "unavailable",
+              "not_applicable"
+            ],
+            "title": "Value State"
+          },
+          "value": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Value"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          },
+          "raw": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Raw"
+          },
+          "annotation": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Annotation"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "value_state",
+          "raw",
+          "annotation"
+        ],
+        "title": "SourceNumber"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
       }
     }
   }

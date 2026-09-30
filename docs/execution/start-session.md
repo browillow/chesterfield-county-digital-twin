@@ -6,13 +6,14 @@ Paste this prompt:
 
 ```text
 Implement the next ready checkpoint for Chesterfield County Digital Twin:
-T007c, explicit activation and release-filtered application reads, after an
-Astra API/activation contract freeze. T007b complete first-slice closure and
-sealed build is accepted. Map/table/evidence UI remains later T008.
+T008, the first useful map/table/evidence workflow, after confirming T007c
+acceptance in current state. Use the existing explicit-release application API.
+Freeze only changed UI/display-geometry contracts under Astra; do not rebuild
+accepted activation, closure verification or source ingestion.
 
 Read AGENTS.md, docs/execution/state.md, workflow.md, the latest linked
-handoff, relevant backlog/contracts, D017–D023 including live continuations,
-the T007b freeze, source_specs/ and architecture release/reproducibility and
+handoff, relevant backlog/contracts, D017–D024 including live continuations,
+the T007b and T007c freezes, source_specs/ and architecture release/reproducibility and
 query-consistency sections. Reconcile actual branch/HEAD/worktree and preserve
 all uncommitted work. Use GPT-6 Astra as supervisor; explicitly request
 gpt-6.1-sol for useful bounded workers with focused context, exclusive file
@@ -28,11 +29,13 @@ chatbot. T011a/T011b/T013a remain planned; no general document intake, agent acc
 or backup capability is implied. Complete basic backup/verified fresh-directory
 restore before irreplaceable private research accumulation. Give infrastructure
 work a concrete research benefit or failure it prevents; reuse accepted safeguards
-and keep review/testing proportionate. This session remains bounded to T007c,
+and keep review/testing proportionate. This next session remains bounded to T008,
 not simultaneous implementation or acquisition of all those future packets.
 
 The local skeleton, adapters, staging, validation reports, credential injection,
-bounded acquisition and T007b sealed build are accepted. The user previously
+bounded acquisition, T007b sealed build and T007c activation/pinned reads are
+accepted as recorded in state. T007c also adds a basic candidate-identity comparison;
+it is not a statistical or complete metadata diff. The user previously
 acquired the unchanged 2023 ACS 5-Year Subject original, 11,368 bytes, SHA-256
  df0a0dffa69d4409102a616cc5144b502117c3eaad4907c4afee51d7a0334fdf.
 All 75 exact tracts, 225 ACS observations, 75 boundaries and 3 document excerpts
@@ -44,22 +47,29 @@ Source-spec access-status prose is historical; do not alter accepted identities.
 The explicit sealed real release is
 81ec338c8c4ff0da3cd7d3f6aa5acbdebb14c65a9096689d202211629138cf84
 in /Users/jordan/Library/Application Support/ChesterfieldTwin-SealedSlice-20260929.
-The active pointer is null. Read exact run/import/candidate-report/build-report
+Use the active pointer recorded in current state and verify it through checked
+bootstrap. Do not reactivate merely to resume. Read exact run/import/candidate-report/build-report
 IDs from state and the linked implementation handoff; never select latest
 implicitly. Separate-process verification and Astra read-only acceptance passed. The release contains
 303 candidates, 330 complete nodes and 1,983 edges, with exact retained build
-inputs/locks/runtime/schema/query/config/transform pins. Final tests: 413 passed.
+inputs/locks/runtime/schema/query/config/transform pins. Read final test counts and actual-byte evidence in the T007c handoff; 413 was the
+historical T007b result.
 Do not rebuild accepted components, repeat acquisition/sealing, request a key,
 or reopen earlier roots merely to resume. Verify this explicit current closure.
 
-Freeze activation and pinned-read contracts before delegation. Explicit activation
-must verify the selected sealed closure and atomically change the active pointer;
-failed activation preserves the previous pointer. Baseline reads must require and
-echo an explicit release ID and include only its facts and supporting metadata.
-Do not expose draft/unselected/synthetic content as the real baseline or silently
-fall back to latest. Keep historical report readback distinct from current evidence
-verification. Preserve separate build, verification, activation and read operations.
-Keep private data separate. No map/table/evidence UI implementation in T007c.
+Pin the release once when the UI initializes; send that explicit ID on every
+summary/records/evidence request, and handle a changed active pointer without
+mixing releases mid-view. Reuse bounded filters, pagination, current verification
+and selected retrieval metadata. Preserve units, 90% MOE, annotations, unavailable
+states, exact citations and the two-locality document caveat. Geometry is source
+EPSG:4269; do not silently advertise it as a WGS84 display layer. Freeze any
+necessary display derivation and retained membership before implementing it.
+No latest fallback, drafts or synthetic content as the real baseline. Keep
+historical report readback distinct from current evidence verification. Preserve
+separate build, verification, activation and read operations and private separation.
+Check one sourced map/table/evidence path in the actual browser, including
+accessible equivalent table, source locator, uncertainty and offline behavior.
+Do not infer a complete T008 gate from backend or synthetic UI tests alone.
 
 Preserve migrations 001–004, the real schema-004 and schema-003 roots and all
 other earlier roots. No upgrade/recovery or evidence repair path exists. If new

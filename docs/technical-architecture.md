@@ -315,7 +315,7 @@ pyproject.toml
 uv.lock
 ```
 
-The commands below define the intended interface. `init`, `doctor`, `serve`, bounded `acquire-acs`, and explicit `release build` / `release verify` are implemented. Release build requires explicit root/run/import/report arguments. Activation, user export, backup, and restore remain proposed; scripts provide explicit staging and candidate validation. See [README](../README.md) for verified setup commands.
+The commands below define the intended interface. `init`, `doctor`, `serve`, bounded `acquire-acs`, and explicit `release build` / `release verify` / `release activate` are implemented. Build requires explicit root/run/import/report arguments; verification and activation require explicit root/release IDs. T007c adds authenticated pinned summary/records/evidence/comparison reads; map/table UI, user export, backup, and restore remain proposed; scripts provide explicit staging and candidate validation. See [README](../README.md) for verified setup commands.
 
 ```sh
 # First setup: resolve the checked-in runtimes and locks, then build assets.
@@ -332,7 +332,7 @@ uv run cdt serve --open
 uv run cdt ingest acs --spec source_specs/acs.toml
 uv run cdt release build
 uv run cdt validate --release <release-id>
-uv run cdt release activate <release-id>
+uv run cdt release activate --data-dir <root> --release-id <release-id>
 uv run cdt export baseline --release <release-id> --format json
 
 # With the application stopped.

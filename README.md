@@ -1,6 +1,6 @@
 # Chesterfield County Digital Twin
 
-A private, locally operated county evidence tool. The local skeleton runs: Python/FastAPI serves a React shell, with separate public-baseline and private SQLite stores outside the checkout. The first real three-source candidate slice is retained and currently validated: 225 ACS observations, 75 tract boundaries and 3 document excerpts. The first real release is now sealed and current-verified in a fresh schema-004 root. No release is active; the UI remains the empty shell. The source audit and remaining work are recorded in [current state](docs/execution/state.md).
+A private, locally operated county evidence tool. The local skeleton runs: Python/FastAPI serves a React shell, with separate public-baseline and private SQLite stores outside the checkout. The first real three-source candidate slice is retained and currently validated: 225 ACS observations, 75 tract boundaries and 3 document excerpts. The first real release is sealed and explicitly active in its schema-004 root. T007c activation and pinned application reads are accepted and verified against the retained real bytes; see current state for exact identities. The UI remains a shell with data views deferred to T008. The source audit and remaining work are recorded in [current state](docs/execution/state.md).
 
 ## Setup and daily use
 
@@ -105,8 +105,52 @@ not expose source text or local exception details; preserve the root and reports
 The [closure contract](docs/execution/t007b-freeze.md) defines the complete graph
 and code-snapshot scope. Use the exact root and identities in the latest
 [handoff](docs/execution/handoffs/2026-09-29-sealed-build.md). Preserve schema-003
-and earlier roots: no migration upgrade exists. Explicit activation and pinned
-application reads remain T007c; map/table/evidence UI remains T008.
+and earlier roots: no migration upgrade exists. Activation and pinned reads use
+the separate application boundary below; map/table/evidence UI remains T008.
+
+## Explicit activation and pinned application reads
+
+Activate only an explicitly selected real sealed release in its existing root:
+
+```sh
+uv run --no-sync cdt release activate \
+  --data-dir '/absolute/path/to/schema-004-root' \
+  --release-id RELEASE_ID
+```
+
+Activation verifies the complete current closure within the pointer transaction.
+Precommit failure preserves the previous pointer; reactivating the same ID still
+reverifies it. A synthetic release cannot become the active baseline. Build,
+verification and activation remain separate operations. No new retrieval occurs.
+An interruption after commit can leave the new complete pointer, so inspect the
+checked bootstrap before retrying an interrupted command.
+
+Start `serve --data-dir ROOT --open` against that explicit root to use its local
+session. Bootstrap verifies the active real release and exposes its ID. Baseline
+API clients must send that pinned ID on every read:
+
+| Authenticated endpoint | Explicit selection |
+| --- | --- |
+| `GET /api/v1/releases/{release_id}` | Summary, coverage and selected sources |
+| `GET /api/v1/records?release_id=...` | Typed records; optional kind, geography_id, metric_code, offset and limit |
+| `GET /api/v1/evidence/{version_id}?release_id=...` | Selected record and its reachable supporting metadata |
+| `GET /api/v1/changes?old_release_id=...&new_release_id=...` | Candidate identity changes between two pinned releases |
+| `POST /api/v1/releases/{release_id}/activate` | Same explicit activation; session, exact Origin and CSRF token required; no body |
+
+Records are sorted by version ID, filtered before pagination and bounded to 303
+per request (default 100). Responses echo release IDs and synthetic status. Sealed
+synthetic reads remain visibly synthetic and cannot be activated. No request
+falls back to latest, drafts or unselected records. Every operation verifies current
+retained dependencies; historical report success cannot hide missing evidence.
+Comparison reports candidate identity changes, not statistical significance or a
+complete supporting-metadata diff.
+
+Evidence preserves values, annotations, 90% margins of error, units, periods,
+exact locators and selected retrieval metadata. Boundary geometry remains source
+NAD83/EPSG:4269. The budget document covers Chesterfield and Colonial Heights;
+its redistribution remains unconfirmed. There is no raw download or export route,
+map/table/evidence UI, general document intake, agent-access capability or backup
+in this checkpoint. [T007c contracts](docs/execution/t007c-freeze.md).
 
 ## Verification
 
@@ -137,7 +181,7 @@ uv run --no-sync python scripts/stage_audited_sources.py --boundary /path/to/aud
 
 This command retains local evidence and repeats each import to verify reuse; it does not fetch, activate or export. It reports counts/hashes only. Retrieval times come from pinned specifications; successful response headers are declared, not freshly verified. The county PDF's redistribution remains unconfirmed. Baseline migration 004 is required: existing 001–003 stores are rejected without upgrading; preserve them and choose a separate new root.
 
-The explicit bounded ACS command and first real three-source ingestion are accepted. Complete first-slice closure and explicit sealed build are accepted. Broader job orchestration, explicit activation and pinned application reads, map/table/evidence inspection, private brief editing and recovery remain future work. Validation reports require an explicit staging run and explicit import IDs; they never choose latest evidence. Complete synthetic selections pass only as synthetic. Historical real boundary/document selections still report missing ACS; the new explicit three-source selection passes. Reports pin inputs and validator identity, remain immutable, and describe evidence verification at creation time; reading an old report does not recheck current object availability. Revalidate explicitly after evidence changes. No report authorizes sealing or activation. Next is T007c explicit activation and pinned application reads; no active release or default baseline reads exist.
+The explicit bounded ACS command and first real three-source ingestion are accepted. Complete first-slice closure and explicit sealed build are accepted. Explicit activation, pinned application reads and basic comparison are implemented. Broader job orchestration, map/table/evidence inspection, private brief editing and recovery remain future work. Validation reports require an explicit staging run and explicit import IDs; they never choose latest evidence. Complete synthetic selections pass only as synthetic. Historical real boundary/document selections still report missing ACS; the new explicit three-source selection passes. Reports pin inputs and validator identity, remain immutable, and describe evidence verification at creation time; reading an old report does not recheck current object availability. Revalidate explicitly after evidence changes. No report authorizes sealing or activation. Actual T007c acceptance and the selected active pointer are recorded in current state. T008 is the next UI checkpoint; future source, agent-access and basic-backup packets retain their own contracts.
 
 For implementation sessions, read [AGENTS.md](AGENTS.md), [state](docs/execution/state.md), [backlog](docs/execution/backlog.md), and [workflow](docs/execution/workflow.md). See the [MVP plan](docs/mvp-plan.md), [technical architecture](docs/technical-architecture.md), and [illustrative UI concepts](docs/ui-concepts/README.md) for intended later behavior.
 

@@ -55,10 +55,144 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/releases/{release_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Release */
+        get: operations["get_release_api_v1_releases__release_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/records": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Records */
+        get: operations["get_records_api_v1_records_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/evidence/{version_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Evidence */
+        get: operations["get_evidence_api_v1_evidence__version_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/changes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Changes */
+        get: operations["get_changes_api_v1_changes_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/releases/{release_id}/activate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Activate Release */
+        post: operations["activate_release_api_v1_releases__release_id__activate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** ActivationResult */
+        ActivationResult: {
+            /** Release Id */
+            release_id: string;
+            /** Synthetic */
+            synthetic: boolean;
+            /**
+             * Current Dependencies Verified
+             * @default true
+             * @constant
+             */
+            current_dependencies_verified: true;
+            /** Previous Release Id */
+            previous_release_id: string | null;
+            /** Active Release Id */
+            active_release_id: string;
+            /** Changed */
+            changed: boolean;
+        };
+        /** ApiLocator */
+        ApiLocator: {
+            /**
+             * Kind
+             * @default api_row
+             * @constant
+             */
+            kind: "api_row";
+            /**
+             * Row
+             * @description Zero-based JSON array row; header is row zero
+             */
+            row: number;
+            /** Geography Id */
+            geography_id: string;
+            /** Fields */
+            fields: [
+                string,
+                string,
+                string,
+                string
+            ];
+        };
+        /** BaselineRecord */
+        BaselineRecord: {
+            /** Version Id */
+            version_id: string;
+            /** Candidate */
+            candidate: components["schemas"]["ObservationCandidate"] | components["schemas"]["BoundaryCandidate"] | components["schemas"]["DocumentCandidate"];
+        };
         /** Bootstrap */
         Bootstrap: {
             /**
@@ -77,10 +211,443 @@ export interface components {
             /** Capabilities */
             capabilities?: string[];
         };
+        /** BoundaryCandidate */
+        BoundaryCandidate: {
+            /** Natural Key */
+            natural_key: string;
+            provenance: components["schemas"]["Provenance"];
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "boundary";
+            /** Geography Id */
+            geography_id: string;
+            /** Name */
+            name: string;
+            /**
+             * Geography Vintage
+             * @default 2023
+             * @constant
+             */
+            geography_vintage: "2023";
+            /**
+             * Geography Definition
+             * @default 2020 Census tracts
+             * @constant
+             */
+            geography_definition: "2020 Census tracts";
+            /**
+             * Crs
+             * @default EPSG:4269
+             * @constant
+             */
+            crs: "EPSG:4269";
+            /** Crs Wkt */
+            crs_wkt: string;
+            geometry: components["schemas"]["Geometry"];
+            /** Geometry Sha256 */
+            geometry_sha256: string;
+            /** Land Area M2 */
+            land_area_m2: number;
+            /** Water Area M2 */
+            water_area_m2: number;
+            locator: components["schemas"]["BoundaryLocator"];
+            /** Limitations */
+            limitations: string;
+        };
+        /** BoundaryLocator */
+        BoundaryLocator: {
+            /**
+             * Kind
+             * @default shapefile_record
+             * @constant
+             */
+            kind: "shapefile_record";
+            /** Archive Member */
+            archive_member: string;
+            /**
+             * Record
+             * @description Zero-based Shapefile/DBF record
+             */
+            record: number;
+            /** Geography Id */
+            geography_id: string;
+        };
+        /** DocumentCandidate */
+        DocumentCandidate: {
+            /** Natural Key */
+            natural_key: string;
+            provenance: components["schemas"]["Provenance"];
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "document_excerpt";
+            /**
+             * Claim Class
+             * @default reported
+             * @constant
+             */
+            claim_class: "reported";
+            /** Title */
+            title: string;
+            /**
+             * Reference Period
+             * @default FY2025
+             * @constant
+             */
+            reference_period: "FY2025";
+            /**
+             * Geographic Scope
+             * @default [
+             *       "51041",
+             *       "51570"
+             *     ]
+             */
+            geographic_scope: [
+                "51041",
+                "51570"
+            ];
+            /** Scope Caveat */
+            scope_caveat: string;
+            /** Excerpt */
+            excerpt: string;
+            /** Extracted Page Sha256 */
+            extracted_page_sha256: string;
+            locator: components["schemas"]["DocumentLocator"];
+        };
+        /** DocumentLocator */
+        DocumentLocator: {
+            /**
+             * Kind
+             * @default pdf_page
+             * @constant
+             */
+            kind: "pdf_page";
+            /** Pdf Page */
+            pdf_page: number;
+            /** Printed Page */
+            printed_page: string;
+            /** Heading */
+            heading: string;
+            /** Text Start */
+            text_start: number;
+            /** Text End */
+            text_end: number;
+        };
+        /**
+         * EvidenceNode
+         * @description Application projection with an explicit edge target; never sealed content.
+         */
+        EvidenceNode: {
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "candidate" | "raw" | "spec" | "retrieval" | "source" | "metric" | "document" | "transform" | "query" | "config" | "code" | "dependency" | "schema" | "coverage";
+            /** Key */
+            key: string;
+            /** Payload */
+            payload: {
+                [key: string]: unknown;
+            };
+            /** Node Id */
+            readonly node_id: string;
+        };
+        /** EvidenceResponse */
+        EvidenceResponse: {
+            /** Release Id */
+            release_id: string;
+            /** Synthetic */
+            synthetic: boolean;
+            /**
+             * Current Dependencies Verified
+             * @default true
+             * @constant
+             */
+            current_dependencies_verified: true;
+            record: components["schemas"]["BaselineRecord"];
+            /** Nodes */
+            nodes: components["schemas"]["EvidenceNode"][];
+            /** Edges */
+            edges: components["schemas"]["ReleaseEdge"][];
+        };
+        /**
+         * Geometry
+         * @description Source CRS geometry, deliberately not advertised as a WGS84 display layer.
+         */
+        Geometry: {
+            /**
+             * Type
+             * @enum {string}
+             */
+            type: "Polygon" | "MultiPolygon";
+            /** Coordinates */
+            coordinates: unknown[];
+        };
+        /** HTTPValidationError */
+        HTTPValidationError: {
+            /** Detail */
+            detail?: components["schemas"]["ValidationError"][];
+        };
+        /** Measurement */
+        Measurement: {
+            /**
+             * Claim Class
+             * @enum {string}
+             */
+            claim_class: "reported" | "calculated" | "inference" | "hypothesis" | "scenario";
+            /**
+             * Value State
+             * @enum {string}
+             */
+            value_state: "observed" | "suppressed" | "unavailable" | "not_applicable";
+            /** Value */
+            value?: string | null;
+            /** Reason */
+            reason?: string | null;
+            /** Unit */
+            unit: string;
+            /** Universe */
+            universe: string;
+            /** Geography Id */
+            geography_id: string;
+            /** Geography Vintage */
+            geography_vintage: string;
+            /** Reference Period */
+            reference_period: string;
+            /**
+             * Synthetic
+             * @default false
+             */
+            synthetic: boolean;
+        };
+        /** ObservationCandidate */
+        ObservationCandidate: {
+            /** Natural Key */
+            natural_key: string;
+            provenance: components["schemas"]["Provenance"];
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "observation";
+            /** Metric Code */
+            metric_code: string;
+            /** Metric Label */
+            metric_label: string;
+            /** Aggregation */
+            aggregation: string;
+            measurement: components["schemas"]["Measurement"];
+            estimate: components["schemas"]["SourceNumber"];
+            margin_of_error: components["schemas"]["SourceNumber"];
+            /**
+             * Confidence Level
+             * @default 90%
+             * @constant
+             */
+            confidence_level: "90%";
+            /**
+             * Uncertainty Kind
+             * @default published_margin_of_error
+             * @constant
+             */
+            uncertainty_kind: "published_margin_of_error";
+            locator: components["schemas"]["ApiLocator"];
+            /**
+             * Geography Definition
+             * @default 2020 Census tracts
+             * @constant
+             */
+            geography_definition: "2020 Census tracts";
+        };
+        /** Provenance */
+        Provenance: {
+            /** Source Id */
+            source_id: string;
+            /** Artifact Sha256 */
+            artifact_sha256: string;
+            /** Artifact Bytes */
+            artifact_bytes: number;
+            /** Spec Sha256 */
+            spec_sha256: string;
+            /** Transform Id */
+            transform_id: string;
+            retrieval: components["schemas"]["Retrieval"];
+            /** Synthetic */
+            synthetic: boolean;
+            /** Retention */
+            retention: string;
+            /**
+             * Redistribution
+             * @default unconfirmed
+             * @enum {string}
+             */
+            redistribution: "unconfirmed" | "allowed";
+        };
+        /** RecordChange */
+        RecordChange: {
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "observation" | "boundary" | "document_excerpt";
+            /** Natural Key */
+            natural_key: string;
+            /**
+             * Change
+             * @enum {string}
+             */
+            change: "added" | "removed" | "changed";
+            /** Old Version Id */
+            old_version_id: string | null;
+            /** New Version Id */
+            new_version_id: string | null;
+        };
+        /** RecordPage */
+        RecordPage: {
+            /** Release Id */
+            release_id: string;
+            /** Synthetic */
+            synthetic: boolean;
+            /**
+             * Current Dependencies Verified
+             * @default true
+             * @constant
+             */
+            current_dependencies_verified: true;
+            /** Records */
+            records: components["schemas"]["BaselineRecord"][];
+            /** Total */
+            total: number;
+            /** Offset */
+            offset: number;
+            /** Limit */
+            limit: number;
+        };
+        /** ReleaseComparison */
+        ReleaseComparison: {
+            /** Old Release Id */
+            old_release_id: string;
+            /** New Release Id */
+            new_release_id: string;
+            /** Old Synthetic */
+            old_synthetic: boolean;
+            /** New Synthetic */
+            new_synthetic: boolean;
+            /**
+             * Current Dependencies Verified
+             * @default true
+             * @constant
+             */
+            current_dependencies_verified: true;
+            /** Unchanged Count */
+            unchanged_count: number;
+            /** Changes */
+            changes: components["schemas"]["RecordChange"][];
+        };
+        /** ReleaseEdge */
+        ReleaseEdge: {
+            /** From Node */
+            from_node: string;
+            /** Role */
+            role: string;
+            /** To Node */
+            to_node: string;
+        };
+        /** ReleaseNode */
+        ReleaseNode: {
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "candidate" | "raw" | "spec" | "retrieval" | "source" | "metric" | "document" | "transform" | "query" | "config" | "code" | "dependency" | "schema" | "coverage";
+            /** Key */
+            key: string;
+            /** Payload */
+            payload: {
+                [key: string]: unknown;
+            };
+        };
+        /** ReleaseSummary */
+        ReleaseSummary: {
+            /** Release Id */
+            release_id: string;
+            /** Synthetic */
+            synthetic: boolean;
+            /**
+             * Current Dependencies Verified
+             * @default true
+             * @constant
+             */
+            current_dependencies_verified: true;
+            /** Candidate Report Id */
+            candidate_report_id: string;
+            /** Build Report Id */
+            build_report_id: string;
+            /** Counts */
+            counts: {
+                [key: string]: number;
+            };
+            /** Coverage */
+            coverage: {
+                [key: string]: unknown;
+            };
+            /** Sources */
+            sources: components["schemas"]["ReleaseNode"][];
+        };
+        /** Retrieval */
+        Retrieval: {
+            /** Url */
+            url: string;
+            /**
+             * Retrieved At
+             * Format: date-time
+             */
+            retrieved_at: string;
+            /** Status Code */
+            status_code: number;
+            /** Media Type */
+            media_type: string;
+            /** Etag */
+            etag?: string | null;
+            /** Last Modified */
+            last_modified?: string | null;
+        };
         /** SessionResponse */
         SessionResponse: {
             /** Csrf Token */
             csrf_token: string;
+        };
+        /** SourceNumber */
+        SourceNumber: {
+            /**
+             * Value State
+             * @enum {string}
+             */
+            value_state: "observed" | "suppressed" | "unavailable" | "not_applicable";
+            /** Value */
+            value?: string | null;
+            /** Reason */
+            reason?: string | null;
+            /** Raw */
+            raw: string | null;
+            /** Annotation */
+            annotation: string | null;
+        };
+        /** ValidationError */
+        ValidationError: {
+            /** Location */
+            loc: (string | number)[];
+            /** Message */
+            msg: string;
+            /** Error Type */
+            type: string;
+            /** Input */
+            input?: unknown;
+            /** Context */
+            ctx?: Record<string, never>;
         };
     };
     responses: never;
@@ -154,6 +721,169 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Bootstrap"];
+                };
+            };
+        };
+    };
+    get_release_api_v1_releases__release_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                release_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReleaseSummary"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_records_api_v1_records_get: {
+        parameters: {
+            query: {
+                release_id: string;
+                kind?: ("observation" | "boundary" | "document_excerpt") | null;
+                geography_id?: string | null;
+                metric_code?: ("median_household_income" | "poverty_rate" | "household_count") | null;
+                offset?: number;
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecordPage"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_evidence_api_v1_evidence__version_id__get: {
+        parameters: {
+            query: {
+                release_id: string;
+            };
+            header?: never;
+            path: {
+                version_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EvidenceResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_changes_api_v1_changes_get: {
+        parameters: {
+            query: {
+                old_release_id: string;
+                new_release_id: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReleaseComparison"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    activate_release_api_v1_releases__release_id__activate_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                release_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ActivationResult"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };

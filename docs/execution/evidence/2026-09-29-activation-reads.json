@@ -1,0 +1,38 @@
+{
+  "release_id": "81ec338c8c4ff0da3cd7d3f6aa5acbdebb14c65a9096689d202211629138cf84",
+  "run_id": "bc809bfa-e597-4447-8feb-5a988cb2d4ed",
+  "import_ids": [
+    "351ba05c-73dc-401f-b5a3-6851a9356454",
+    "352490fd-8882-4b93-a8df-03c0df1a22f3",
+    "6d97c8af-ed5c-4f2d-b392-1e400a7908aa"
+  ],
+  "candidate_report_id": "9f6709caf335f9722c7dba5307d85c8d4f1d3e8d6e825321f72ab8b784947a9e",
+  "build_report_id": "48ab41e78ef0553ea6571290391d987372eae293eeeb475a664081a9027dd2c8",
+  "previous_release_id": null,
+  "active_release_id": "81ec338c8c4ff0da3cd7d3f6aa5acbdebb14c65a9096689d202211629138cf84",
+  "synthetic": false,
+  "current_dependencies_verified": true,
+  "counts": {
+    "boundary": 75,
+    "document_excerpt": 3,
+    "observation": 225
+  },
+  "node_count": 330,
+  "edge_count": 1983,
+  "http_pages_verified": 4,
+  "evidence_kinds_verified": 3,
+  "serialized_node_ids_and_edges_verified": true,
+  "self_comparison_unchanged": 303,
+  "public_objects_unchanged": true,
+  "sealed_tables_unchanged": true,
+  "private_bytes_unchanged": true,
+  "schema_changed": false,
+  "acquisition_performed": false,
+  "baseline_sha256": "8be9410ae07badecd1fbf499c7c113b68a87c4e2f8314cb988759662c390b623",
+  "limitations": [
+    "Boundary/document provenance is historical replay, not fresh HTTP retrieval.",
+    "Source geometry remains EPSG:4269.",
+    "County document serves both localities; redistribution remains unconfirmed.",
+    "TestClient exercises real HTTP routing and real retained evidence; no browser UI acceptance."
+  ]
+}

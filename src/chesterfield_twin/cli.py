@@ -54,7 +54,7 @@ def main():
     parser = SafeArgumentParser(prog="cdt", description="Local Chesterfield evidence tool")
     parser.add_argument("--version", action="version", version="%(prog)s 0.1.0")
     sub = parser.add_subparsers(dest="command", required=True)
-    release = sub.add_parser("release", help="Explicit sealed build or current verification")
+    release = sub.add_parser("release", help="Explicit build, current verification, or activation")
     release_commands = release.add_subparsers(dest="release_command", required=True)
     build = release_commands.add_parser("build", help="Build and seal without activation")
     build.add_argument("--data-dir", type=Path, required=True)
@@ -65,6 +65,9 @@ def main():
     verify = release_commands.add_parser("verify", help="Verify current sealed dependencies")
     verify.add_argument("--data-dir", type=Path, required=True)
     verify.add_argument("--release-id", required=True)
+    activate = release_commands.add_parser("activate", help="Verify and activate a real sealed release")
+    activate.add_argument("--data-dir", type=Path, required=True)
+    activate.add_argument("--release-id", required=True)
     acquire = sub.add_parser("acquire-acs", help="Explicit bounded 2023 Subject acquisition")
     acquire.add_argument("--audit-dir", type=Path, required=True,
                          help="New external local audit directory; must not exist")
@@ -101,10 +104,16 @@ def main():
                               "staged": False, "release_activated": False}, indent=2))
             return 0
 
-        from .storage import BaselineRepository, check_initialized, initialize, maintenance_lock
+        from .storage import check_initialized, initialize, maintenance_lock
 
         root = resolve_data_root(args.data_dir)
         if args.command == "release":
+            if args.release_command == "activate":
+                from .storage.application import ReleaseApplication
+
+                result = ReleaseApplication(root, PROJECT_ROOT).activate(args.release_id)
+                print(json.dumps(result.model_dump(mode="json"), indent=2))
+                return 0
             from .storage.releases import ReleaseBuilder
 
             builder = ReleaseBuilder(root, PROJECT_ROOT)
@@ -148,13 +157,16 @@ def main():
             )
             print(json.dumps(result, indent=2))
         else:
+            from .storage.application import ReleaseApplication
+
             with maintenance_lock(root, exclusive=False):
                 check_initialized(root)
-                repo = BaselineRepository(root)
+                application = ReleaseApplication(root, PROJECT_ROOT)
                 credentials = load_census_credentials(args.census_key_source)
                 secret = secrets.token_urlsafe(32)
                 app = create_app(
-                    bootstrap=repo.bootstrap,
+                    bootstrap=application.bootstrap,
+                    application=application,
                     port=args.port,
                     launch_secret=secret,
                     frontend_dir=PROJECT_ROOT / "frontend/dist",
@@ -186,6 +198,10 @@ def main():
                         thread.join(timeout=1)
     except KeyboardInterrupt:
         if args.command == "release":
+            if args.release_command == "activate":
+                print("Activation interrupted. Preserve the root and verify the active pointer "
+                      "before retrying; a completed commit may have taken effect.", file=sys.stderr)
+                return 130
             print("Release operation interrupted. Preserve the root and reports; "
                   "no activation was requested.", file=sys.stderr)
             return 130
@@ -215,6 +231,11 @@ def main():
                   "--audit-dir; inspect the local setup before retrying.", file=sys.stderr)
             return 1
         if args.command == "release":
+            if args.release_command == "activate":
+                print("Activation did not complete successfully. Preserve the root and check "
+                      "the explicit release, retained dependencies and active pointer. "
+                      "Do not rebuild or repair evidence to retry.", file=sys.stderr)
+                return 1
             print("Release operation failed. Preserve the root and reports. Check the explicit "
                   "selection and retained dependencies; do not upgrade an earlier store. "
                   "No activation was requested.", file=sys.stderr)

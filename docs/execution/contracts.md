@@ -1,6 +1,6 @@
 # Shared contracts for the first implementation wave
 
-Status: First-wave interfaces accepted in T001 on September 27, 2026. `src/chesterfield_twin/domain/contracts.py` owns bootstrap/session/measurement transport validation; `openapi.json` and `frontend/src/api/schema.d.ts` are generated. First-slice retained evidence, validation and sealed-build services are now accepted below; activation and application reads remain pending.
+Status: First-wave interfaces accepted in T001 on September 27, 2026. `src/chesterfield_twin/domain/contracts.py` owns bootstrap/session/measurement transport validation; `openapi.json` and `frontend/src/api/schema.d.ts` are generated. First-slice retained evidence, validation and sealed-build services are accepted below; T007c activation and pinned-read contracts are indexed below, with acceptance recorded in current state.
 
 ## Ownership and authority
 
@@ -110,3 +110,31 @@ Acquisition creates no store/import/release. `scripts/stage_acquired_slice.py` e
 Executable authorities are `domain/releases.py`, `storage/releases.py` and baseline `004_release_closure.sql`; complete semantics are in the [Astra freeze](t007b-freeze.md). `ReleaseBuilder(root, repository_root).build(run_id, import_ids, expected_report_id=...)` explicitly constructs and seals a complete first-slice release. `read_release(release_id, verify_current=True)` verifies current retained closure; historical-only readback is explicitly weaker. CLI exposes separate `release build` and `release verify` commands with required root and selection pins. No activation or baseline query endpoint is added.
 
 Build returns a persisted closure report, optional manifest and sealed flag. The selected candidate report must match fresh current validation. Each of the 303 candidates and every supporting identity is closed in a canonical graph and normalized SQL membership. Reproducibility captures exact allowlisted code/config bytes, locks, runtime inventory, schemas, selection and transforms. Complete manifest/report objects are durable before sealing; failures preserve prior releases and the active pointer. A synthetic seal stays synthetic and is never real-source acceptance. New initialization requires 004; no accepted earlier migration or root is upgraded. Integration evidence and remaining limits are in the latest handoff.
+
+
+## T007c — Activation and pinned application reads (September 29, 2026)
+
+[The Astra freeze](t007c-freeze.md) and `domain/application.py` define the changed
+interfaces. `ReleaseApplication(root, repository_root)` provides `bootstrap`,
+`activate(release_id)`, `summary(release_id)`, `records(release_id, query=...)`,
+`evidence(release_id, version_id)` and `compare(old_release_id, new_release_id)`.
+Reads use one read-only snapshot with complete current closure verification;
+activation verifies the selected real release within its pointer transaction.
+The existing internal `BaselineRepository.bootstrap` remains a low-level helper;
+production serving uses checked `ReleaseApplication.bootstrap`.
+
+Records preserve typed candidates, exact version IDs and selected retrievals.
+Filters precede sorting/pagination (maximum 303). Evidence exposes only reachable
+support in the selected graph, with explicit canonical node IDs for edge references. Comparison is a bounded natural-key/version-ID
+diff, with both release pins and synthetic declarations. No operation silently
+selects latest or repairs evidence. Sealed synthetic reads stay labeled and
+cannot become the active baseline.
+
+Authenticated routes: `GET /api/v1/releases/{release_id}`, `/records`,
+`/evidence/{version_id}`, `/changes`, and
+`POST /api/v1/releases/{release_id}/activate`. Records/evidence require query
+`release_id`; comparison requires both `old_release_id` and `new_release_id`.
+Unknown/duplicate selectors are rejected. Activation retains exact Origin/CSRF
+requirements and accepts no body. CLI adds explicit `release activate` with
+required `--data-dir` and `--release-id`, separate from build and verification.
+No raw artifact route, UI consumer, agent-access contract or export was added.

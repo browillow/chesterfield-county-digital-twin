@@ -4,16 +4,39 @@ import secrets
 from collections.abc import Callable
 from contextlib import asynccontextmanager
 from pathlib import Path
+from typing import Annotated
 
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException, Query, Request
+from fastapi import Path as PathParameter
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import ValidationError
+from starlette.concurrency import run_in_threadpool
 
 from ..credentials import CensusCredentialProvider
+from ..domain.application import (
+    ActivationResult,
+    CandidateKind,
+    EvidenceResponse,
+    MetricCode,
+    RecordPage,
+    RecordQuery,
+    ReleaseComparison,
+    ReleaseSummary,
+)
+from ..domain.candidates import Geoid, Sha256
 from ..domain.contracts import Bootstrap, SessionRequest, SessionResponse
+from ..storage import StorageBusyError, StorageError
+from ..storage.application import ApplicationError, ReleaseApplication
 
 MAX_SESSION_BODY = 512
+APPLICATION_ERROR_STATUS = {
+    "invalid_query": 422,
+    "unknown_release": 404,
+    "unknown_evidence": 404,
+    "synthetic_release": 409,
+    "release_unavailable": 409,
+}
 
 
 def create_app(
@@ -23,12 +46,13 @@ def create_app(
     launch_secret: str | None = None,
     frontend_dir: Path | None = None,
     credentials: CensusCredentialProvider | None = None,
+    application: ReleaseApplication | None = None,
 ) -> FastAPI:
     provider = credentials if credentials is not None else CensusCredentialProvider()
     try:
         return _create_app(
             bootstrap=bootstrap, port=port, launch_secret=launch_secret,
-            frontend_dir=frontend_dir, credentials=provider,
+            frontend_dir=frontend_dir, credentials=provider, application=application,
         )
     except BaseException:
         provider.clear()
@@ -42,6 +66,7 @@ def _create_app(
     launch_secret: str | None,
     frontend_dir: Path | None,
     credentials: CensusCredentialProvider,
+    application: ReleaseApplication | None,
 ) -> FastAPI:
     @asynccontextmanager
     async def lifespan(app: FastAPI):
@@ -63,6 +88,14 @@ def _create_app(
     )
     # Internal dependency only. Never include this provider in transport/storage models.
     app.state.census_credentials = credentials
+
+    def selected_application(request: Request, allowed: set[str]) -> ReleaseApplication:
+        keys = [key for key, _ in request.query_params.multi_items()]
+        if any(key not in allowed for key in keys) or len(keys) != len(set(keys)):
+            raise HTTPException(422, "invalid_query")
+        if application is None:
+            raise HTTPException(503, "application_unavailable")
+        return application
 
     @app.middleware("http")
     async def boundary(request: Request, call_next):
@@ -138,7 +171,69 @@ def _create_app(
 
     @app.get("/api/v1/bootstrap", response_model=Bootstrap)
     def get_bootstrap():
-        return bootstrap()
+        return application.bootstrap() if application is not None else bootstrap()
+
+    @app.get("/api/v1/releases/{release_id}", response_model=ReleaseSummary)
+    def get_release(request: Request, release_id: Annotated[Sha256, PathParameter()]):
+        return selected_application(request, set()).summary(release_id)
+
+    @app.get("/api/v1/records", response_model=RecordPage)
+    def get_records(
+        request: Request,
+        release_id: Annotated[Sha256, Query()],
+        kind: Annotated[CandidateKind | None, Query()] = None,
+        geography_id: Annotated[Geoid | None, Query()] = None,
+        metric_code: Annotated[MetricCode | None, Query()] = None,
+        offset: Annotated[int, Query(ge=0, le=303)] = 0,
+        limit: Annotated[int, Query(ge=1, le=303)] = 100,
+    ):
+        service = selected_application(
+            request, {"release_id", "kind", "geography_id", "metric_code", "offset", "limit"}
+        )
+        query = RecordQuery(
+            kind=kind, geography_id=geography_id, metric_code=metric_code,
+            offset=offset, limit=limit,
+        )
+        return service.records(release_id, query=query)
+
+    @app.get("/api/v1/evidence/{version_id}", response_model=EvidenceResponse)
+    def get_evidence(
+        request: Request,
+        version_id: Annotated[Sha256, PathParameter()],
+        release_id: Annotated[Sha256, Query()],
+    ):
+        return selected_application(request, {"release_id"}).evidence(release_id, version_id)
+
+    @app.get("/api/v1/changes", response_model=ReleaseComparison)
+    def get_changes(
+        request: Request,
+        old_release_id: Annotated[Sha256, Query()],
+        new_release_id: Annotated[Sha256, Query()],
+    ):
+        return selected_application(request, {"old_release_id", "new_release_id"}).compare(
+            old_release_id, new_release_id
+        )
+
+    @app.post("/api/v1/releases/{release_id}/activate", response_model=ActivationResult)
+    async def activate_release(request: Request, release_id: Annotated[Sha256, PathParameter()]):
+        service = selected_application(request, set())
+        async for chunk in request.stream():
+            if chunk:
+                raise HTTPException(422, "invalid_query")
+        return await run_in_threadpool(service.activate, release_id)
+
+    @app.exception_handler(ApplicationError)
+    async def application_error(request: Request, exc: ApplicationError):
+        code = exc.code if exc.code in APPLICATION_ERROR_STATUS else "storage_unavailable"
+        return JSONResponse({"detail": code}, status_code=APPLICATION_ERROR_STATUS.get(code, 503))
+
+    @app.exception_handler(StorageBusyError)
+    async def storage_busy(request: Request, exc: StorageBusyError):
+        return JSONResponse({"detail": "storage_busy"}, status_code=503)
+
+    @app.exception_handler(StorageError)
+    async def storage_unavailable(request: Request, exc: StorageError):
+        return JSONResponse({"detail": "storage_unavailable"}, status_code=503)
 
     @app.exception_handler(Exception)
     async def unexpected_error(request: Request, exc: Exception):

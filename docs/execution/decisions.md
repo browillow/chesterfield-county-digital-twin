@@ -121,3 +121,47 @@ Keep the accepted local stack, source contracts, provenance, uncertainty, privat
 Make bounded research with existing agents an explicit planned workflow, separate from an embedded chatbot and implementation delegation. Access must preserve explicit evidence/release selection and citations, respect retention and permitted processing destinations, exclude private strategy by default, and keep synthesis as draft research with counterevidence and unknowns. No source acquisition, remote inference, connector implementation, outreach, publication, spending or background operation is authorized merely by this plan.
 
 Require each infrastructure task to name the research capability enabled or concrete failure prevented. Reuse established safeguards; limit shared-contract freezes and independent reviews to consequential changes, with proportionate checks for routine work. Split basic offline backup/verified fresh-directory restore into T013a before irreplaceable private research; leave generalized exports and upgrade/recovery tooling later. T007c remains next ready. T010 dependencies are loosened; T011a/T011b/T013a are planned packets, not implemented capabilities. Historical source-access and T007b acceptance records remain unchanged. See the [planning handoff](handoffs/2026-09-29-research-plan-alignment.md).
+
+
+## D024 — Explicit activation and current pinned application reads (2026-09-29)
+
+Astra froze [T007c](t007c-freeze.md) before two explicitly requested Sol workers
+implemented the storage and HTTP boundaries. Reuse the accepted current closure
+verifier in one explicit baseline snapshot for reads, or in the same
+`BEGIN IMMEDIATE` transaction as activation. No schema, source specification,
+adapter, historical manifest, retained code pin or earlier root changes are needed.
+This prevents evidence from different releases or unpublished candidates from
+entering a research view while making the retained measures and citations usable.
+
+Activation requires an explicit real sealed release and verifies its complete
+current closure before updating only the active pointer. Same-ID activation
+reverifies; precommit failure rolls back. Bootstrap discovers and verifies the
+active real release. Summary, records, evidence and comparison require explicit
+IDs, echo them, and project only verified membership and selected support.
+Synthetic explicit reads remain labeled; synthetic activation and mixed-mode
+comparison are rejected. Supporting retrieval metadata comes from the selected
+release graph rather than a global event lookup. Historical reports remain
+historical attestations, never substitutes for current verification.
+
+The authenticated local API reuses existing Host/Origin/session/CSRF checks and
+bounded allowlisted selectors. Evidence returns typed records and reachable
+supporting metadata, not raw downloads. Comparison reports candidate identity
+changes by kind/natural key; it does not assess statistical significance or
+provide a complete metadata diff. No UI, user export, agent/outbound access,
+backup, restore or acquisition follows from these operations. T011a/T011b/T013a
+remain planned. The [handoff](handoffs/2026-09-29-activation-reads.md) records
+integration acceptance, actual-root operations and limitations separately.
+
+
+D024 acceptance — September 29, 2026: 501 Python tests passed across stable
+application and regression partitions, followed by affected transport reruns
+(64 HTTP/schema/credential tests and one complete storage projection test).
+Generated types, frontend build and six frontend tests passed. Explicit activation
+changed the selected real root's pointer from null to
+`81ec338c8c4ff0da3cd7d3f6aa5acbdebb14c65a9096689d202211629138cf84`.
+Separate-process coordinator and Astra verification passed current closure,
+303 typed fingerprints, all evidence kinds and canonical graph references.
+Application evidence nodes expose their IDs without changing sealed node hashes.
+All retained public objects, non-pointer tables and private bytes were preserved.
+T007c and minimal T007 are accepted; T008 remains the next UI checkpoint.
+[Evidence](evidence/2026-09-29-activation-reads.json).

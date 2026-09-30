@@ -105,9 +105,72 @@ def test_build_requires_each_pin(tmp_path, monkeypatch, capsys, missing):
     assert error.value.code == 2
 
 
-def test_activation_is_not_an_available_command(monkeypatch, capsys):
+def test_activation_rejects_unpinned_positional_arguments(monkeypatch, capsys):
     monkeypatch.setattr(sys, "argv", ["cdt", "release", "activate", "PRIVATE-SENTINEL"])
     with pytest.raises(SystemExit) as error:
         cli.main()
     assert error.value.code == 2
     assert "PRIVATE-SENTINEL" not in str(capsys.readouterr())
+
+
+def test_activation_uses_only_explicit_service_without_build_or_credentials(
+    tmp_path, monkeypatch, capsys,
+):
+    from chesterfield_twin.domain.application import ActivationResult
+    from chesterfield_twin.storage import application
+
+    arguments(monkeypatch, tmp_path, "activate")
+    install(monkeypatch, lambda *a: pytest.fail("build or verify service"))
+
+    class Service:
+        def __init__(self, root, repository_root):
+            assert root == tmp_path / "data" and repository_root == cli.PROJECT_ROOT
+
+        def activate(self, release_id):
+            assert release_id == "e" * 64
+            return ActivationResult(
+                release_id=release_id, active_release_id=release_id,
+                previous_release_id=None, changed=True, synthetic=False,
+            )
+
+    monkeypatch.setattr(application, "ReleaseApplication", Service)
+    assert cli.main() == 0
+    result = json.loads(capsys.readouterr().out)
+    assert result["active_release_id"] == "e" * 64
+    assert result["changed"] and result["current_dependencies_verified"]
+    assert result["synthetic"] is False
+    assert not (tmp_path / "data").exists()
+
+
+@pytest.mark.parametrize("failure", [ValueError, OSError, RuntimeError, KeyboardInterrupt])
+def test_activation_failure_never_prints_success_or_private_exception(
+    tmp_path, monkeypatch, capsys, failure,
+):
+    from chesterfield_twin.storage import application
+
+    arguments(monkeypatch, tmp_path, "activate")
+
+    class Service:
+        def __init__(self, *args):
+            pass
+
+        def activate(self, release_id):
+            raise failure("PRIVATE-SENTINEL")
+
+    monkeypatch.setattr(application, "ReleaseApplication", Service)
+    assert cli.main() == (130 if failure is KeyboardInterrupt else 1)
+    output = capsys.readouterr()
+    assert not output.out and "PRIVATE-SENTINEL" not in output.err
+    assert "active pointer" in output.err
+    assert "No activation was requested" not in output.err
+
+
+@pytest.mark.parametrize("missing", ["--data-dir", "--release-id"])
+def test_activation_requires_root_and_release(monkeypatch, tmp_path, missing):
+    flags = {"--data-dir": str(tmp_path), "--release-id": "e" * 64}
+    del flags[missing]
+    monkeypatch.setattr(sys, "argv", ["cdt", "release", "activate",
+                                    *(s for pair in flags.items() for s in pair)])
+    with pytest.raises(SystemExit) as error:
+        cli.main()
+    assert error.value.code == 2
